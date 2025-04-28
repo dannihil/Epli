@@ -1,0 +1,113 @@
+.title {
+  margin-top: 80px;
+  margin-bottom: 40px;
+}
+
+.table-container {
+  height: 73vh; /* Adjust height as needed */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+.table-container-2 {
+  width: 80vw;
+  min-width: 10vw;
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  background: rgb(217, 217, 217);
+  border: 1px solid;
+  border-color: rgb(199, 199, 199);
+  font-weight: bold;
+}
+
+.sticky-cell {
+  border: 1px solid;
+  border-color: rgb(199, 199, 199);
+}
+
+.filter-buttons-and-search-bar {
+  margin-top: 90px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter-buttons {
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px;
+}
+
+.filter-button {
+  background-color: rgb(182, 182, 182);
+  border-radius: 25px;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filter-button:hover {
+  cursor: pointer;
+  background-color: rgb(94, 94, 94);
+}
+
+.filter-button.active {
+  background-color: rgb(57, 57, 57); /* Highlight the active button */
+  color: white;
+  font-weight: bold;
+}
+
+.filter-button:disabled,
+.filter-button.disabled {
+  background-color: #ececec; /* Grey background */
+  color: #a1a1a1; /* Grey text */
+  border: 1px solid #a1a1a1; /* Grey border */
+  cursor: not-allowed; /* Change cursor to not-allowed */
+}
+
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 450px;
+}
+
+.search-bar {
+  width: 100%;
+  padding: 10px 35px 10px 10px; /* Add padding-right to prevent overlap */
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+  background-color: white;
+  color: black;
+  font-weight: 600;
+}
+
+.search-bar:focus {
+  border-color: rgb(30, 30, 30);
+}
+
+.search-x {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  color: gray;
+  margin-bottom: 10px;
+  background-color: lightgrey;
+  padding: 5px;
+  border-radius: 25px;
+  height: 25px;
+  width: 25px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.search-x:hover {
+  color: rgb(64, 64, 64);
+  background-color: rgb(159, 159, 159);
+}

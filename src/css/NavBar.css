@@ -1,0 +1,93 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.navbar {
+  position: fixed; /* Or absolute if desired */
+  top: 10px;
+  width: 98.5%;
+  background-color: #262626ed; /* Example background color */
+  color: white;
+  padding: 1rem; /* Optional, for inner spacing */
+  margin: 0; /* Remove any default margin */
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  height: 82px;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+  border-radius: 15px;
+}
+
+.login-icon {
+  color: rgb(255, 255, 255);
+  transition: color 0.3s ease;
+}
+.login-icon:hover {
+  cursor: pointer;
+  color: rgb(161, 161, 161);
+}
+
+.navbar-links {
+  display: flex;
+  gap: 10rem;
+}
+
+.nav-link-button {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-link-button:hover {
+  color: rgb(186, 185, 185);
+  cursor: pointer;
+}
+
+.icon {
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.icon:hover {
+  color: rgb(186, 186, 186);
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.2rem;
+  }
+
+  .navbar-links {
+    gap: 1rem;
+  }
+
+  .nav-link {
+    padding: 0.5rem;
+  }
+}
+
+.epli-icon {
+  margin-top: 4px;
+}
+.epli-icon:hover {
+  cursor: pointer;
+}
+
+.navbar-signinbutton {
+  margin-right: 25px;
+}

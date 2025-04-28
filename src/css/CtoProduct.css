@@ -1,0 +1,141 @@
+.main-container {
+  margin-top: 60px;
+  margin-bottom: 50px;
+}
+
+.page-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 60px;
+  margin-top: 30px;
+}
+
+.filter-button-selection {
+  background-color: white;
+  color: black;
+  min-width: 80px;
+  text-align: center;
+  padding: 15px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 25px;
+  border: 1px solid;
+  border-color: rgb(172, 172, 172);
+  transition: border-color 0.3s ease, box-shadow 0.2s ease;
+}
+
+.filter-button-selection:hover {
+  cursor: pointer;
+  border-color: rgb(0, 0, 0);
+}
+
+.filter-button-selection.active {
+  background-color: rgb(57, 57, 57);
+  color: white;
+}
+
+.filter-button-selection:disabled,
+.filter-button-selection.disabled {
+  display: none;
+}
+.filter-button-processor {
+  text-align: center;
+  height: 130px;
+  padding: 15px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 15px;
+  border: 1px solid;
+  border-color: rgb(172, 172, 172);
+  transition: border-color 0.3s ease, box-shadow 0.2s ease;
+}
+
+.filter-button-processor:hover {
+  cursor: pointer;
+  border-color: rgb(0, 0, 0);
+}
+
+.filter-button-processor.active {
+  background-color: rgb(57, 57, 57);
+  color: white;
+}
+
+.filter-button-processor:disabled,
+.filter-button-processor.disabled {
+  display: none;
+}
+
+.filter-button-processor-text {
+  width: 80px;
+}
+
+.button-processor-logo {
+  height: 60px;
+  background-color: #ececec;
+  border-radius: 10px;
+}
+
+.image-spec-container {
+  text-align: left;
+}
+
+.product-image-container {
+  border: 1px solid;
+  border-color: lightgrey;
+  border-radius: 25px;
+}
+
+.product-image {
+  height: 450px;
+  padding: 50px;
+  object-fit: contain;
+}
+
+.spec-title {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.spec-list-title {
+  margin-top: 20px;
+  margin-bottom: 5px;
+  font-weight: 900;
+  font-size: 20px;
+}
+
+.spec-list {
+  gap: 20px;
+}
+
+.spec-list-item {
+  margin-top: 2px;
+}
+
+.cto-spec-selection {
+  width: 500px;
+  text-align: left;
+}
+
+.spec-selection-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.pdf-button {
+  height: 40px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 25px;
+  background-color: rgb(0, 183, 43);
+  border: 2px solid;
+  border-color: rgb(0, 183, 43);
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.pdf-button:hover {
+  background-color: white;
+  color: rgb(0, 183, 43);
+}
