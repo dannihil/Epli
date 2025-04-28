@@ -12,8 +12,8 @@ function LoggedInHomepage() {
         <div className="title-box">
           <h1>Hæ {user.firstName}!</h1>
           <h3>
-            Hér getur þú skoðað sérpöntunarverðlista eða skoðað stöðu sendinga á
-            leið til Epli.
+            Hér getur þú skoðað stöðu sendinga frá Apple eða skoðað
+            sérpöntunarverðlista.
           </h3>
         </div>
       </div>
@@ -24,7 +24,7 @@ function LoggedInHomepage() {
             className="content-selection"
             onClick={() => navigate("/stada-sendinga")}
           >
-            Skoða stöðu sendinga!
+            Skoða stöðu sendinga
           </button>
           <button
             className="content-selection"
