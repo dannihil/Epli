@@ -21,6 +21,7 @@ import MacStudio from "./pages/cto-pages/MacStudio";
 import MacMini from "./pages/cto-pages/Macmini";
 import MacPro from "./pages/cto-pages/MacPro";
 import Imac from "./pages/cto-pages/Imac";
+import MacbookProTest from "./pages/cto-pages/MacbookProTest";
 
 function App() {
   const { user, isSignedIn } = useUser();
@@ -37,6 +38,7 @@ function App() {
           <Route path="/cto" element={<Cto />} />
           <Route path="/cto/macbook-air" element={<MacbookAir />} />
           <Route path="/cto/macbook-pro" element={<MacbookPro />} />
+          <Route path="/cto/macbook-pro-test" element={<MacbookProTest />} />
           <Route path="/cto/imac" element={<Imac />} />
           <Route path="/cto/mac-studio" element={<MacStudio />} />
           <Route path="/cto/mac-mini" element={<MacMini />} />

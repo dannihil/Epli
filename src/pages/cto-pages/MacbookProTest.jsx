@@ -4,7 +4,7 @@ import Divider from "@mui/material/Divider";
 import { jsPDF } from "jspdf";
 import { useUser } from "@clerk/clerk-react";
 
-function MacbookPro() {
+function MacbookProTest() {
   const [date, setDate] = useState("");
 
   useEffect(() => {
@@ -248,7 +248,7 @@ function MacbookPro() {
     doc.setFontSize(25);
     doc.setFont("georgia", "bold");
     doc.line(10, 10, pageWidth - 10, 10);
-    doc.text(`${title}"`, 10, 25);
+    doc.text(`${title}`, 10, 25);
 
     doc.setFontSize(12);
     doc.setFont("georgia", "bold");
@@ -876,4 +876,4 @@ function MacbookPro() {
   );
 }
 
-export default MacbookPro;
+export default MacbookProTest;

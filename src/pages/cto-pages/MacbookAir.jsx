@@ -4,7 +4,9 @@ import Divider from "@mui/material/Divider";
 import { jsPDF } from "jspdf";
 import { useUser } from "@clerk/clerk-react";
 
-function MacbookPro() {
+function MacbookAir() {
+  const user = useUser();
+  const basePrices = { 13: 199990, 15: 249990 };
   const [date, setDate] = useState("");
 
   useEffect(() => {
@@ -18,8 +20,6 @@ function MacbookPro() {
 
     return () => clearInterval(interval); // Cleanup on component unmount
   }, []);
-  const user = useUser();
-  const basePrices = { 13: 199990, 15: 249990 };
 
   const priceModifiers = {
     processor: {
@@ -112,9 +112,30 @@ function MacbookPro() {
     });
   };
 
-  const generatePdf = (title) => {
+  function getBase64Image(imageUrl) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = "Anonymous"; // handle cross-origin issues
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        const dataURL = canvas.toDataURL("image/png"); // Convert image to Base64
+        resolve(dataURL);
+      };
+      img.onerror = (error) => {
+        reject(error);
+      };
+      img.src = imageUrl;
+    });
+  }
+
+  const generatePdf = async (title) => {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
+    const formattedDate = new Date().toLocaleDateString("en-GB");
 
     // Add image based on screen size and color
     let imageSrc = "";
@@ -160,11 +181,14 @@ function MacbookPro() {
       imageSrc = "../assets/mba_m3_mid.png";
     }
 
+    // Convert image to Base64
+    const base64Image = await getBase64Image(imageSrc);
+
     // Add image to PDF (10, 20 is the position, 180, 160 is the size)
     if (selectedOptions.screenSize == "13") {
-      doc.addImage(imageSrc, "PNG", 5, 23, 100, 100);
+      doc.addImage(base64Image, "PNG", 5, 23, 100, 100);
     } else if (selectedOptions.screenSize == "15") {
-      doc.addImage(imageSrc, "PNG", 5, 30, 100, 100);
+      doc.addImage(base64Image, "PNG", 5, 25, 100, 100);
     }
 
     // Add title
@@ -177,7 +201,7 @@ function MacbookPro() {
     doc.setFont("georgia", "bold");
     doc.text("Dagsetning:", 150, 20);
     doc.setFont("georgia", "normal");
-    doc.text(`${date}`, 175, 20);
+    doc.text(formattedDate, 175, 20);
 
     doc.setFont("georgia", "bold");
     doc.text(`Sölumaður:`, 150, 28);
@@ -265,7 +289,9 @@ function MacbookPro() {
     );
     doc.line(10, 225, pageWidth - 10, 225);
 
-    doc.addImage("../assets/epli-logo-black.png", "PNG", 30, 208, 150, 100);
+    // Add logo image (base64 format or URL)
+    const logoBase64 = await getBase64Image("../assets/epli-logo-black.png");
+    doc.addImage(logoBase64, "PNG", 30, 208, 150, 100);
     doc.line(65, 285, pageWidth - 65, 285);
     doc.text("Laugavegur 182 - Smáralind - epli.is", 73, 290);
 
@@ -635,4 +661,4 @@ function MacbookPro() {
   );
 }
 
-export default MacbookPro;
+export default MacbookAir;

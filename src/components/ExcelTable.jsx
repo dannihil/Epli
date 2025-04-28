@@ -130,10 +130,10 @@ const ExcelTable = () => {
             <TableHead>
               <TableRow>
                 <TableCell className="sticky-header">
-                  <p style={{ fontWeight: "bold" }}>Purchase Order #</p>
+                  <p style={{ fontWeight: "bold" }}>Apple Order #</p>
                 </TableCell>
                 <TableCell className="sticky-header">
-                  <p style={{ fontWeight: "bold" }}>Apple Order #</p>
+                  <p style={{ fontWeight: "bold" }}>Purchase Order #</p>
                 </TableCell>
                 <TableCell className="sticky-header">
                   <p style={{ fontWeight: "bold" }}>Part #</p>
