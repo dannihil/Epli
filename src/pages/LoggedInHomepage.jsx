@@ -10,7 +10,7 @@ function LoggedInHomepage() {
     <div>
       <div className="LoggedInHomepage-container">
         <div className="title-box">
-          <h1>Velkominn {user.firstName}!</h1>
+          <h1>Hæ {user.firstName}!</h1>
           <h3>
             Hér getur þú skoðað sérpöntunarverðlista eða skoðað stöðu sendinga á
             leið til Epli.
