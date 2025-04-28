@@ -102,11 +102,18 @@ function MacbookAir() {
       }
       if (
         (category === "memory" && option === "24GB") ||
+        (category === "memory" && option === "32GB") ||
         (category === "storage" && option === "512GB") ||
         (category === "storage" && option === "1TB") ||
         (category === "storage" && option === "2TB")
       ) {
         newSelection.processor = "M4 chip with 10-core CPU, 10-core GPU";
+      }
+      if (
+        category === "processor" &&
+        option === "M4 chip with 10-core CPU, 8-core GPU"
+      ) {
+        newSelection.memory = "16GB";
       }
       return newSelection;
     });
@@ -469,8 +476,6 @@ function MacbookAir() {
                   : "" || selectedOptions.storage === "1TB"
                   ? "disabled"
                   : "" || selectedOptions.storage === "2TB"
-                  ? "disabled"
-                  : "" || selectedOptions.memory === "24GB"
                   ? "disabled"
                   : "" || selectedOptions.screenSize === "15"
                   ? "disabled"

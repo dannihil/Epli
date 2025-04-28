@@ -178,6 +178,7 @@ function MacbookPro() {
         category === "processor" &&
         option === "M4 Max chip with 16-core CPU, 40-core GPU"
       ) {
+        newSelection.storage = "1TB";
         newSelection.memory = "48GB";
       }
 
