@@ -79,6 +79,14 @@ ul {
   .nav-link {
     padding: 0.5rem;
   }
+
+  .nav-link-button {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
 }
 
 .epli-icon {

@@ -1,3 +1,4 @@
+/* Default styles */
 .container {
   margin-top: 20vh;
 }
@@ -43,4 +44,70 @@
 .category-text {
   font-size: 20px;
   font-weight: 700;
+}
+
+/* Responsive styles for mobile (0px - 600px) */
+@media (max-width: 600px) {
+  .container {
+    margin-top: 10vh;
+  }
+
+  .category-selection-container {
+    width: 100vw; /* Adjust to 100% width on mobile */
+    padding: 0 10px; /* Add some padding for better spacing */
+    gap: 10px; /* Reduce gap between boxes */
+  }
+
+  .category-selection-box {
+    width: 140px; /* Reduce width of boxes */
+    height: 160px; /* Reduce height of boxes */
+    padding: 10px; /* Adjust padding for mobile */
+  }
+
+  .category-image {
+    height: 100px; /* Smaller image size */
+    width: 100px; /* Smaller image size */
+  }
+
+  .category-text {
+    font-size: 16px; /* Smaller text for mobile */
+  }
+
+  /* Add margin-bottom to ensure space between boxes and footer */
+  .category-selection-container {
+    margin-bottom: 60px; /* Adjust based on footer size */
+  }
+}
+
+/* Responsive styles for tablets (600px - 1024px) */
+@media (min-width: 601px) and (max-width: 1200px) {
+  .container {
+    margin-top: 15vh;
+  }
+
+  .category-selection-container {
+    width: 90vw; /* Adjust to 90% width for tablets */
+    padding: 0 15px; /* Add more padding for better spacing */
+    gap: 15px; /* Slightly reduce the gap between boxes */
+  }
+
+  .category-selection-box {
+    width: 160px; /* Slightly reduce width of boxes */
+    height: 180px; /* Slightly reduce height of boxes */
+    padding: 11px; /* Adjust padding for tablets */
+  }
+
+  .category-image {
+    height: 130px; /* Slightly reduce image size */
+    width: 130px; /* Slightly reduce image size */
+  }
+
+  .category-text {
+    font-size: 18px; /* Slightly reduce text size */
+  }
+
+  /* Ensure margin at the bottom to prevent footer overlap */
+  .category-selection-container {
+    margin-bottom: 80px; /* Adjust based on footer size */
+  }
 }

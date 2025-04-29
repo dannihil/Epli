@@ -82,6 +82,10 @@ function Cto() {
             <p className="category-text">Mac Pro</p>
           </div>
         </div>
+        <h2>
+          ATH! þessar síður eru í vinnslu, verð gætu verið röng, vinsamlegast
+          berið saman við excel skjalið.
+        </h2>
       </div>
     </div>
   );

@@ -1,17 +1,18 @@
 .LoggedInHomepage-container {
   color: rgb(0, 0, 0);
   height: 250px;
+  display: flex; /* Needed for align-items and justify-content to work */
   align-items: center;
   justify-content: center;
   margin-top: 50px;
-  background: rgb(208, 208, 208);
   background: linear-gradient(
     0deg,
     rgba(208, 208, 208, 1) 0%,
     rgba(255, 255, 255, 1) 100%
   );
   width: 98.5vw;
-  border-radius: 0px 0px 15px 15px;
+  border-radius: 0 0 15px 15px;
+  text-align: center;
 }
 
 .title-box {
@@ -29,19 +30,19 @@
 
 .content-container {
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
+  justify-content: center;
+  align-items: center;
   margin: 0 auto;
   gap: 20px;
   margin-top: 10px;
+  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
 }
 
 .content-selection {
   height: 50px;
   background-color: rgb(49, 49, 49);
   color: rgb(255, 255, 255);
-  border: 1px solid;
-  border-color: rgb(50, 50, 50);
+  border: 1px solid rgb(50, 50, 50);
   box-shadow: 0px 0px 4px 0px rgb(37, 37, 37);
   border-radius: 250px;
   font-weight: 700;
@@ -52,4 +53,69 @@
 .content-selection:hover {
   color: black;
   background-color: white;
+}
+
+/* ===== Responsive ===== */
+
+/* Small devices (mobile, 0px - 600px) */
+@media (max-width: 600px) {
+  .LoggedInHomepage-container {
+    height: auto;
+    padding: 20px 10px;
+  }
+
+  .title-box {
+    padding-top: 40px;
+  }
+
+  .under-title {
+    font-size: 24px;
+  }
+
+  .content-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .content-selection {
+    width: 90%;
+    font-size: 16px;
+  }
+
+  .button-container {
+    max-width: 70vw;
+    margin: 30px auto; /* Center the container horizontally */
+  }
+}
+/* Medium devices (tablet, 600px - 1024px) */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .LoggedInHomepage-container {
+    height: 300px;
+    padding: 30px 20px;
+  }
+
+  .title-box {
+    padding-top: 60px;
+  }
+
+  .under-title {
+    font-size: 30px;
+  }
+
+  .content-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .content-selection {
+    width: 250px;
+    font-size: 18px;
+  }
+}
+
+/* Large devices (desktop, 1025px and up) */
+@media (min-width: 1025px) {
+  .content-selection {
+    width: 300px;
+  }
 }
