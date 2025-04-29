@@ -10,11 +10,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 15px;
   font-weight: bold;
   height: 55px;
   backdrop-filter: blur(8px);
   border-radius: 15px;
-  font-size: 18px; /* Default font size */
 }
 
 /* Media query for mobile devices */
