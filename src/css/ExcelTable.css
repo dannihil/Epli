@@ -8,6 +8,7 @@
   height: 73vh;
   overflow-y: auto;
   margin-bottom: 100px;
+  border: 1px solid rgb(217, 217, 217);
 }
 
 .table-container-2 {

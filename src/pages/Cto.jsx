@@ -82,7 +82,7 @@ function Cto() {
             <p className="category-text">Mac Pro</p>
           </div>
         </div>
-        <h2>
+        <h2 style={{ marginTop: "30px" }}>
           ATH! þessar síður eru í vinnslu, verð gætu verið röng, vinsamlegast
           berið saman við excel skjalið.
         </h2>

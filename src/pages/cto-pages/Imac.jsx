@@ -6,7 +6,7 @@ import { useUser } from "@clerk/clerk-react";
 
 function Imac() {
   return (
-    <div style={{ marginTop: "80px" }}>
+    <div style={{ marginTop: "100px" }}>
       <div>
         <h1>Síða í vinnslu!</h1>
         <p>Væntanleg á næstunni.</p>

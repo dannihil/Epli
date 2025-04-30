@@ -1,10 +1,8 @@
 .LoggedInHomepage-container {
   color: rgb(0, 0, 0);
-  height: 250px;
+  height: 200px;
   display: flex; /* Needed for align-items and justify-content to work */
-  align-items: center;
   justify-content: center;
-  margin-top: 50px;
   background: linear-gradient(
     0deg,
     rgba(208, 208, 208, 1) 0%,
@@ -16,7 +14,7 @@
 }
 
 .title-box {
-  padding-top: 80px;
+  margin-top: 30px;
 }
 
 .under-title {
@@ -60,12 +58,14 @@
 /* Small devices (mobile, 0px - 600px) */
 @media (max-width: 600px) {
   .LoggedInHomepage-container {
-    height: auto;
+    height: 15vh;
     padding: 20px 10px;
   }
 
   .title-box {
-    padding-top: 40px;
+    font-size: 12px;
+    padding: 0px 30px;
+    margin-top: -5vh;
   }
 
   .under-title {
@@ -79,7 +79,7 @@
 
   .content-selection {
     width: 90%;
-    font-size: 16px;
+    font-size: 12px;
   }
 
   .button-container {
@@ -109,7 +109,7 @@
 
   .content-selection {
     width: 250px;
-    font-size: 18px;
+    font-size: 15px;
   }
 }
 

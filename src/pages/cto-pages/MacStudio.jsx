@@ -2,7 +2,7 @@ import React from "react";
 
 function MacStudio() {
   return (
-    <div style={{ marginTop: "80px" }}>
+    <div style={{ marginTop: "100px" }}>
       <div>
         <h1>Síða í vinnslu!</h1>
         <p>Væntanleg á næstunni.</p>
