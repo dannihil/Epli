@@ -66,6 +66,7 @@ ul {
 @media (max-width: 768px) {
   .navbar {
     padding: 1rem;
+    height: 50px;
   }
 
   .navbar-brand {
@@ -81,7 +82,7 @@ ul {
   }
 
   .nav-link-button {
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 500;
     color: rgb(255, 255, 255);
     text-decoration: none;

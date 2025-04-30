@@ -130,34 +130,34 @@ const ExcelTable = () => {
             <TableHead>
               <TableRow>
                 <TableCell className="sticky-header">
-                  <p style={{ fontWeight: "bold" }}>Apple Order #</p>
+                  <p className="sticky-header-text">Apple Order #</p>
                 </TableCell>
                 <TableCell className="sticky-header">
-                  <p style={{ fontWeight: "bold" }}>Purchase Order #</p>
+                  <p className="sticky-header-text">Purchase Order #</p>
                 </TableCell>
                 <TableCell className="sticky-header">
-                  <p style={{ fontWeight: "bold" }}>Part #</p>
+                  <p className="sticky-header-text">Part #</p>
                 </TableCell>
                 <TableCell className="sticky-header">
-                  <p style={{ fontWeight: "bold" }}>Description</p>
+                  <p className="sticky-header-text">Description</p>
                 </TableCell>
                 <TableCell className="sticky-header">
-                  <p style={{ fontWeight: "bold" }}>Order Qty</p>
+                  <p className="sticky-header-text">Order Qty</p>
                 </TableCell>
                 <TableCell className="sticky-header">
-                  <p style={{ fontWeight: "bold" }}>Delivered</p>
+                  <p className="sticky-header-text">Delivered</p>
                 </TableCell>
                 <TableCell className="sticky-header">
-                  <p style={{ fontWeight: "bold" }}>In Transit</p>
+                  <p className="sticky-header-text">In Transit</p>
                 </TableCell>
                 <TableCell className="sticky-header">
-                  <p style={{ fontWeight: "bold" }}>Remaining</p>
+                  <p className="sticky-header-text">Remaining</p>
                 </TableCell>
                 <TableCell className="sticky-header">
-                  <p style={{ fontWeight: "bold" }}>Status</p>
+                  <p className="sticky-header-text">Status</p>
                 </TableCell>
                 <TableCell className="sticky-header">
-                  <p style={{ fontWeight: "bold" }}>Estimated Delivery</p>
+                  <p className="sticky-header-text">Estimated Delivery</p>
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -165,29 +165,36 @@ const ExcelTable = () => {
               {displayedData.map((row, index) => (
                 <TableRow key={index}>
                   <TableCell className="sticky-cell">
-                    {row.appleOrderNumber}
+                    <p className="sticky-cell-text">{row.appleOrderNumber}</p>
                   </TableCell>
                   <TableCell className="sticky-cell">
-                    {row.orderNumber}
+                    <p className="sticky-cell-text">{row.orderNumber}</p>
                   </TableCell>
                   <TableCell className="sticky-cell">
-                    {skuMap[row.partNumber] || row.partNumber}
+                    <p className="sticky-cell-text">
+                      {skuMap[row.partNumber] || row.partNumber}
+                    </p>
                   </TableCell>
-
                   <TableCell className="sticky-cell">
-                    {row.description}
+                    <p className="sticky-cell-text">{row.description}</p>
                   </TableCell>
-                  <TableCell className="sticky-cell">{row.orderQty}</TableCell>
                   <TableCell className="sticky-cell">
-                    {row.deliveredQty}
+                    <p className="sticky-cell-text">{row.orderQty}</p>
                   </TableCell>
-                  <TableCell className="sticky-cell">{row.inTransit}</TableCell>
                   <TableCell className="sticky-cell">
-                    {row.remainingQty}
+                    <p className="sticky-cell-text">{row.deliveredQty}</p>
                   </TableCell>
-                  <TableCell className="sticky-cell">{row.status}</TableCell>
                   <TableCell className="sticky-cell">
-                    {row.estimatedDelivery}
+                    <p className="sticky-cell-text">{row.inTransit}</p>
+                  </TableCell>
+                  <TableCell className="sticky-cell">
+                    <p className="sticky-cell-text">{row.remainingQty}</p>
+                  </TableCell>
+                  <TableCell className="sticky-cell">
+                    <p className="sticky-cell-text">{row.status}</p>
+                  </TableCell>
+                  <TableCell className="sticky-cell">
+                    <p className="sticky-cell-text">{row.estimatedDelivery}</p>
                   </TableCell>
                 </TableRow>
               ))}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../css/NavBar.css";
 import { useNavigate } from "react-router-dom";
 import { FaUser, FaTruck, FaLaptop } from "react-icons/fa6";
@@ -16,13 +16,27 @@ function NavBar() {
   const userIcon = "/assets/user_icon.png";
   const navigate = useNavigate();
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Responsive size and margin
+  const logoStyle = {
+    width: windowWidth < 768 ? 30 : 60,
+    marginLeft: windowWidth < 768 ? 10 : 19,
+  };
+
   return (
     <div className="navbar">
       <div className="epli-icon">
         <img
           src={logo}
           alt="Logo"
-          style={{ width: 60, marginLeft: 19 }}
+          style={logoStyle}
           draggable="false"
           onClick={() => navigate("/")}
         />
@@ -34,11 +48,11 @@ function NavBar() {
               className="nav-link-button"
               onClick={() => navigate("/stada-sendinga")}
             >
-              <FaTruck size={30} />
+              <FaTruck size={windowWidth < 768 ? 20 : 30} />
               <li>Staða sendinga</li>
             </div>
             <div className="nav-link-button" onClick={() => navigate("/cto")}>
-              <FaLaptop size={30} />
+              <FaLaptop size={windowWidth < 768 ? 20 : 30} />
               <li>Sérpöntunarverðlisti</li>
             </div>
           </ul>
@@ -50,7 +64,11 @@ function NavBar() {
       <SignedOut>
         <div className="navbar-signinbutton">
           <SignInButton mode="modal">
-            <FaUser size={30} className="login-icon" onClick />
+            <FaUser
+              size={windowWidth < 768 ? 20 : 30}
+              className="login-icon"
+              onClick
+            />
           </SignInButton>
         </div>
       </SignedOut>

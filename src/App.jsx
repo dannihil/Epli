@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Analytics } from "@vercel/analytics/react";
 import {
@@ -26,6 +26,13 @@ import MacbookProTest from "./pages/cto-pages/MacbookProTest";
 function App() {
   const { user, isSignedIn } = useUser();
 
+  const [showFooter, setShowFooter] = useState(window.innerWidth > 1200);
+
+  useEffect(() => {
+    const handleResize = () => setShowFooter(window.innerWidth > 1200);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <Router>
       <div className="navbar-container">
@@ -45,9 +52,11 @@ function App() {
           <Route path="/cto/mac-pro" element={<MacPro />} />
         </Routes>
       </div>
-      <div className="navbar-container">
-        <Footer />
-      </div>
+      {showFooter && (
+        <div className="navbar-container">
+          <Footer />
+        </div>
+      )}
       <Analytics />
     </Router>
   );
