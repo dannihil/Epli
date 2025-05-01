@@ -1,0 +1,28 @@
+export const descriptionOverride = {
+  Z1CT: 'MacBook Air 13" M4 10/8-Core 16GB 256GB - Silver',
+  Z1CU: 'MacBook Air 13" M4 10/10-Core 16GB 512GB - Silver',
+  Z1CV: 'MacBook Air 13" M4 10/8-Core 16GB 256GB - Starlight',
+  Z1CW: 'MacBook Air 13" M4 10/10-Core 16GB 512GB - Starlight',
+  Z1CX: 'MacBook Air 13" M4 10/8-Core 16GB 256GB - Midnight',
+  Z1CY: 'MacBook Air 13" M4 10/10-Core 16GB 512GB - Midnight',
+  Z1GS: 'MacBook Air 13" M4 10/10-Core 24GB 512GB - Silver',
+  Z1GT: 'MacBook Air 13" M4 10/10-Core 24GB 512GB - Starlight',
+  Z1GU: 'MacBook Air 13" M4 10/10-Core 24GB 512GB - Midnight',
+  Z1H7: 'MacBook Air 13" M4 10/8-Core 16GB 256GB - Sky Blue',
+  Z1H8: 'MacBook Air 13" M4 10/10-Core 16GB 512GB - Sky Blue',
+  Z1H9: 'MacBook Air 13" M4 10/10-Core 24GB 512GB - Sky Blue',
+
+  Z1DB: 'MacBook Air 15" M4 10/10-Core 16GB 256GB - Silver',
+  Z1DC: 'MacBook Air 15" M4 10/10-Core 16GB 512GB - Silver',
+  Z1DD: 'MacBook Air 15" M4 10/10-Core 16GB 256GB - Starlight',
+  Z1DF: 'MacBook Air 15" M4 10/10-Core 16GB 512GB - Starlight',
+  Z1DG: 'MacBook Air 15" M4 10/10-Core 16GB 256GB - Midnight',
+  Z1DH: 'MacBook Air 15" M4 10/10-Core 16GB 512GB - Midnight',
+  Z1H0: 'MacBook Air 15" M4 10/10-Core 24GB 512GB - Silver',
+  Z1H1: 'MacBook Air 15" M4 10/10-Core 24GB 512GB - Starlight',
+  Z1H2: 'MacBook Air 15" M4 10/10-Core 24GB 512GB - Midnight',
+  Z1HD: 'MacBook Air 15" M4 10/10-Core 16GB 256GB - Sky Blue',
+  Z1HE: 'MacBook Air 15" M4 10/10-Core 16GB 512GB - Sky Blue',
+  Z1HF: 'MacBook Air 15" M4 10/10-Core 24GB 512GB - Sky Blue',
+  // Add more overrides as needed
+};

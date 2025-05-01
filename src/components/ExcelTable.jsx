@@ -11,18 +11,14 @@ import {
 } from "@mui/material";
 import "../css/ExcelTable.css";
 import { FaX } from "react-icons/fa6";
+import { skuMap } from "../data/skuMap";
+import { descriptionOverride } from "../data/descriptionOverride";
 
 const ExcelTable = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [activeFilter, setActiveFilter] = useState("All");
   const [searchTerm, setSearchTerm] = useState(""); // New state for search input
-  const skuMap = {
-    "MU9D3ZE/A": "Z1CF",
-    "MCX44ZE/A": "Z1JV",
-    "MCYT4ZE/A": "Z1JX",
-    "MU9E3ZE/A": "Z1CG",
-  };
 
   // Filter function based on selected LOB
   const filterDataByLOB = (lob) => {
@@ -77,10 +73,13 @@ const ExcelTable = () => {
   // Search filter logic
   const displayedData = filteredData.filter((row) => {
     const mappedPartNumber = skuMap[row.partNumber] || row.partNumber;
+    const mappedDescription =
+      descriptionOverride[row.partNumber] || row.description;
 
     return Object.values({
       ...row,
       partNumber: mappedPartNumber, // Use mapped value for search
+      description: mappedDescription, // Use overridden description for searching
     }).some((value) =>
       value?.toString().toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -176,7 +175,9 @@ const ExcelTable = () => {
                     </p>
                   </TableCell>
                   <TableCell className="sticky-cell">
-                    <p className="sticky-cell-text">{row.description}</p>
+                    <p className="sticky-cell-text">
+                      {descriptionOverride[row.partNumber] || row.description}
+                    </p>
                   </TableCell>
                   <TableCell className="sticky-cell">
                     <p className="sticky-cell-text">{row.orderQty}</p>

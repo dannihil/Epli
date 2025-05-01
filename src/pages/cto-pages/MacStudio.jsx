@@ -267,6 +267,33 @@ function MacStudio() {
                 {selectedOptions.memory} Unified vinnsluminni
               </li>
             </ul>
+
+            <p
+              style={{
+                marginTop: "20px",
+                fontSize: "18px",
+                fontWeight: "800",
+              }}
+            >
+              Tengimöguleikar
+            </p>
+            <ul>
+              <li className="spec-list-item">
+                <b>Front:</b> Two USB-C ports, one SDXC card slot
+              </li>
+              <li className="spec-list-item">
+                <b>Back:</b> Four Thunderbolt 5 ports, two USB-A ports, HDMI
+                port,
+              </li>
+              <li className="spec-list-item">
+                10Gb Ethernet port, headphone jack
+              </li>
+              <li className="spec-list-item">
+                <i style={{ fontWeight: "550" }}>
+                  Support for up to five displays
+                </i>
+              </li>
+            </ul>
           </div>
         </div>
         <div className="cto-spec-selection">
@@ -524,13 +551,11 @@ function MacStudio() {
               onClick={() => handleSelection("memory", "128GB")}
               disabled={
                 selectedOptions.processor ===
-                  "M4 chip with 10-core CPU, 10-core GPU" ||
+                  "M4 Max chip with 14-core CPU, 32-core GPU" ||
                 selectedOptions.processor ===
-                  "M4 Pro chip with 12-core CPU, 16-core GPU" ||
+                  "M3 Ultra chip with 28-core CPU, 60-core GPU" ||
                 selectedOptions.processor ===
-                  "M4 Pro chip with 14-core CPU, 20-core GPU" ||
-                selectedOptions.processor ===
-                  "M4 Max chip with 14-core CPU, 32-core GPU"
+                  "M3 Ultra chip with 32-core CPU, 80-core GPU"
               }
             >
               128GB
