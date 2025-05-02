@@ -159,13 +159,13 @@ function Imac() {
     if (selectedOptions.color === "Blue") {
       imageSrc = "../assets/imac_blue.png";
     } else if (selectedOptions.color === "Purple") {
-      imageSrc = "";
+      imageSrc = "../assets/imac_purple.png";
     } else if (selectedOptions.color === "Pink") {
       imageSrc = "../assets/imac_pink.png";
     } else if (selectedOptions.color === "Orange") {
-      imageSrc = "";
+      imageSrc = "../assets/imac_orange.png";
     } else if (selectedOptions.color === "Yellow") {
-      imageSrc = "";
+      imageSrc = "../assets/imac_yellow.png";
     } else if (selectedOptions.color === "Green") {
       imageSrc = "../assets/imac_green.png";
     } else if (selectedOptions.color === "Silver") {
@@ -176,7 +176,7 @@ function Imac() {
     const base64Image = await getBase64Image(imageSrc);
 
     // Add image to the PDF (10, 25 is the position, 100, 100 is the size)
-    doc.addImage(base64Image, "PNG", 5, 23, 100, 100);
+    doc.addImage(base64Image, "PNG", 20, 41, 70, 65);
 
     // Add title
     doc.setFontSize(25);
@@ -223,12 +223,22 @@ function Imac() {
     doc.text(`Skjár: ${selectedOptions.display}`, xPosition, yPosition);
     yPosition += 7;
     doc.text(
-      `Lyklaborð: ${selectedOptions.mouseTrackpad}`,
+      `Mús eða trackpad: ${selectedOptions.mouseTrackpad}`,
       xPosition,
       yPosition
     );
     yPosition += 7;
-    doc.text(`Lyklaborð: ${selectedOptions.keyboard}`, xPosition, yPosition);
+    if (selectedOptions.keyboard === "Magic Keyboard with Touch ID") {
+      doc.text(`Lyklaborð: ${selectedOptions.keyboard}`, xPosition, yPosition);
+    } else if (
+      selectedOptions.keyboard ===
+      "Magic Keyboard with Touch ID and Numeric Keypad"
+    ) {
+      doc.text(`Lyklaborð: Magic Keyboard with Touch ID`, xPosition, yPosition);
+      yPosition += 7;
+      doc.text(`and numeric keyboard`, xPosition, yPosition);
+      yPosition -= 7;
+    }
 
     // Add price
     yPosition += 20;
@@ -243,7 +253,7 @@ function Imac() {
     doc.line(10, 182, pageWidth - 10, 182);
     doc.setFont("georgia", "bold");
     doc.text(
-      "Afgreiðslutími sérpanta getur verið allt að 6-8 vikur frá degi pöntunar.",
+      "Afgreiðslutími sérpanta getur verið allt að 4-6 vikur frá degi pöntunar.",
       10,
       yPosition
     );

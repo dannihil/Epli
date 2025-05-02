@@ -11,8 +11,11 @@ import {
 } from "@mui/material";
 import "../css/ExcelTable.css";
 import { FaX } from "react-icons/fa6";
-import { skuMap } from "../data/skuMap";
-import { descriptionOverride } from "../data/descriptionOverride";
+import { skuMap, skuMapFromIdentifier } from "../data/skuMap";
+import {
+  descriptionOverride,
+  descriptionOverrideFromIdentifier,
+} from "../data/descriptionOverride";
 
 const ExcelTable = () => {
   const [data, setData] = useState([]);
@@ -57,6 +60,7 @@ const ExcelTable = () => {
                 inTransit: row["In-Transit"],
                 remainingQty: row["Remaining Quantity"],
                 status: row["Shipping Status"],
+                productIdentifier: row["Product Configuration Identifier"],
                 estimatedDelivery: formattedDate,
                 lob: row["LOB"],
               };
@@ -71,19 +75,48 @@ const ExcelTable = () => {
   }, []);
 
   // Search filter logic
-  const displayedData = filteredData.filter((row) => {
-    const mappedPartNumber = skuMap[row.partNumber] || row.partNumber;
-    const mappedDescription =
-      descriptionOverride[row.partNumber] || row.description;
+  // Updated code to change partNumber if productIdentifier exists in skuMapFromIdentifier
+  const displayedData = filteredData
+    .map((row) => {
+      // Map part number and description
+      let mappedPartNumber = skuMap[row.partNumber] || row.partNumber;
+      let mappedDescription =
+        descriptionOverride[row.partNumber] || row.description;
 
-    return Object.values({
-      ...row,
-      partNumber: mappedPartNumber, // Use mapped value for search
-      description: mappedDescription, // Use overridden description for searching
-    }).some((value) =>
-      value?.toString().toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  });
+      // Check for part number override using productIdentifier
+      if (
+        row.productIdentifier &&
+        skuMapFromIdentifier[row.productIdentifier]
+      ) {
+        mappedPartNumber = skuMapFromIdentifier[row.productIdentifier];
+      }
+
+      // Check for description override using productIdentifier
+      if (
+        row.productIdentifier &&
+        descriptionOverrideFromIdentifier[row.productIdentifier]
+      ) {
+        mappedDescription =
+          descriptionOverrideFromIdentifier[row.productIdentifier];
+      }
+
+      // Return the updated row with mapped part number and description
+      return {
+        ...row,
+        partNumber: mappedPartNumber,
+        description: mappedDescription, // Use overridden description
+      };
+    })
+    .filter((row) => {
+      // Perform search across part number and description
+      return Object.values({
+        ...row,
+        partNumber: skuMap[row.partNumber] || row.partNumber,
+        description: row.description,
+      }).some((value) =>
+        value?.toString().toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    });
 
   return (
     <div className="p-6">
@@ -175,9 +208,8 @@ const ExcelTable = () => {
                     </p>
                   </TableCell>
                   <TableCell className="sticky-cell">
-                    <p className="sticky-cell-text">
-                      {descriptionOverride[row.partNumber] || row.description}
-                    </p>
+                    <p className="sticky-cell-text">{row.description}</p>{" "}
+                    {/* Updated description */}
                   </TableCell>
                   <TableCell className="sticky-cell">
                     <p className="sticky-cell-text">{row.orderQty}</p>

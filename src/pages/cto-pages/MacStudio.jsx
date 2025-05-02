@@ -210,7 +210,7 @@ function MacStudio() {
     doc.line(10, 182, pageWidth - 10, 182);
     doc.setFont("georgia", "bold");
     doc.text(
-      "Afgreiðslutími sérpanta getur verið allt að 6-8 vikur frá degi pöntunar.",
+      "Afgreiðslutími sérpanta getur verið allt að 4-6 vikur frá degi pöntunar.",
       10,
       yPosition
     );

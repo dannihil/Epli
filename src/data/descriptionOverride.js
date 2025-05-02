@@ -24,5 +24,34 @@ export const descriptionOverride = {
   Z1HD: 'MacBook Air 15" M4 10/10-Core 16GB 256GB - Sky Blue',
   Z1HE: 'MacBook Air 15" M4 10/10-Core 16GB 512GB - Sky Blue',
   Z1HF: 'MacBook Air 15" M4 10/10-Core 24GB 512GB - Sky Blue',
+
+  Z1DS: 'MacBook Pro 14" M4 10/10-core 16GB/512GB Space Black',
+  Z1DT: 'MacBook Pro 14" M4 10/10-core 16GB/1TB Space Black',
+  Z1DW: 'MacBook Pro 14" M4 10/10-core 16GB/512GB Silver',
+  Z1DX: 'MacBook Pro 14" M4 10/10-core 16GB/1TB Silver',
+  Z1FB: 'MacBook Pro 14" M4 Pro 12/16-core 24GB/512GB Silver',
+  Z1FC: 'MacBook Pro 14" M4 Pro 14/20-core 24GB/1TB Silver',
+  Z1FD: 'MacBook Pro 14" M4 Max 14/32-core 36GB/1TB Silver',
+  Z1FG: 'MacBook Pro 14" M4 Max 14/32-core 36GB/1TB Space Black',
+  Z1JR: 'MacBook Pro 14" M4 10/10-core 24GB/1TB Space Black',
+  Z1JS: 'MacBook Pro 14" M4 10/10-core 24GB/1TB Silver',
+
+  Z1FP: 'MacBook Pro 16" M4 Pro 14/20-core 24GB/512GB Silver',
+  Z1FQ: 'MacBook Pro 16" M4 Pro 14/20-core 48GB/512GB Silver',
+  Z1FR: 'MacBook Pro 16" M4 Max 14/32-core 36GB/1TB Silver',
+  Z1FS: 'MacBook Pro 16" M4 Max 16/40-core 48GB/1TB Silver',
+  Z1FV: 'MacBook Pro 16" M4 Max 14/32-core 36GB/1TB Space Black',
+  Z1FW: 'MacBook Pro 16" M4 Max 16/40-core 48GB/1TB Space Black',
   // Add more overrides as needed
+};
+
+export const descriptionOverrideFromIdentifier = {
+  Z1FE00194: 'MacBook Pro 14" M4 Pro 12/16-core 24GB/512GB Space Black',
+  Z1FE00195: 'MacBook Pro 14" M4 Pro 12/16-core 48GB/512GB Space Black',
+  Z1FF000T8: 'MacBook Pro 14" M4 Pro 14/20-core 24GB/1TB Space Black',
+  Z1FF000T9: 'MacBook Pro 14" M4 Pro 14/20-core 48GB/1TB Space Black',
+  Z1FT000P0: 'MacBook Pro 16" M4 Pro 14/20-core 24GB/512GB Space Black',
+  Z1FT000P1: 'MacBook Pro 16" M4 Pro 14/20-core 24GB/1TB Space Black',
+  Z1FU000GM: 'MacBook Pro 16" M4 Pro 14/20-core 48GB/512GB Space Black',
+  Z1FU000GN: 'MacBook Pro 16" M4 Pro 14/20-core 48GB/1TB Space Black',
 };
