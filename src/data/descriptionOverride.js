@@ -42,6 +42,9 @@ export const descriptionOverride = {
   Z1FS: 'MacBook Pro 16" M4 Max 16/40-core 48GB/1TB Silver',
   Z1FV: 'MacBook Pro 16" M4 Max 14/32-core 36GB/1TB Space Black',
   Z1FW: 'MacBook Pro 16" M4 Max 16/40-core 48GB/1TB Space Black',
+
+  Z1CD: "Mac Studio M4 Max 14/32-core 36GB/512GB",
+  Z1CE: "Mac Studio M3 Ultra 28/60-core 96GB/1TB",
   // Add more overrides as needed
 };
 
