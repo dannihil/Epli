@@ -130,6 +130,7 @@ const ExcelTable = () => {
             "iPad",
             "Watch",
             "AirPods",
+            "Home",
             "Accessories",
           ].map((lob) => (
             <button
