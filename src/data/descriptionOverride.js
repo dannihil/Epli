@@ -45,6 +45,11 @@ export const descriptionOverride = {
 
   Z1CD: "Mac Studio M4 Max 14/32-core 36GB/512GB",
   Z1CE: "Mac Studio M3 Ultra 28/60-core 96GB/1TB",
+
+  Z1CF: "Mac mini M4 10-Core CPU/10-Core GPU/16GB/256GB",
+  Z1CG: "Mac mini M4 10-Core CPU/10-Core GPU/16GB/512GB",
+  Z1JV: "Mac mini M4 Pro 12-Core CPU/16-Core GPU/24GB/512GB",
+  Z1JX: "Mac mini M4 10-Core CPU/10-Core GPU/24GB/512GB",
   // Add more overrides as needed
 };
 
