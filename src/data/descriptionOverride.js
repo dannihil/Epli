@@ -58,6 +58,8 @@ export const descriptionOverrideFromIdentifier = {
   Z1FE00195: 'MacBook Pro 14" M4 Pro 12/16-core 48GB/512GB Space Black',
   Z1FF000T8: 'MacBook Pro 14" M4 Pro 14/20-core 24GB/1TB Space Black',
   Z1FF000T9: 'MacBook Pro 14" M4 Pro 14/20-core 48GB/1TB Space Black',
+  Z1FF002L9:
+    'MacBook Pro 14" M4 Pro 14/20-core 48GB/1TB Space Black - Nano display',
   Z1FT000P0: 'MacBook Pro 16" M4 Pro 14/20-core 24GB/512GB Space Black',
   Z1FT000P1: 'MacBook Pro 16" M4 Pro 14/20-core 24GB/1TB Space Black',
   Z1FU000GM: 'MacBook Pro 16" M4 Pro 14/20-core 48GB/512GB Space Black',

@@ -248,7 +248,6 @@ function MacbookPro() {
     // Add title
     doc.setFontSize(25);
     doc.setFont("georgia", "bold");
-    doc.line(10, 10, pageWidth - 10, 10);
     doc.text(`${title}"`, 10, 25);
 
     doc.setFontSize(12);
@@ -310,8 +309,8 @@ function MacbookPro() {
     doc.setFont("georgia", "normal");
     yPosition += 7;
     doc.text(`${formatPriceISK(totalPrice)}`, 183, yPosition);
-    yPosition += 62;
-    doc.line(10, 182, pageWidth - 10, 182);
+    yPosition += 20;
+    doc.line(10, 140, pageWidth - 10, 140);
     doc.setFont("georgia", "bold");
     doc.text(
       "Afgreiðslutími sérpanta getur verið allt að 4-6 vikur frá degi pöntunar.",
@@ -336,11 +335,16 @@ function MacbookPro() {
       10,
       yPosition
     );
-    doc.line(10, 225, pageWidth - 10, 225);
+    doc.line(10, 183, pageWidth - 10, 183);
+
+    doc.setFont("georgia", "normal");
+    yPosition += 70;
+    doc.text(`Undirskrift (staðfesting á pöntun)`, 10, yPosition);
+    doc.line(10, 240, pageWidth - 100, 240);
 
     // Add logo image (base64 format or URL)
     const logoBase64 = await getBase64Image("../assets/epli-logo-black.png");
-    doc.addImage(logoBase64, "PNG", 30, 208, 150, 100);
+    doc.addImage(logoBase64, "PNG", 65, 240, 80, 52.5);
     doc.line(65, 285, pageWidth - 65, 285);
     doc.text("Laugavegur 182 - Smáralind - epli.is", 73, 290);
 
