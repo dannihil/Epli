@@ -292,7 +292,7 @@ function MacbookPro() {
       yPosition
     );
     yPosition += 7;
-    doc.text("Skjár: Standard glass", xPosition, yPosition);
+    doc.text(`Skjár: ${selectedOptions.display}`, xPosition, yPosition);
     yPosition += 7;
     doc.text(
       `Aukahlutir: ${selectedOptions.accessories}`,
