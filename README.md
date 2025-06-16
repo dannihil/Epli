@@ -1,10 +1,4 @@
-# React + Vite
+# Epli Portal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-![image](https://github.com/user-attachments/assets/75975a34-5e2b-468a-be43-c98d13abfc05)
+This project is used for Epli in Iceland.
+It is designed to give sales representatives easier access to information about product shipments and a pricing guide for CTO products.
