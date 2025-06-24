@@ -44,12 +44,32 @@ export const descriptionOverride = {
   Z1FW: 'MacBook Pro 16" M4 Max 16/40-core 48GB/1TB Space Black',
 
   Z1CD: "Mac Studio M4 Max 14/32-core 36GB/512GB",
+  "MU963ZE/A": "Mac Studio M4 Max 14/32-core 36GB/512GB",
   Z1CE: "Mac Studio M3 Ultra 28/60-core 96GB/1TB",
 
-  Z1CF: "Mac mini M4 10-Core CPU/10-Core GPU/16GB/256GB",
-  Z1CG: "Mac mini M4 10-Core CPU/10-Core GPU/16GB/512GB",
-  Z1JV: "Mac mini M4 Pro 12-Core CPU/16-Core GPU/24GB/512GB",
-  Z1JX: "Mac mini M4 10-Core CPU/10-Core GPU/24GB/512GB",
+  "MU9D3ZE/A": "Mac mini M4 10-Core CPU/10-Core GPU/16GB/256GB",
+  "MU9E3ZE/A": "Mac mini M4 10-Core CPU/10-Core GPU/16GB/512GB",
+  "MCX44ZE/A": "Mac mini M4 Pro 12-Core CPU/16-Core GPU/24GB/512GB",
+  "MCYT4ZE/A": "Mac mini M4 10-Core CPU/10-Core GPU/24GB/512GB",
+
+  "MD3H4ZE/A": 'iMac 24" M4 10/10-Core 16GB/256GB Silver, Nano-Texture Glass',
+  Z1E2: 'iMac 24" M4 8/8-Core 16GB/256GB Silver',
+  Z1E4: 'iMac 24" M4 8/8-Core 16GB/256GB Green',
+  Z1E5: 'iMac 24" M4 8/8-Core 16GB/256GB Blue',
+  Z1E6: 'iMac 24" M4 8/8-Core 16GB/256GB Pink',
+  Z1EH: 'iMac 24" M4 10/10-Core 16GB/256GB Silver',
+  Z1EJ: 'iMac 24" M4 10/10-Core 16GB/512GB Silver',
+  Z1EM: 'iMac 24" M4 10/10-Core 16GB/256GB Green',
+  Z1EN: 'iMac 24" M4 10/10-Core 16GB/512GB Green',
+  Z1EP: 'iMac 24" M4 10/10-Core 16GB/256GB Blue',
+  Z1EQ: 'iMac 24" M4 10/10-Core 16GB/512GB Blue',
+  Z1ER: 'iMac 24" M4 10/10-Core 16GB/256GB Pink',
+  Z1ES: 'iMac 24" M4 10/10-Core 16GB/512GB Pink',
+  Z1K1: 'iMac 24" M4 10/10-Core 24GB/512GB Silver',
+  "Z1K1 1TB": 'iMac 24" M4 10/10-Core 24GB/1TB Silver',
+  Z1K3: 'iMac 24" M4 10/10-Core 24GB/512GB Green',
+  Z1K5: 'iMac 24" M4 10/10-Core 24GB/512GB Blue',
+  Z1K6: 'iMac 24" M4 10/10-Core 24GB/512GB Pink',
   // Add more overrides as needed
 };
 
@@ -64,4 +84,7 @@ export const descriptionOverrideFromIdentifier = {
   Z1FT000P1: 'MacBook Pro 16" M4 Pro 14/20-core 24GB/1TB Space Black',
   Z1FU000GM: 'MacBook Pro 16" M4 Pro 14/20-core 48GB/512GB Space Black',
   Z1FU000GN: 'MacBook Pro 16" M4 Pro 14/20-core 48GB/1TB Space Black',
+  Z1CD0024E: "Mac Studio M4 Max 16/40-core 128GB/1TB",
+  Z1H2001E5: 'MacBook Air 15" M4 10/10-Core 24GB 1TB - Midnight',
+  Z1H2001ED: 'MacBook Air 15" M4 10/10-Core 32GB 1TB - Midnight',
 };
