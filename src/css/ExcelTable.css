@@ -5,9 +5,11 @@
 }
 
 .table-container {
-  height: 73vh;
+  height: calc(
+    100dvh - 300px
+  ); /* Adjust value based on actual top + bottom content */
   overflow-y: auto;
-  margin-bottom: 100px;
+  margin-bottom: 0;
   border: 1px solid rgb(217, 217, 217);
 }
 
@@ -137,10 +139,6 @@
     padding: 0 10px;
   }
 
-  .table-container {
-    height: 58vh;
-  }
-
   .sticky-header,
   .sticky-cell {
     white-space: nowrap;
@@ -185,11 +183,6 @@
     padding: 0 60px;
   }
 
-  .table-container {
-    height: 73vh;
-    margin-bottom: 100px;
-  }
-
   .sticky-header,
   .sticky-cell {
     white-space: nowrap;
@@ -230,11 +223,6 @@
   .table-container-2 {
     width: 100vw;
     padding: 0 60px;
-  }
-
-  .table-container {
-    height: 73vh;
-    margin-bottom: 100px;
   }
 
   .filter-buttons-and-search-bar {

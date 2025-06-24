@@ -3,6 +3,7 @@ export const skuMap = {
   "MCX44ZE/A": "Z1JV",
   "MCYT4ZE/A": "Z1JX",
   "MU9E3ZE/A": "Z1CG",
+  "MU963ZE/A": "Z1CD",
 };
 
 export const skuMapFromIdentifier = {
