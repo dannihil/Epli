@@ -1,8 +1,12 @@
-# React + Vite
+# Epli Portal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is used for Epli in Iceland.
+It is designed to give sales representatives easier access to information about product shipments and a pricing guide for CTO products.
 
-Currently, two official plugins are available:
+# User auth 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+User authentication system is made with Clerk.
+https://clerk.com
+
+# Programming language
+The programming language used is React. To-do is to upgrade to Next js.
