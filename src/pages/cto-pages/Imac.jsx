@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../css/CtoProduct.css";
 import Divider from "@mui/material/Divider";
 import { jsPDF } from "jspdf";
-import { useUser } from "@clerk/clerk-react";
+import { useUser, SignedIn } from "@clerk/clerk-react";
 
 function Imac() {
   const [date, setDate] = useState("");
@@ -288,370 +288,380 @@ function Imac() {
   };
 
   return (
-    <div className="main-container">
-      <div className="page-container">
-        <div className="image-spec-container">
-          <div className="product-image-container">
-            {selectedOptions.color === "Blue" ? (
-              <img
-                src="../assets/imac_blue.png"
-                alt="iMac"
-                className="product-image"
-                draggable={false}
-              />
-            ) : selectedOptions.color === "Purple" ? (
-              <img
-                src="../assets/imac_purple.png"
-                alt="iMac"
-                className="product-image"
-                draggable={false}
-              />
-            ) : selectedOptions.color === "Pink" ? (
-              <img
-                src="../assets/imac_pink.png"
-                alt="iMac"
-                className="product-image"
-                draggable={false}
-              />
-            ) : selectedOptions.color === "Orange" ? (
-              <img
-                src="../assets/imac_orange.png"
-                alt="iMac"
-                className="product-image"
-                draggable={false}
-              />
-            ) : selectedOptions.color === "Yellow" ? (
-              <img
-                src="../assets/imac_yellow.png"
-                alt="iMac"
-                className="product-image"
-                draggable={false}
-              />
-            ) : selectedOptions.color === "Green" ? (
-              <img
-                src="../assets/imac_green.png"
-                alt="iMac"
-                className="product-image"
-                draggable={false}
-              />
-            ) : selectedOptions.color === "Silver" ? (
-              <img
-                src="../assets/imac_silver.png"
-                alt="iMac"
-                className="product-image"
-                draggable={false}
-              />
-            ) : (
-              <img
-                src="../assets/imac_blue.png"
-                alt="iMac"
-                className="product-image"
-                draggable={false}
-              />
-            )}
-          </div>
-          <p className="spec-list-title">Tæknilegar upplýsingar</p>
-          <div className="spec-list">
-            <ul>
-              <li className="spec-list-item">{selectedOptions.processor}</li>
-              <li className="spec-list-item">
-                {selectedOptions.storage} SSD geymsla
-              </li>
-              <li className="spec-list-item">
-                {selectedOptions.memory} Unified vinnsluminni
-              </li>
-              <li className="spec-list-item">{selectedOptions.display}</li>
-              <li className="spec-list-item">
-                {selectedOptions.mouseTrackpad}
-              </li>
-              <li className="spec-list-item">{selectedOptions.keyboard}</li>
-            </ul>
-          </div>
-        </div>
-        <div className="cto-spec-selection">
-          <h1 style={{ fontWeight: 900, fontSize: 40, marginBottom: 10 }}>
-            iMac
-          </h1>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <div style={{ display: "flex" }}>
-              <p style={{ fontSize: "20px", fontWeight: 700, marginRight: 10 }}>
-                <b>Verð:</b>
-              </p>
-              <p style={{ fontSize: "20px" }}>{formatPriceISK(totalPrice)}</p>
+    <SignedIn>
+      <div className="main-container">
+        <div className="page-container">
+          <div className="image-spec-container">
+            <div className="product-image-container">
+              {selectedOptions.color === "Blue" ? (
+                <img
+                  src="../assets/imac_blue.png"
+                  alt="iMac"
+                  className="product-image"
+                  draggable={false}
+                />
+              ) : selectedOptions.color === "Purple" ? (
+                <img
+                  src="../assets/imac_purple.png"
+                  alt="iMac"
+                  className="product-image"
+                  draggable={false}
+                />
+              ) : selectedOptions.color === "Pink" ? (
+                <img
+                  src="../assets/imac_pink.png"
+                  alt="iMac"
+                  className="product-image"
+                  draggable={false}
+                />
+              ) : selectedOptions.color === "Orange" ? (
+                <img
+                  src="../assets/imac_orange.png"
+                  alt="iMac"
+                  className="product-image"
+                  draggable={false}
+                />
+              ) : selectedOptions.color === "Yellow" ? (
+                <img
+                  src="../assets/imac_yellow.png"
+                  alt="iMac"
+                  className="product-image"
+                  draggable={false}
+                />
+              ) : selectedOptions.color === "Green" ? (
+                <img
+                  src="../assets/imac_green.png"
+                  alt="iMac"
+                  className="product-image"
+                  draggable={false}
+                />
+              ) : selectedOptions.color === "Silver" ? (
+                <img
+                  src="../assets/imac_silver.png"
+                  alt="iMac"
+                  className="product-image"
+                  draggable={false}
+                />
+              ) : (
+                <img
+                  src="../assets/imac_blue.png"
+                  alt="iMac"
+                  className="product-image"
+                  draggable={false}
+                />
+              )}
             </div>
-            <button
-              onClick={() => generatePdf(`Sérpöntun - iMac`)}
-              className="pdf-button"
-            >
-              Búa til PDF
-            </button>
-          </div>{" "}
-          {/* Updated total price display */}
-          <Divider style={{ margin: "10px 0px 10px 0px" }} />
-          <p className="spec-title">Örgjörvi</p>
-          <div className="spec-selection-buttons">
+            <p className="spec-list-title">Tæknilegar upplýsingar</p>
+            <div className="spec-list">
+              <ul>
+                <li className="spec-list-item">{selectedOptions.processor}</li>
+                <li className="spec-list-item">
+                  {selectedOptions.storage} SSD geymsla
+                </li>
+                <li className="spec-list-item">
+                  {selectedOptions.memory} Unified vinnsluminni
+                </li>
+                <li className="spec-list-item">{selectedOptions.display}</li>
+                <li className="spec-list-item">
+                  {selectedOptions.mouseTrackpad}
+                </li>
+                <li className="spec-list-item">{selectedOptions.keyboard}</li>
+              </ul>
+            </div>
+          </div>
+          <div className="cto-spec-selection">
+            <h1 style={{ fontWeight: 900, fontSize: 40, marginBottom: 10 }}>
+              iMac
+            </h1>
             <div
-              className={`filter-button-processor ${
-                selectedOptions.processor ===
-                "M4 chip with 8-core CPU, 8-core GPU"
-                  ? "active"
-                  : ""
-              } `}
-              onClick={() => {
-                handleSelection(
-                  "processor",
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <div style={{ display: "flex" }}>
+                <p
+                  style={{ fontSize: "20px", fontWeight: 700, marginRight: 10 }}
+                >
+                  <b>Verð:</b>
+                </p>
+                <p style={{ fontSize: "20px" }}>{formatPriceISK(totalPrice)}</p>
+              </div>
+              <button
+                onClick={() => generatePdf(`Sérpöntun - iMac`)}
+                className="pdf-button"
+              >
+                Búa til PDF
+              </button>
+            </div>{" "}
+            {/* Updated total price display */}
+            <Divider style={{ margin: "10px 0px 10px 0px" }} />
+            <p className="spec-title">Örgjörvi</p>
+            <div className="spec-selection-buttons">
+              <div
+                className={`filter-button-processor ${
+                  selectedOptions.processor ===
                   "M4 chip with 8-core CPU, 8-core GPU"
-                );
-              }}
-            >
-              <img
-                src="../assets/m4.svg"
-                alt="M4 logo"
-                className="button-processor-logo"
-              />
-              <p className="filter-button-processor-text">
-                8-core CPU 8-core GPU
-              </p>
-            </div>
-            <div
-              className={`filter-button-processor ${
-                selectedOptions.processor ===
-                "M4 chip with 10-core CPU, 10-core GPU"
-                  ? "active"
-                  : ""
-              } `}
-              onClick={() => {
-                handleSelection(
-                  "processor",
+                    ? "active"
+                    : ""
+                } `}
+                onClick={() => {
+                  handleSelection(
+                    "processor",
+                    "M4 chip with 8-core CPU, 8-core GPU"
+                  );
+                }}
+              >
+                <img
+                  src="../assets/m4.svg"
+                  alt="M4 logo"
+                  className="button-processor-logo"
+                />
+                <p className="filter-button-processor-text">
+                  8-core CPU 8-core GPU
+                </p>
+              </div>
+              <div
+                className={`filter-button-processor ${
+                  selectedOptions.processor ===
                   "M4 chip with 10-core CPU, 10-core GPU"
-                );
-              }}
-            >
-              <img
-                src="../assets/m4.svg"
-                alt="M3 logo"
-                className="button-processor-logo"
-              />
-              <p className="filter-button-processor-text">
-                10-core CPU 10-core GPU
-              </p>
+                    ? "active"
+                    : ""
+                } `}
+                onClick={() => {
+                  handleSelection(
+                    "processor",
+                    "M4 chip with 10-core CPU, 10-core GPU"
+                  );
+                }}
+              >
+                <img
+                  src="../assets/m4.svg"
+                  alt="M3 logo"
+                  className="button-processor-logo"
+                />
+                <p className="filter-button-processor-text">
+                  10-core CPU 10-core GPU
+                </p>
+              </div>
             </div>
-          </div>
-          <p className="spec-title">Geymsla</p>
-          <div className="spec-selection-buttons">
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.storage === "256GB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("storage", "256GB")}
-            >
-              256GB
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.storage === "512GB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("storage", "512GB")}
-            >
-              512GB
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.storage === "1TB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("storage", "1TB")}
-            >
-              1TB
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.storage === "2TB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("storage", "2TB")}
-              disabled={
-                selectedOptions.processor ===
-                "M4 chip with 8-core CPU, 8-core GPU"
-              }
-            >
-              2TB
-            </button>
-          </div>
-          <p className="spec-title">Vinnsluminni</p>
-          <div className="spec-selection-buttons">
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.memory === "16GB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("memory", "16GB")}
-            >
-              16GB
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.memory === "24GB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("memory", "24GB")}
-            >
-              24GB
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.memory === "32GB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("memory", "32GB")}
-              disabled={
-                selectedOptions.processor ===
-                "M4 chip with 8-core CPU, 8-core GPU"
-              }
-            >
-              32GB
-            </button>
-          </div>
-          <p className="spec-title">Litur</p>
-          <div className="spec-selection-buttons">
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.color === "Blue" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("color", "Blue")}
-            >
-              Blue
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.color === "Purple" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("color", "Purple")}
-            >
-              Purple
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.color === "Pink" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("color", "Pink")}
-            >
-              Pink
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.color === "Orange" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("color", "Orange")}
-            >
-              Orange
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.color === "Yellow" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("color", "Yellow")}
-            >
-              Yellow
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.color === "Green" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("color", "Green")}
-            >
-              Green
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.color === "Silver" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("color", "Silver")}
-            >
-              Silver
-            </button>
-          </div>
-          <p className="spec-title">Skjár</p>
-          <div className="spec-selection-buttons">
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.display === "Standard display" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("display", "Standard display")}
-            >
-              Standard display
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.display === "Nano-texture display"
-                  ? "active"
-                  : ""
-              }`}
-              onClick={() => handleSelection("display", "Nano-texture display")}
-              disabled={
-                selectedOptions.processor ===
-                "M4 chip with 8-core CPU, 8-core GPU"
-              }
-            >
-              Nano-texture display
-            </button>
-          </div>
-          <p className="spec-title">Mús eða Trackpad</p>
-          <div className="spec-selection-buttons">
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.mouseTrackpad === "Magic Mouse" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("mouseTrackpad", "Magic Mouse")}
-            >
-              Magic Mouse
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.mouseTrackpad === "Magic Trackpad"
-                  ? "active"
-                  : ""
-              }`}
-              onClick={() => handleSelection("mouseTrackpad", "Magic Trackpad")}
-            >
-              Magic Trackpad
-            </button>
-          </div>
-          <p className="spec-title">Lyklaborð</p>
-          <div className="spec-selection-buttons">
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.keyboard === "Magic Keyboard with Touch ID"
-                  ? "active"
-                  : ""
-              }`}
-              onClick={() =>
-                handleSelection("keyboard", "Magic Keyboard with Touch ID")
-              }
-            >
-              Magic Keyboard with Touch ID
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.keyboard ===
-                "Magic Keyboard with Touch ID and Numeric Keypad"
-                  ? "active"
-                  : ""
-              }`}
-              onClick={() =>
-                handleSelection(
-                  "keyboard",
+            <p className="spec-title">Geymsla</p>
+            <div className="spec-selection-buttons">
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.storage === "256GB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("storage", "256GB")}
+              >
+                256GB
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.storage === "512GB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("storage", "512GB")}
+              >
+                512GB
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.storage === "1TB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("storage", "1TB")}
+              >
+                1TB
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.storage === "2TB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("storage", "2TB")}
+                disabled={
+                  selectedOptions.processor ===
+                  "M4 chip with 8-core CPU, 8-core GPU"
+                }
+              >
+                2TB
+              </button>
+            </div>
+            <p className="spec-title">Vinnsluminni</p>
+            <div className="spec-selection-buttons">
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.memory === "16GB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("memory", "16GB")}
+              >
+                16GB
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.memory === "24GB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("memory", "24GB")}
+              >
+                24GB
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.memory === "32GB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("memory", "32GB")}
+                disabled={
+                  selectedOptions.processor ===
+                  "M4 chip with 8-core CPU, 8-core GPU"
+                }
+              >
+                32GB
+              </button>
+            </div>
+            <p className="spec-title">Litur</p>
+            <div className="spec-selection-buttons">
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.color === "Blue" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("color", "Blue")}
+              >
+                Blue
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.color === "Purple" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("color", "Purple")}
+              >
+                Purple
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.color === "Pink" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("color", "Pink")}
+              >
+                Pink
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.color === "Orange" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("color", "Orange")}
+              >
+                Orange
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.color === "Yellow" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("color", "Yellow")}
+              >
+                Yellow
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.color === "Green" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("color", "Green")}
+              >
+                Green
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.color === "Silver" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("color", "Silver")}
+              >
+                Silver
+              </button>
+            </div>
+            <p className="spec-title">Skjár</p>
+            <div className="spec-selection-buttons">
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.display === "Standard display" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("display", "Standard display")}
+              >
+                Standard display
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.display === "Nano-texture display"
+                    ? "active"
+                    : ""
+                }`}
+                onClick={() =>
+                  handleSelection("display", "Nano-texture display")
+                }
+                disabled={
+                  selectedOptions.processor ===
+                  "M4 chip with 8-core CPU, 8-core GPU"
+                }
+              >
+                Nano-texture display
+              </button>
+            </div>
+            <p className="spec-title">Mús eða Trackpad</p>
+            <div className="spec-selection-buttons">
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.mouseTrackpad === "Magic Mouse"
+                    ? "active"
+                    : ""
+                }`}
+                onClick={() => handleSelection("mouseTrackpad", "Magic Mouse")}
+              >
+                Magic Mouse
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.mouseTrackpad === "Magic Trackpad"
+                    ? "active"
+                    : ""
+                }`}
+                onClick={() =>
+                  handleSelection("mouseTrackpad", "Magic Trackpad")
+                }
+              >
+                Magic Trackpad
+              </button>
+            </div>
+            <p className="spec-title">Lyklaborð</p>
+            <div className="spec-selection-buttons">
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.keyboard === "Magic Keyboard with Touch ID"
+                    ? "active"
+                    : ""
+                }`}
+                onClick={() =>
+                  handleSelection("keyboard", "Magic Keyboard with Touch ID")
+                }
+              >
+                Magic Keyboard with Touch ID
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.keyboard ===
                   "Magic Keyboard with Touch ID and Numeric Keypad"
-                )
-              }
-            >
-              Magic Keyboard with Touch ID and Numeric Keypad
-            </button>
+                    ? "active"
+                    : ""
+                }`}
+                onClick={() =>
+                  handleSelection(
+                    "keyboard",
+                    "Magic Keyboard with Touch ID and Numeric Keypad"
+                  )
+                }
+              >
+                Magic Keyboard with Touch ID and Numeric Keypad
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </SignedIn>
   );
 }
 

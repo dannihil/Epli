@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../css/CtoProduct.css";
 import Divider from "@mui/material/Divider";
 import { jsPDF } from "jspdf";
-import { useUser } from "@clerk/clerk-react";
+import { useUser, SignedIn } from "@clerk/clerk-react";
 
 function MacbookAir() {
   const user = useUser();
@@ -307,76 +307,85 @@ function MacbookAir() {
   };
 
   return (
-    <div className="main-container">
-      <div className="page-container">
-        <div className="image-spec-container">
-          <div className="product-image-container">
-            {selectedOptions.screenSize === "13" ? (
-              selectedOptions.color === "Sky Blue" ? (
-                <img
-                  src="../assets/mba_m4_sk-bl.png"
-                  alt="MacBook Air"
-                  className="product-image"
-                  draggable={false}
-                />
-              ) : selectedOptions.color === "Silver" ? (
-                <img
-                  src="../assets/mba_m3_sil.png"
-                  alt="MacBook Air"
-                  className="product-image"
-                  draggable={false}
-                />
-              ) : selectedOptions.color === "Starlight" ? (
-                <img
-                  src="../assets/mba_m3_sl.png"
-                  alt="MacBook Air"
-                  className="product-image"
-                  draggable={false}
-                />
-              ) : selectedOptions.color === "Midnight" ? (
-                <img
-                  src="../assets/mba_m3_mid.png"
-                  alt="MacBook Air"
-                  className="product-image"
-                  draggable={false}
-                />
-              ) : (
-                <img
-                  src="../assets/mba_m3_sg.png"
-                  alt="MacBook Air"
-                  className="product-image"
-                  draggable={false}
-                />
-              )
-            ) : selectedOptions.screenSize === "15" ? (
-              selectedOptions.color === "Sky Blue" ? (
-                <img
-                  src="../assets/mba_15_m4_sk-bl.png"
-                  alt="MacBook Air"
-                  className="product-image"
-                  draggable={false}
-                />
-              ) : selectedOptions.color === "Silver" ? (
-                <img
-                  src="../assets/mba_15_m3_sil.png"
-                  alt="MacBook Air"
-                  className="product-image"
-                  draggable={false}
-                />
-              ) : selectedOptions.color === "Starlight" ? (
-                <img
-                  src="../assets/mba_15_m3_stl.png"
-                  alt="MacBook Air"
-                  className="product-image"
-                  draggable={false}
-                />
-              ) : selectedOptions.color === "Midnight" ? (
-                <img
-                  src="../assets/mba_15_m3_mid.png"
-                  alt="MacBook Air"
-                  className="product-image"
-                  draggable={false}
-                />
+    <SignedIn>
+      <div className="main-container">
+        <div className="page-container">
+          <div className="image-spec-container">
+            <div className="product-image-container">
+              {selectedOptions.screenSize === "13" ? (
+                selectedOptions.color === "Sky Blue" ? (
+                  <img
+                    src="../assets/mba_m4_sk-bl.png"
+                    alt="MacBook Air"
+                    className="product-image"
+                    draggable={false}
+                  />
+                ) : selectedOptions.color === "Silver" ? (
+                  <img
+                    src="../assets/mba_m3_sil.png"
+                    alt="MacBook Air"
+                    className="product-image"
+                    draggable={false}
+                  />
+                ) : selectedOptions.color === "Starlight" ? (
+                  <img
+                    src="../assets/mba_m3_sl.png"
+                    alt="MacBook Air"
+                    className="product-image"
+                    draggable={false}
+                  />
+                ) : selectedOptions.color === "Midnight" ? (
+                  <img
+                    src="../assets/mba_m3_mid.png"
+                    alt="MacBook Air"
+                    className="product-image"
+                    draggable={false}
+                  />
+                ) : (
+                  <img
+                    src="../assets/mba_m3_sg.png"
+                    alt="MacBook Air"
+                    className="product-image"
+                    draggable={false}
+                  />
+                )
+              ) : selectedOptions.screenSize === "15" ? (
+                selectedOptions.color === "Sky Blue" ? (
+                  <img
+                    src="../assets/mba_15_m4_sk-bl.png"
+                    alt="MacBook Air"
+                    className="product-image"
+                    draggable={false}
+                  />
+                ) : selectedOptions.color === "Silver" ? (
+                  <img
+                    src="../assets/mba_15_m3_sil.png"
+                    alt="MacBook Air"
+                    className="product-image"
+                    draggable={false}
+                  />
+                ) : selectedOptions.color === "Starlight" ? (
+                  <img
+                    src="../assets/mba_15_m3_stl.png"
+                    alt="MacBook Air"
+                    className="product-image"
+                    draggable={false}
+                  />
+                ) : selectedOptions.color === "Midnight" ? (
+                  <img
+                    src="../assets/mba_15_m3_mid.png"
+                    alt="MacBook Air"
+                    className="product-image"
+                    draggable={false}
+                  />
+                ) : (
+                  <img
+                    src="../assets/mba_15_m3_sg.png"
+                    alt="MacBook Air"
+                    className="product-image"
+                    draggable={false}
+                  />
+                )
               ) : (
                 <img
                   src="../assets/mba_15_m3_sg.png"
@@ -384,285 +393,282 @@ function MacbookAir() {
                   className="product-image"
                   draggable={false}
                 />
-              )
-            ) : (
-              <img
-                src="../assets/mba_15_m3_sg.png"
-                alt="MacBook Air"
-                className="product-image"
-                draggable={false}
-              />
-            )}
-          </div>
-          <p className="spec-list-title">Tæknilegar upplýsingar</p>
-          <div className="spec-list">
-            <ul>
-              <li className="spec-item">
-                {selectedOptions.screenSize === "13" ? '13"' : '15"'} Retina
-                skjár
-              </li>
-              <li className="spec-list-item">{selectedOptions.processor}</li>
-              <li className="spec-list-item">
-                {selectedOptions.storage} SSD geymsla
-              </li>
-              <li className="spec-list-item">
-                {selectedOptions.memory} Unified vinnsluminni
-              </li>
-              <li className="spec-list-item">{selectedOptions.display}</li>
-              <li className="spec-list-item">{selectedOptions.accessories}</li>
-            </ul>
-          </div>
-        </div>
-        <div className="cto-spec-selection">
-          <h1 style={{ fontWeight: 900, fontSize: 40, marginBottom: 10 }}>
-            Macbook Air {selectedOptions.screenSize}"
-          </h1>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <div style={{ display: "flex" }}>
-              <p style={{ fontSize: "20px", fontWeight: 700, marginRight: 10 }}>
-                <b>Verð:</b>
-              </p>
-              <p style={{ fontSize: "20px" }}>{formatPriceISK(totalPrice)}</p>
+              )}
             </div>
-            <button
-              onClick={() =>
-                generatePdf(
-                  `Sérpöntun - MacBook Air ${selectedOptions.screenSize}`
-                )
-              }
-              className="pdf-button"
-            >
-              Búa til PDF
-            </button>
-          </div>{" "}
-          {/* Updated total price display */}
-          <Divider style={{ margin: "10px 0px 10px 0px" }} />
-          <p className="spec-title">Skjástærð</p>
-          <div className="spec-selection-buttons">
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.screenSize === "13" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("screenSize", "13")}
-            >
-              13"
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.screenSize === "15" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("screenSize", "15")}
-            >
-              15"
-            </button>
+            <p className="spec-list-title">Tæknilegar upplýsingar</p>
+            <div className="spec-list">
+              <ul>
+                <li className="spec-item">
+                  {selectedOptions.screenSize === "13" ? '13"' : '15"'} Retina
+                  skjár
+                </li>
+                <li className="spec-list-item">{selectedOptions.processor}</li>
+                <li className="spec-list-item">
+                  {selectedOptions.storage} SSD geymsla
+                </li>
+                <li className="spec-list-item">
+                  {selectedOptions.memory} Unified vinnsluminni
+                </li>
+                <li className="spec-list-item">{selectedOptions.display}</li>
+                <li className="spec-list-item">
+                  {selectedOptions.accessories}
+                </li>
+              </ul>
+            </div>
           </div>
-          <p className="spec-title">Örgjörvi</p>
-          <div className="spec-selection-buttons">
+          <div className="cto-spec-selection">
+            <h1 style={{ fontWeight: 900, fontSize: 40, marginBottom: 10 }}>
+              Macbook Air {selectedOptions.screenSize}"
+            </h1>
             <div
-              className={`filter-button-processor ${
-                selectedOptions.processor ===
-                "M4 chip with 10-core CPU, 8-core GPU"
-                  ? "active"
-                  : ""
-              } ${
-                selectedOptions.storage === "512GB"
-                  ? "disabled"
-                  : "" || selectedOptions.storage === "1TB"
-                  ? "disabled"
-                  : "" || selectedOptions.storage === "2TB"
-                  ? "disabled"
-                  : "" || selectedOptions.screenSize === "15"
-                  ? "disabled"
-                  : ""
-              }`}
-              onClick={() => {
-                if (selectedOptions.screenSize !== "15") {
-                  handleSelection(
-                    "processor",
-                    "M4 chip with 10-core CPU, 8-core GPU"
-                  );
-                }
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
               }}
             >
-              <img
-                src="../assets/m4.svg"
-                alt="M4 logo"
-                className="button-processor-logo"
-              />
-              <p className="filter-button-processor-text">
-                10-core CPU 8-core GPU
-              </p>
+              <div style={{ display: "flex" }}>
+                <p
+                  style={{ fontSize: "20px", fontWeight: 700, marginRight: 10 }}
+                >
+                  <b>Verð:</b>
+                </p>
+                <p style={{ fontSize: "20px" }}>{formatPriceISK(totalPrice)}</p>
+              </div>
+              <button
+                onClick={() =>
+                  generatePdf(
+                    `Sérpöntun - MacBook Air ${selectedOptions.screenSize}`
+                  )
+                }
+                className="pdf-button"
+              >
+                Búa til PDF
+              </button>
+            </div>{" "}
+            {/* Updated total price display */}
+            <Divider style={{ margin: "10px 0px 10px 0px" }} />
+            <p className="spec-title">Skjástærð</p>
+            <div className="spec-selection-buttons">
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.screenSize === "13" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("screenSize", "13")}
+              >
+                13"
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.screenSize === "15" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("screenSize", "15")}
+              >
+                15"
+              </button>
             </div>
-            <div
-              className={`filter-button-processor ${
-                selectedOptions.processor ===
-                "M4 chip with 10-core CPU, 10-core GPU"
-                  ? "active"
-                  : ""
-              }`}
-              onClick={() =>
-                handleSelection(
-                  "processor",
+            <p className="spec-title">Örgjörvi</p>
+            <div className="spec-selection-buttons">
+              <div
+                className={`filter-button-processor ${
+                  selectedOptions.processor ===
+                  "M4 chip with 10-core CPU, 8-core GPU"
+                    ? "active"
+                    : ""
+                } ${
+                  selectedOptions.storage === "512GB"
+                    ? "disabled"
+                    : "" || selectedOptions.storage === "1TB"
+                    ? "disabled"
+                    : "" || selectedOptions.storage === "2TB"
+                    ? "disabled"
+                    : "" || selectedOptions.screenSize === "15"
+                    ? "disabled"
+                    : ""
+                }`}
+                onClick={() => {
+                  if (selectedOptions.screenSize !== "15") {
+                    handleSelection(
+                      "processor",
+                      "M4 chip with 10-core CPU, 8-core GPU"
+                    );
+                  }
+                }}
+              >
+                <img
+                  src="../assets/m4.svg"
+                  alt="M4 logo"
+                  className="button-processor-logo"
+                />
+                <p className="filter-button-processor-text">
+                  10-core CPU 8-core GPU
+                </p>
+              </div>
+              <div
+                className={`filter-button-processor ${
+                  selectedOptions.processor ===
                   "M4 chip with 10-core CPU, 10-core GPU"
-                )
-              }
-            >
-              <img
-                src="../assets/m4.svg"
-                alt="M4 logo"
-                className="button-processor-logo"
-              />
-              <p className="filter-button-processor-text">
-                10-core CPU 10-core GPU
-              </p>
+                    ? "active"
+                    : ""
+                }`}
+                onClick={() =>
+                  handleSelection(
+                    "processor",
+                    "M4 chip with 10-core CPU, 10-core GPU"
+                  )
+                }
+              >
+                <img
+                  src="../assets/m4.svg"
+                  alt="M4 logo"
+                  className="button-processor-logo"
+                />
+                <p className="filter-button-processor-text">
+                  10-core CPU 10-core GPU
+                </p>
+              </div>
             </div>
-          </div>
-          <p className="spec-title">Geymsla</p>
-          <div className="spec-selection-buttons">
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.storage === "256GB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("storage", "256GB")}
-            >
-              256GB
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.storage === "512GB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("storage", "512GB")}
-            >
-              512GB
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.storage === "1TB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("storage", "1TB")}
-            >
-              1TB
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.storage === "2TB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("storage", "2TB")}
-            >
-              2TB
-            </button>
-          </div>
-          <p className="spec-title">Vinnsluminni</p>
-          <div className="spec-selection-buttons">
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.memory === "16GB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("memory", "16GB")}
-            >
-              16GB
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.memory === "24GB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("memory", "24GB")}
-            >
-              24GB
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.memory === "32GB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("memory", "32GB")}
-            >
-              32GB
-            </button>
-          </div>
-          <p className="spec-title">Litur</p>
-          <div className="spec-selection-buttons">
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.color === "Sky Blue" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("color", "Sky Blue")}
-            >
-              Sky Blue
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.color === "Silver" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("color", "Silver")}
-            >
-              Silver
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.color === "Starlight" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("color", "Starlight")}
-            >
-              Starlight
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.color === "Midnight" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("color", "Midnight")}
-            >
-              Midnight
-            </button>
-          </div>
-          <p className="spec-title">Aukahlutir</p>
-          <div className="spec-selection-buttons">
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.accessories === "30W Power Adapter"
-                  ? "active"
-                  : ""
-              }`}
-              onClick={() =>
-                handleSelection("accessories", "30W Power Adapter")
-              }
-              disabled={selectedOptions.screenSize === "15"}
-            >
-              30W Power Adapter
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.accessories === "35W Dual USB-C Power Adapter"
-                  ? "active"
-                  : ""
-              }`}
-              onClick={() =>
-                handleSelection("accessories", "35W Dual USB-C Power Adapter")
-              }
-            >
-              35W Dual USB-C Power Adapter
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.accessories === "70W Power Adapter"
-                  ? "active"
-                  : ""
-              }`}
-              onClick={() =>
-                handleSelection("accessories", "70W Power Adapter")
-              }
-            >
-              70W Power Adapter
-            </button>
+            <p className="spec-title">Geymsla</p>
+            <div className="spec-selection-buttons">
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.storage === "256GB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("storage", "256GB")}
+              >
+                256GB
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.storage === "512GB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("storage", "512GB")}
+              >
+                512GB
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.storage === "1TB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("storage", "1TB")}
+              >
+                1TB
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.storage === "2TB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("storage", "2TB")}
+              >
+                2TB
+              </button>
+            </div>
+            <p className="spec-title">Vinnsluminni</p>
+            <div className="spec-selection-buttons">
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.memory === "16GB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("memory", "16GB")}
+              >
+                16GB
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.memory === "24GB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("memory", "24GB")}
+              >
+                24GB
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.memory === "32GB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("memory", "32GB")}
+              >
+                32GB
+              </button>
+            </div>
+            <p className="spec-title">Litur</p>
+            <div className="spec-selection-buttons">
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.color === "Sky Blue" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("color", "Sky Blue")}
+              >
+                Sky Blue
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.color === "Silver" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("color", "Silver")}
+              >
+                Silver
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.color === "Starlight" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("color", "Starlight")}
+              >
+                Starlight
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.color === "Midnight" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("color", "Midnight")}
+              >
+                Midnight
+              </button>
+            </div>
+            <p className="spec-title">Aukahlutir</p>
+            <div className="spec-selection-buttons">
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.accessories === "30W Power Adapter"
+                    ? "active"
+                    : ""
+                }`}
+                onClick={() =>
+                  handleSelection("accessories", "30W Power Adapter")
+                }
+                disabled={selectedOptions.screenSize === "15"}
+              >
+                30W Power Adapter
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.accessories === "35W Dual USB-C Power Adapter"
+                    ? "active"
+                    : ""
+                }`}
+                onClick={() =>
+                  handleSelection("accessories", "35W Dual USB-C Power Adapter")
+                }
+              >
+                35W Dual USB-C Power Adapter
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.accessories === "70W Power Adapter"
+                    ? "active"
+                    : ""
+                }`}
+                onClick={() =>
+                  handleSelection("accessories", "70W Power Adapter")
+                }
+              >
+                70W Power Adapter
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </SignedIn>
   );
 }
 

@@ -1,12 +1,15 @@
 import React from "react";
 import ExcelTable from "../components/ExcelTable";
 import "../css/FGorder.css";
+import { SignedIn } from "@clerk/clerk-react";
 
 function FGorder() {
   return (
-    <div className="fgorder-container">
-      <ExcelTable />
-    </div>
+    <SignedIn>
+      <div className="fgorder-container">
+        <ExcelTable />
+      </div>
+    </SignedIn>
   );
 }
 

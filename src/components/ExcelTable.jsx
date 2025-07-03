@@ -17,6 +17,9 @@ import {
   descriptionOverrideFromIdentifier,
 } from "../data/descriptionOverride";
 
+import ExcelJS from "exceljs";
+import { saveAs } from "file-saver";
+
 const ExcelTable = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -118,6 +121,77 @@ const ExcelTable = () => {
       );
     });
 
+  const exportToExcel = async () => {
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet("Filtered Data");
+
+    // Define header row
+    const headers = [
+      "Apple Order #",
+      "Purchase Order #",
+      "Part #",
+      "Description",
+      "Order Qty",
+      "Delivered",
+      "In Transit",
+      "Remaining",
+      "Status",
+      "Estimated Delivery",
+    ];
+
+    // Add header row with style
+    const headerRow = worksheet.addRow(headers);
+    headerRow.eachCell((cell) => {
+      cell.font = { bold: true, color: { argb: "FFFFFFFF" }, size: 15 };
+      cell.fill = {
+        type: "pattern",
+        pattern: "solid",
+        fgColor: { argb: "4d77b1" },
+      };
+      cell.alignment = { vertical: "middle", horizontal: "center" };
+      cell.border = {
+        top: { style: "thin" },
+        left: { style: "thin" },
+        bottom: { style: "thin" },
+        right: { style: "thin" },
+      };
+    });
+
+    // Add the data rows
+    displayedData.forEach((row) => {
+      worksheet.addRow([
+        row.appleOrderNumber,
+        row.orderNumber,
+        row.partNumber,
+        row.description,
+        row.orderQty,
+        row.deliveredQty,
+        row.inTransit,
+        row.remainingQty,
+        row.status,
+        row.estimatedDelivery,
+      ]);
+    });
+
+    // Auto width for columns
+    worksheet.columns.forEach((column) => {
+      let maxLength = 0;
+      column.eachCell({ includeEmpty: true }, (cell) => {
+        maxLength = Math.max(
+          maxLength,
+          cell.value ? cell.value.toString().length : 0
+        );
+      });
+      column.width = maxLength + 5;
+    });
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+    saveAs(blob, "stada-sendinga-EpliPortal.xlsx");
+  };
+
   return (
     <div className="p-6">
       {/* LOB Filter Buttons */}
@@ -144,6 +218,9 @@ const ExcelTable = () => {
             </button>
           ))}
         </div>
+        <button className="export-button" onClick={exportToExcel}>
+          Export data to Excel
+        </button>
         <div className="search-container">
           <input
             type="text"

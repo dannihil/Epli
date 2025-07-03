@@ -132,6 +132,27 @@
   background-color: rgb(159, 159, 159);
 }
 
+.export-button {
+  background-color: rgb(31, 31, 31);
+  color: rgb(255, 255, 255);
+  border: 1px solid black;
+  border-radius: 250px;
+  padding: 10px 15px;
+  height: 40px;
+  font-size: 15px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  margin-left: 12px;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.export-button:hover {
+  color: black;
+  background-color: white;
+}
+
 /* === Responsive Design === */
 @media (max-width: 750px) {
   .table-container-2 {

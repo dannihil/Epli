@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../css/CtoProduct.css";
 import Divider from "@mui/material/Divider";
 import { jsPDF } from "jspdf";
-import { useUser } from "@clerk/clerk-react";
+import { SignedIn, useUser } from "@clerk/clerk-react";
 
 function MacMini() {
   const [date, setDate] = useState("");
@@ -235,404 +235,412 @@ function MacMini() {
   };
 
   return (
-    <div className="main-container">
-      <div className="page-container">
-        <div className="image-spec-container">
-          <div className="product-image-container">
-            <img
-              src="../assets/mac_mini.png"
-              alt="Mac mini"
-              className="product-image"
-              draggable={false}
-            />
+    <SignedIn>
+      <div className="main-container">
+        <div className="page-container">
+          <div className="image-spec-container">
+            <div className="product-image-container">
+              <img
+                src="../assets/mac_mini.png"
+                alt="Mac mini"
+                className="product-image"
+                draggable={false}
+              />
+            </div>
+            <p className="spec-list-title">Tæknilegar upplýsingar</p>
+            <div className="spec-list">
+              <ul>
+                <li className="spec-list-item">{selectedOptions.processor}</li>
+                <li className="spec-list-item">
+                  {selectedOptions.storage} SSD geymsla
+                </li>
+                <li className="spec-list-item">
+                  {selectedOptions.memory} Unified vinnsluminni
+                </li>
+                <li className="spec-list-item">{selectedOptions.ethernet}</li>
+              </ul>
+              <p
+                style={{
+                  marginTop: "20px",
+                  fontSize: "18px",
+                  fontWeight: "800",
+                }}
+              >
+                Tengimöguleikar
+              </p>
+              <ul>
+                <li className="spec-list-item">
+                  <b>Front:</b> Two USB-C ports with support for USB 3 (up to
+                  10Gb/s)
+                </li>
+                <li className="spec-list-item">3.5 mm headphone jack</li>
+                {selectedOptions.processor ===
+                "M4 chip with 10-core CPU, 10-core GPU" ? (
+                  <>
+                    <li className="spec-list-item">
+                      <b>Back:</b> Gigabit Ethernet port (configurable to 10Gb
+                      Ethernet)
+                    </li>
+                    <li className="spec-list-item">HDMI port</li>
+                    <li className="spec-list-item">
+                      <b>Three Thunderbolt 4 (USB-C) ports with support for:</b>
+                    </li>
+                    <li className="spec-list-item">
+                      Thunderbolt 4 (up to 40Gb/s)
+                    </li>
+                    <li className="spec-list-item">USB 4 (up to 40Gb/s)</li>
+                    <li className="spec-list-item">DisplayPort</li>
+                  </>
+                ) : selectedOptions.processor ===
+                    "M4 Pro chip with 12-core CPU, 16-core GPU" ||
+                  selectedOptions.processor ===
+                    "M4 Pro chip with 14-core CPU, 20-core GPU" ? (
+                  <>
+                    <li className="spec-list-item">
+                      <b>Back:</b> Gigabit Ethernet port (configurable to 10Gb
+                      Ethernet)
+                    </li>
+                    <li className="spec-list-item">HDMI port</li>
+                    <li className="spec-list-item">
+                      <b>Three Thunderbolt 5 (USB-C) ports with support for:</b>
+                    </li>
+                    <li className="spec-list-item">
+                      Thunderbolt 5 (up to 120Gb/s)
+                    </li>
+                    <li className="spec-list-item">USB 4 (up to 120Gb/s)</li>
+                    <li className="spec-list-item">DisplayPort</li>
+                  </>
+                ) : (
+                  ""
+                )}
+              </ul>
+            </div>
           </div>
-          <p className="spec-list-title">Tæknilegar upplýsingar</p>
-          <div className="spec-list">
-            <ul>
-              <li className="spec-list-item">{selectedOptions.processor}</li>
-              <li className="spec-list-item">
-                {selectedOptions.storage} SSD geymsla
-              </li>
-              <li className="spec-list-item">
-                {selectedOptions.memory} Unified vinnsluminni
-              </li>
-              <li className="spec-list-item">{selectedOptions.ethernet}</li>
-            </ul>
-            <p
+          <div className="cto-spec-selection">
+            <h1 style={{ fontWeight: 900, fontSize: 40, marginBottom: 10 }}>
+              Mac mini
+            </h1>
+            <div
               style={{
-                marginTop: "20px",
-                fontSize: "18px",
-                fontWeight: "800",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
               }}
             >
-              Tengimöguleikar
-            </p>
-            <ul>
-              <li className="spec-list-item">
-                <b>Front:</b> Two USB-C ports with support for USB 3 (up to
-                10Gb/s)
-              </li>
-              <li className="spec-list-item">3.5 mm headphone jack</li>
+              <div style={{ display: "flex" }}>
+                <p
+                  style={{ fontSize: "20px", fontWeight: 700, marginRight: 10 }}
+                >
+                  <b>Verð:</b>
+                </p>
+                <p style={{ fontSize: "20px" }}>{formatPriceISK(totalPrice)}</p>
+              </div>
+              <button
+                onClick={() => generatePdf(`Sérpöntun - Mac mini`)}
+                className="pdf-button"
+              >
+                Búa til PDF
+              </button>
+            </div>{" "}
+            {/* Updated total price display */}
+            <Divider style={{ margin: "10px 0px 10px 0px" }} />
+            <p className="spec-title">Örgjörvi</p>
+            <div className="spec-selection-buttons">
+              <div
+                className={`filter-button-processor ${
+                  selectedOptions.processor ===
+                  "M4 chip with 10-core CPU, 10-core GPU"
+                    ? "active"
+                    : ""
+                } `}
+                onClick={() => {
+                  handleSelection(
+                    "processor",
+                    "M4 chip with 10-core CPU, 10-core GPU"
+                  );
+                }}
+              >
+                <img
+                  src="../assets/m4.svg"
+                  alt="M4 logo"
+                  className="button-processor-logo"
+                />
+                <p className="filter-button-processor-text">
+                  10-core CPU 10-core GPU
+                </p>
+              </div>
+              <div
+                className={`filter-button-processor ${
+                  selectedOptions.processor ===
+                  "M4 Pro chip with 12-core CPU, 16-core GPU"
+                    ? "active"
+                    : ""
+                } `}
+                onClick={() => {
+                  handleSelection(
+                    "processor",
+                    "M4 Pro chip with 12-core CPU, 16-core GPU"
+                  );
+                }}
+              >
+                <img
+                  src="../assets/m4pro.svg"
+                  alt="M4 Pro logo"
+                  className="button-processor-logo"
+                />
+                <p className="filter-button-processor-text">
+                  12-core CPU 16-core GPU
+                </p>
+              </div>
+              <div
+                className={`filter-button-processor ${
+                  selectedOptions.processor ===
+                  "M4 Pro chip with 14-core CPU, 20-core GPU"
+                    ? "active"
+                    : ""
+                } `}
+                onClick={() => {
+                  handleSelection(
+                    "processor",
+                    "M4 Pro chip with 14-core CPU, 20-core GPU"
+                  );
+                }}
+              >
+                <img
+                  src="../assets/m4pro.svg"
+                  alt="M4 Pro logo"
+                  className="button-processor-logo"
+                />
+                <p className="filter-button-processor-text">
+                  14-core CPU 20-core GPU
+                </p>
+              </div>
+            </div>
+            <p className="spec-title">Geymsla</p>
+            <div className="spec-selection-buttons">
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.storage === "256GB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("storage", "256GB")}
+                disabled={
+                  selectedOptions.processor ===
+                    "M4 Pro chip with 12-core CPU, 16-core GPU" ||
+                  selectedOptions.processor ===
+                    "M4 Pro chip with 14-core CPU, 20-core GPU"
+                }
+              >
+                256GB
+              </button>
               {selectedOptions.processor ===
               "M4 chip with 10-core CPU, 10-core GPU" ? (
-                <>
-                  <li className="spec-list-item">
-                    <b>Back:</b> Gigabit Ethernet port (configurable to 10Gb
-                    Ethernet)
-                  </li>
-                  <li className="spec-list-item">HDMI port</li>
-                  <li className="spec-list-item">
-                    <b>Three Thunderbolt 4 (USB-C) ports with support for:</b>
-                  </li>
-                  <li className="spec-list-item">
-                    Thunderbolt 4 (up to 40Gb/s)
-                  </li>
-                  <li className="spec-list-item">USB 4 (up to 40Gb/s)</li>
-                  <li className="spec-list-item">DisplayPort</li>
-                </>
+                <button
+                  className={`filter-button-selection ${
+                    selectedOptions.storage === "512GB" ? "active" : ""
+                  }`}
+                  onClick={() => handleSelection("storage", "512GB")}
+                >
+                  512GB
+                </button>
               ) : selectedOptions.processor ===
                   "M4 Pro chip with 12-core CPU, 16-core GPU" ||
                 selectedOptions.processor ===
                   "M4 Pro chip with 14-core CPU, 20-core GPU" ? (
-                <>
-                  <li className="spec-list-item">
-                    <b>Back:</b> Gigabit Ethernet port (configurable to 10Gb
-                    Ethernet)
-                  </li>
-                  <li className="spec-list-item">HDMI port</li>
-                  <li className="spec-list-item">
-                    <b>Three Thunderbolt 5 (USB-C) ports with support for:</b>
-                  </li>
-                  <li className="spec-list-item">
-                    Thunderbolt 5 (up to 120Gb/s)
-                  </li>
-                  <li className="spec-list-item">USB 4 (up to 120Gb/s)</li>
-                  <li className="spec-list-item">DisplayPort</li>
-                </>
+                <button
+                  className={`filter-button-selection ${
+                    selectedOptions.storage === "512GB-M4PRO" ? "active" : ""
+                  }`}
+                  onClick={() => handleSelection("storage", "512GB-M4PRO")}
+                >
+                  512GB
+                </button>
               ) : (
                 ""
               )}
-            </ul>
-          </div>
-        </div>
-        <div className="cto-spec-selection">
-          <h1 style={{ fontWeight: 900, fontSize: 40, marginBottom: 10 }}>
-            Mac mini
-          </h1>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <div style={{ display: "flex" }}>
-              <p style={{ fontSize: "20px", fontWeight: 700, marginRight: 10 }}>
-                <b>Verð:</b>
-              </p>
-              <p style={{ fontSize: "20px" }}>{formatPriceISK(totalPrice)}</p>
-            </div>
-            <button
-              onClick={() => generatePdf(`Sérpöntun - Mac mini`)}
-              className="pdf-button"
-            >
-              Búa til PDF
-            </button>
-          </div>{" "}
-          {/* Updated total price display */}
-          <Divider style={{ margin: "10px 0px 10px 0px" }} />
-          <p className="spec-title">Örgjörvi</p>
-          <div className="spec-selection-buttons">
-            <div
-              className={`filter-button-processor ${
+              {selectedOptions.processor ===
+              "M4 chip with 10-core CPU, 10-core GPU" ? (
+                <button
+                  className={`filter-button-selection ${
+                    selectedOptions.storage === "1TB" ? "active" : ""
+                  }`}
+                  onClick={() => handleSelection("storage", "1TB")}
+                >
+                  1TB
+                </button>
+              ) : selectedOptions.processor ===
+                  "M4 Pro chip with 12-core CPU, 16-core GPU" ||
                 selectedOptions.processor ===
-                "M4 chip with 10-core CPU, 10-core GPU"
-                  ? "active"
-                  : ""
-              } `}
-              onClick={() => {
-                handleSelection(
-                  "processor",
+                  "M4 Pro chip with 14-core CPU, 20-core GPU" ? (
+                <button
+                  className={`filter-button-selection ${
+                    selectedOptions.storage === "1TB-M4PRO" ? "active" : ""
+                  }`}
+                  onClick={() => handleSelection("storage", "1TB-M4PRO")}
+                >
+                  1TB
+                </button>
+              ) : (
+                ""
+              )}
+              {selectedOptions.processor ===
+              "M4 chip with 10-core CPU, 10-core GPU" ? (
+                <button
+                  className={`filter-button-selection ${
+                    selectedOptions.storage === "2TB" ? "active" : ""
+                  }`}
+                  onClick={() => handleSelection("storage", "2TB")}
+                >
+                  2TB
+                </button>
+              ) : selectedOptions.processor ===
+                  "M4 Pro chip with 12-core CPU, 16-core GPU" ||
+                selectedOptions.processor ===
+                  "M4 Pro chip with 14-core CPU, 20-core GPU" ? (
+                <button
+                  className={`filter-button-selection ${
+                    selectedOptions.storage === "2TB-M4PRO" ? "active" : ""
+                  }`}
+                  onClick={() => handleSelection("storage", "2TB-M4PRO")}
+                >
+                  2TB
+                </button>
+              ) : (
+                ""
+              )}
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.storage === "4TB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("storage", "4TB")}
+                disabled={
+                  selectedOptions.processor ===
                   "M4 chip with 10-core CPU, 10-core GPU"
-                );
-              }}
-            >
-              <img
-                src="../assets/m4.svg"
-                alt="M4 logo"
-                className="button-processor-logo"
-              />
-              <p className="filter-button-processor-text">
-                10-core CPU 10-core GPU
-              </p>
+                }
+              >
+                4TB
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.storage === "8TB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("storage", "8TB")}
+                disabled={
+                  selectedOptions.processor ===
+                  "M4 chip with 10-core CPU, 10-core GPU"
+                }
+              >
+                8TB
+              </button>
             </div>
-            <div
-              className={`filter-button-processor ${
-                selectedOptions.processor ===
-                "M4 Pro chip with 12-core CPU, 16-core GPU"
-                  ? "active"
-                  : ""
-              } `}
-              onClick={() => {
-                handleSelection(
-                  "processor",
-                  "M4 Pro chip with 12-core CPU, 16-core GPU"
-                );
-              }}
-            >
-              <img
-                src="../assets/m4pro.svg"
-                alt="M4 Pro logo"
-                className="button-processor-logo"
-              />
-              <p className="filter-button-processor-text">
-                12-core CPU 16-core GPU
-              </p>
-            </div>
-            <div
-              className={`filter-button-processor ${
-                selectedOptions.processor ===
-                "M4 Pro chip with 14-core CPU, 20-core GPU"
-                  ? "active"
-                  : ""
-              } `}
-              onClick={() => {
-                handleSelection(
-                  "processor",
-                  "M4 Pro chip with 14-core CPU, 20-core GPU"
-                );
-              }}
-            >
-              <img
-                src="../assets/m4pro.svg"
-                alt="M4 Pro logo"
-                className="button-processor-logo"
-              />
-              <p className="filter-button-processor-text">
-                14-core CPU 20-core GPU
-              </p>
-            </div>
-          </div>
-          <p className="spec-title">Geymsla</p>
-          <div className="spec-selection-buttons">
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.storage === "256GB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("storage", "256GB")}
-              disabled={
-                selectedOptions.processor ===
+            <p className="spec-title">Vinnsluminni</p>
+            <div className="spec-selection-buttons">
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.memory === "16GB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("memory", "16GB")}
+                disabled={
+                  selectedOptions.processor ===
+                    "M4 Pro chip with 12-core CPU, 16-core GPU" ||
+                  selectedOptions.processor ===
+                    "M4 Pro chip with 14-core CPU, 20-core GPU"
+                }
+              >
+                16GB
+              </button>
+              {selectedOptions.processor ===
+              "M4 chip with 10-core CPU, 10-core GPU" ? (
+                <button
+                  className={`filter-button-selection ${
+                    selectedOptions.memory === "24GB" ? "active" : ""
+                  }`}
+                  onClick={() => handleSelection("memory", "24GB")}
+                >
+                  24GB
+                </button>
+              ) : selectedOptions.processor ===
                   "M4 Pro chip with 12-core CPU, 16-core GPU" ||
                 selectedOptions.processor ===
-                  "M4 Pro chip with 14-core CPU, 20-core GPU"
-              }
-            >
-              256GB
-            </button>
-            {selectedOptions.processor ===
-            "M4 chip with 10-core CPU, 10-core GPU" ? (
+                  "M4 Pro chip with 14-core CPU, 20-core GPU" ? (
+                <button
+                  className={`filter-button-selection ${
+                    selectedOptions.memory === "24GB-M4PRO" ? "active" : ""
+                  }`}
+                  onClick={() => handleSelection("memory", "24GB-M4PRO")}
+                >
+                  24GB
+                </button>
+              ) : (
+                ""
+              )}
               <button
                 className={`filter-button-selection ${
-                  selectedOptions.storage === "512GB" ? "active" : ""
+                  selectedOptions.memory === "32GB" ? "active" : ""
                 }`}
-                onClick={() => handleSelection("storage", "512GB")}
+                onClick={() => handleSelection("memory", "32GB")}
+                disabled={
+                  selectedOptions.processor ===
+                    "M4 Pro chip with 12-core CPU, 16-core GPU" ||
+                  selectedOptions.processor ===
+                    "M4 Pro chip with 14-core CPU, 20-core GPU"
+                }
               >
-                512GB
+                32GB
               </button>
-            ) : selectedOptions.processor ===
-                "M4 Pro chip with 12-core CPU, 16-core GPU" ||
-              selectedOptions.processor ===
-                "M4 Pro chip with 14-core CPU, 20-core GPU" ? (
               <button
                 className={`filter-button-selection ${
-                  selectedOptions.storage === "512GB-M4PRO" ? "active" : ""
+                  selectedOptions.memory === "48GB" ? "active" : ""
                 }`}
-                onClick={() => handleSelection("storage", "512GB-M4PRO")}
+                onClick={() => handleSelection("memory", "48GB")}
+                disabled={
+                  selectedOptions.processor ===
+                  "M4 chip with 10-core CPU, 10-core GPU"
+                }
               >
-                512GB
+                48GB
               </button>
-            ) : (
-              ""
-            )}
-            {selectedOptions.processor ===
-            "M4 chip with 10-core CPU, 10-core GPU" ? (
               <button
                 className={`filter-button-selection ${
-                  selectedOptions.storage === "1TB" ? "active" : ""
+                  selectedOptions.memory === "64GB" ? "active" : ""
                 }`}
-                onClick={() => handleSelection("storage", "1TB")}
+                onClick={() => handleSelection("memory", "64GB")}
+                disabled={
+                  selectedOptions.processor ===
+                  "M4 chip with 10-core CPU, 10-core GPU"
+                }
               >
-                1TB
+                64GB
               </button>
-            ) : selectedOptions.processor ===
-                "M4 Pro chip with 12-core CPU, 16-core GPU" ||
-              selectedOptions.processor ===
-                "M4 Pro chip with 14-core CPU, 20-core GPU" ? (
+            </div>
+            <p className="spec-title">Ethernet</p>
+            <div className="spec-selection-buttons">
               <button
                 className={`filter-button-selection ${
-                  selectedOptions.storage === "1TB-M4PRO" ? "active" : ""
+                  selectedOptions.ethernet === "Gigabit Ethernet"
+                    ? "active"
+                    : ""
                 }`}
-                onClick={() => handleSelection("storage", "1TB-M4PRO")}
+                onClick={() => handleSelection("ethernet", "Gigabit Ethernet")}
               >
-                1TB
+                Gigabit Ethernet
               </button>
-            ) : (
-              ""
-            )}
-            {selectedOptions.processor ===
-            "M4 chip with 10-core CPU, 10-core GPU" ? (
               <button
                 className={`filter-button-selection ${
-                  selectedOptions.storage === "2TB" ? "active" : ""
+                  selectedOptions.ethernet === "10 Gigabit Ethernet"
+                    ? "active"
+                    : ""
                 }`}
-                onClick={() => handleSelection("storage", "2TB")}
+                onClick={() =>
+                  handleSelection("ethernet", "10 Gigabit Ethernet")
+                }
               >
-                2TB
+                10 Gigabit Ethernet
               </button>
-            ) : selectedOptions.processor ===
-                "M4 Pro chip with 12-core CPU, 16-core GPU" ||
-              selectedOptions.processor ===
-                "M4 Pro chip with 14-core CPU, 20-core GPU" ? (
-              <button
-                className={`filter-button-selection ${
-                  selectedOptions.storage === "2TB-M4PRO" ? "active" : ""
-                }`}
-                onClick={() => handleSelection("storage", "2TB-M4PRO")}
-              >
-                2TB
-              </button>
-            ) : (
-              ""
-            )}
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.storage === "4TB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("storage", "4TB")}
-              disabled={
-                selectedOptions.processor ===
-                "M4 chip with 10-core CPU, 10-core GPU"
-              }
-            >
-              4TB
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.storage === "8TB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("storage", "8TB")}
-              disabled={
-                selectedOptions.processor ===
-                "M4 chip with 10-core CPU, 10-core GPU"
-              }
-            >
-              8TB
-            </button>
-          </div>
-          <p className="spec-title">Vinnsluminni</p>
-          <div className="spec-selection-buttons">
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.memory === "16GB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("memory", "16GB")}
-              disabled={
-                selectedOptions.processor ===
-                  "M4 Pro chip with 12-core CPU, 16-core GPU" ||
-                selectedOptions.processor ===
-                  "M4 Pro chip with 14-core CPU, 20-core GPU"
-              }
-            >
-              16GB
-            </button>
-            {selectedOptions.processor ===
-            "M4 chip with 10-core CPU, 10-core GPU" ? (
-              <button
-                className={`filter-button-selection ${
-                  selectedOptions.memory === "24GB" ? "active" : ""
-                }`}
-                onClick={() => handleSelection("memory", "24GB")}
-              >
-                24GB
-              </button>
-            ) : selectedOptions.processor ===
-                "M4 Pro chip with 12-core CPU, 16-core GPU" ||
-              selectedOptions.processor ===
-                "M4 Pro chip with 14-core CPU, 20-core GPU" ? (
-              <button
-                className={`filter-button-selection ${
-                  selectedOptions.memory === "24GB-M4PRO" ? "active" : ""
-                }`}
-                onClick={() => handleSelection("memory", "24GB-M4PRO")}
-              >
-                24GB
-              </button>
-            ) : (
-              ""
-            )}
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.memory === "32GB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("memory", "32GB")}
-              disabled={
-                selectedOptions.processor ===
-                  "M4 Pro chip with 12-core CPU, 16-core GPU" ||
-                selectedOptions.processor ===
-                  "M4 Pro chip with 14-core CPU, 20-core GPU"
-              }
-            >
-              32GB
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.memory === "48GB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("memory", "48GB")}
-              disabled={
-                selectedOptions.processor ===
-                "M4 chip with 10-core CPU, 10-core GPU"
-              }
-            >
-              48GB
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.memory === "64GB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("memory", "64GB")}
-              disabled={
-                selectedOptions.processor ===
-                "M4 chip with 10-core CPU, 10-core GPU"
-              }
-            >
-              64GB
-            </button>
-          </div>
-          <p className="spec-title">Ethernet</p>
-          <div className="spec-selection-buttons">
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.ethernet === "Gigabit Ethernet" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("ethernet", "Gigabit Ethernet")}
-            >
-              Gigabit Ethernet
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.ethernet === "10 Gigabit Ethernet"
-                  ? "active"
-                  : ""
-              }`}
-              onClick={() => handleSelection("ethernet", "10 Gigabit Ethernet")}
-            >
-              10 Gigabit Ethernet
-            </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </SignedIn>
   );
 }
 

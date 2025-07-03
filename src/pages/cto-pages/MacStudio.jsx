@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../css/CtoProduct.css";
 import Divider from "@mui/material/Divider";
 import { jsPDF } from "jspdf";
-import { useUser } from "@clerk/clerk-react";
+import { SignedIn, useUser } from "@clerk/clerk-react";
 
 function MacStudio() {
   const [date, setDate] = useState("");
@@ -245,355 +245,359 @@ function MacStudio() {
   };
 
   return (
-    <div className="main-container">
-      <div className="page-container">
-        <div className="image-spec-container">
-          <div className="product-image-container">
-            <img
-              src="../assets/mac_studio.png"
-              alt="MacBook Pro"
-              className="product-image"
-              draggable={false}
-            />
-          </div>
-          <p className="spec-list-title">Tæknilegar upplýsingar</p>
-          <div className="spec-list">
-            <ul>
-              <li className="spec-list-item">{selectedOptions.processor}</li>
-              <li className="spec-list-item">
-                {selectedOptions.storage} SSD geymsla
-              </li>
-              <li className="spec-list-item">
-                {selectedOptions.memory} Unified vinnsluminni
-              </li>
-            </ul>
+    <SignedIn>
+      <div className="main-container">
+        <div className="page-container">
+          <div className="image-spec-container">
+            <div className="product-image-container">
+              <img
+                src="../assets/mac_studio.png"
+                alt="MacBook Pro"
+                className="product-image"
+                draggable={false}
+              />
+            </div>
+            <p className="spec-list-title">Tæknilegar upplýsingar</p>
+            <div className="spec-list">
+              <ul>
+                <li className="spec-list-item">{selectedOptions.processor}</li>
+                <li className="spec-list-item">
+                  {selectedOptions.storage} SSD geymsla
+                </li>
+                <li className="spec-list-item">
+                  {selectedOptions.memory} Unified vinnsluminni
+                </li>
+              </ul>
 
-            <p
+              <p
+                style={{
+                  marginTop: "20px",
+                  fontSize: "18px",
+                  fontWeight: "800",
+                }}
+              >
+                Tengimöguleikar
+              </p>
+              <ul>
+                <li className="spec-list-item">
+                  <b>Front:</b> Two USB-C ports, one SDXC card slot
+                </li>
+                <li className="spec-list-item">
+                  <b>Back:</b> Four Thunderbolt 5 ports, two USB-A ports, HDMI
+                  port,
+                </li>
+                <li className="spec-list-item">
+                  10Gb Ethernet port, headphone jack
+                </li>
+                <li className="spec-list-item">
+                  <i style={{ fontWeight: "550" }}>
+                    Support for up to five displays
+                  </i>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="cto-spec-selection">
+            <h1 style={{ fontWeight: 900, fontSize: 40, marginBottom: 10 }}>
+              Mac Studio
+            </h1>
+            <div
               style={{
-                marginTop: "20px",
-                fontSize: "18px",
-                fontWeight: "800",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
               }}
             >
-              Tengimöguleikar
-            </p>
-            <ul>
-              <li className="spec-list-item">
-                <b>Front:</b> Two USB-C ports, one SDXC card slot
-              </li>
-              <li className="spec-list-item">
-                <b>Back:</b> Four Thunderbolt 5 ports, two USB-A ports, HDMI
-                port,
-              </li>
-              <li className="spec-list-item">
-                10Gb Ethernet port, headphone jack
-              </li>
-              <li className="spec-list-item">
-                <i style={{ fontWeight: "550" }}>
-                  Support for up to five displays
-                </i>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className="cto-spec-selection">
-          <h1 style={{ fontWeight: 900, fontSize: 40, marginBottom: 10 }}>
-            Mac Studio
-          </h1>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <div style={{ display: "flex" }}>
-              <p style={{ fontSize: "20px", fontWeight: 700, marginRight: 10 }}>
-                <b>Verð:</b>
-              </p>
-              <p style={{ fontSize: "20px" }}>{formatPriceISK(totalPrice)}</p>
-            </div>
-            <button
-              onClick={() => generatePdf(`Sérpöntun - Mac Studio`)}
-              className="pdf-button"
-            >
-              Búa til PDF
-            </button>
-          </div>{" "}
-          {/* Updated total price display */}
-          <Divider style={{ margin: "10px 0px 10px 0px" }} />
-          <p className="spec-title">Örgjörvi</p>
-          <div className="spec-selection-buttons">
-            <div
-              className={`filter-button-processor ${
-                selectedOptions.processor ===
-                "M4 Max chip with 14-core CPU, 32-core GPU"
-                  ? "active"
-                  : ""
-              } `}
-              onClick={() => {
-                handleSelection(
-                  "processor",
+              <div style={{ display: "flex" }}>
+                <p
+                  style={{ fontSize: "20px", fontWeight: 700, marginRight: 10 }}
+                >
+                  <b>Verð:</b>
+                </p>
+                <p style={{ fontSize: "20px" }}>{formatPriceISK(totalPrice)}</p>
+              </div>
+              <button
+                onClick={() => generatePdf(`Sérpöntun - Mac Studio`)}
+                className="pdf-button"
+              >
+                Búa til PDF
+              </button>
+            </div>{" "}
+            {/* Updated total price display */}
+            <Divider style={{ margin: "10px 0px 10px 0px" }} />
+            <p className="spec-title">Örgjörvi</p>
+            <div className="spec-selection-buttons">
+              <div
+                className={`filter-button-processor ${
+                  selectedOptions.processor ===
                   "M4 Max chip with 14-core CPU, 32-core GPU"
-                );
-              }}
-            >
-              <img
-                src="../assets/m4max.svg"
-                alt="M4 Max logo"
-                className="button-processor-logo"
-              />
-              <p className="filter-button-processor-text">
-                14-core CPU 32-core GPU
-              </p>
-            </div>
-            <div
-              className={`filter-button-processor ${
-                selectedOptions.processor ===
-                "M4 Max chip with 16-core CPU, 40-core GPU"
-                  ? "active"
-                  : ""
-              } `}
-              onClick={() => {
-                handleSelection(
-                  "processor",
+                    ? "active"
+                    : ""
+                } `}
+                onClick={() => {
+                  handleSelection(
+                    "processor",
+                    "M4 Max chip with 14-core CPU, 32-core GPU"
+                  );
+                }}
+              >
+                <img
+                  src="../assets/m4max.svg"
+                  alt="M4 Max logo"
+                  className="button-processor-logo"
+                />
+                <p className="filter-button-processor-text">
+                  14-core CPU 32-core GPU
+                </p>
+              </div>
+              <div
+                className={`filter-button-processor ${
+                  selectedOptions.processor ===
                   "M4 Max chip with 16-core CPU, 40-core GPU"
-                );
-              }}
-            >
-              <img
-                src="../assets/m4max.svg"
-                alt="M4 Max logo"
-                className="button-processor-logo"
-              />
-              <p className="filter-button-processor-text">
-                16-core CPU 40-core GPU
-              </p>
-            </div>
-            <div
-              className={`filter-button-processor ${
-                selectedOptions.processor ===
-                "M3 Ultra chip with 28-core CPU, 60-core GPU"
-                  ? "active"
-                  : ""
-              } `}
-              onClick={() => {
-                handleSelection(
-                  "processor",
+                    ? "active"
+                    : ""
+                } `}
+                onClick={() => {
+                  handleSelection(
+                    "processor",
+                    "M4 Max chip with 16-core CPU, 40-core GPU"
+                  );
+                }}
+              >
+                <img
+                  src="../assets/m4max.svg"
+                  alt="M4 Max logo"
+                  className="button-processor-logo"
+                />
+                <p className="filter-button-processor-text">
+                  16-core CPU 40-core GPU
+                </p>
+              </div>
+              <div
+                className={`filter-button-processor ${
+                  selectedOptions.processor ===
                   "M3 Ultra chip with 28-core CPU, 60-core GPU"
-                );
-              }}
-            >
-              <img
-                src="../assets/m3ultra.svg"
-                alt="M3 Ultra logo"
-                className="button-processor-logo"
-              />
-              <p className="filter-button-processor-text">
-                28-core CPU 60-core GPU
-              </p>
+                    ? "active"
+                    : ""
+                } `}
+                onClick={() => {
+                  handleSelection(
+                    "processor",
+                    "M3 Ultra chip with 28-core CPU, 60-core GPU"
+                  );
+                }}
+              >
+                <img
+                  src="../assets/m3ultra.svg"
+                  alt="M3 Ultra logo"
+                  className="button-processor-logo"
+                />
+                <p className="filter-button-processor-text">
+                  28-core CPU 60-core GPU
+                </p>
+              </div>
+              <div
+                className={`filter-button-processor ${
+                  selectedOptions.processor ===
+                  "M3 Ultra chip with 32-core CPU, 80-core GPU"
+                    ? "active"
+                    : ""
+                } `}
+                onClick={() => {
+                  handleSelection(
+                    "processor",
+                    "M3 Ultra chip with 32-core CPU, 80-core GPU"
+                  );
+                }}
+              >
+                <img
+                  src="../assets/m3ultra.svg"
+                  alt="M3 Ultra logo"
+                  className="button-processor-logo"
+                />
+                <p className="filter-button-processor-text">
+                  32-core CPU 80-core GPU
+                </p>
+              </div>
             </div>
-            <div
-              className={`filter-button-processor ${
-                selectedOptions.processor ===
-                "M3 Ultra chip with 32-core CPU, 80-core GPU"
-                  ? "active"
-                  : ""
-              } `}
-              onClick={() => {
-                handleSelection(
-                  "processor",
-                  "M3 Ultra chip with 32-core CPU, 80-core GPU"
-                );
-              }}
-            >
-              <img
-                src="../assets/m3ultra.svg"
-                alt="M3 Ultra logo"
-                className="button-processor-logo"
-              />
-              <p className="filter-button-processor-text">
-                32-core CPU 80-core GPU
-              </p>
+            <p className="spec-title">Geymsla</p>
+            <div className="spec-selection-buttons">
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.storage === "512GB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("storage", "512GB")}
+                disabled={
+                  selectedOptions.processor ===
+                    "M3 Ultra chip with 28-core CPU, 60-core GPU" ||
+                  selectedOptions.processor ===
+                    "M3 Ultra chip with 32-core CPU, 80-core GPU"
+                }
+              >
+                512GB
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.storage === "1TB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("storage", "1TB")}
+              >
+                1TB
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.storage === "2TB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("storage", "2TB")}
+              >
+                2TB
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.storage === "4TB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("storage", "4TB")}
+              >
+                4TB
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.storage === "8TB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("storage", "8TB")}
+              >
+                8TB
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.storage === "16TB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("storage", "16TB")}
+                disabled={
+                  selectedOptions.processor ===
+                    "M4 Max chip with 14-core CPU, 32-core GPU" ||
+                  selectedOptions.processor ===
+                    "M4 Max chip with 16-core CPU, 40-core GPU"
+                }
+              >
+                16TB
+              </button>
             </div>
-          </div>
-          <p className="spec-title">Geymsla</p>
-          <div className="spec-selection-buttons">
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.storage === "512GB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("storage", "512GB")}
-              disabled={
-                selectedOptions.processor ===
-                  "M3 Ultra chip with 28-core CPU, 60-core GPU" ||
-                selectedOptions.processor ===
-                  "M3 Ultra chip with 32-core CPU, 80-core GPU"
-              }
-            >
-              512GB
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.storage === "1TB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("storage", "1TB")}
-            >
-              1TB
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.storage === "2TB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("storage", "2TB")}
-            >
-              2TB
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.storage === "4TB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("storage", "4TB")}
-            >
-              4TB
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.storage === "8TB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("storage", "8TB")}
-            >
-              8TB
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.storage === "16TB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("storage", "16TB")}
-              disabled={
-                selectedOptions.processor ===
-                  "M4 Max chip with 14-core CPU, 32-core GPU" ||
-                selectedOptions.processor ===
-                  "M4 Max chip with 16-core CPU, 40-core GPU"
-              }
-            >
-              16TB
-            </button>
-          </div>
-          <p className="spec-title">Vinnsluminni</p>
-          <div className="spec-selection-buttons">
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.memory === "36GB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("memory", "36GB")}
-              disabled={
-                selectedOptions.processor ===
-                  "M4 Max chip with 16-core CPU, 40-core GPU" ||
-                selectedOptions.processor ===
-                  "M3 Ultra chip with 28-core CPU, 60-core GPU" ||
-                selectedOptions.processor ===
-                  "M3 Ultra chip with 32-core CPU, 80-core GPU"
-              }
-            >
-              36GB
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.memory === "48GB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("memory", "48GB")}
-              disabled={
-                selectedOptions.processor ===
-                  "M4 Max chip with 14-core CPU, 32-core GPU" ||
-                selectedOptions.processor ===
-                  "M3 Ultra chip with 28-core CPU, 60-core GPU" ||
-                selectedOptions.processor ===
-                  "M3 Ultra chip with 32-core CPU, 80-core GPU"
-              }
-            >
-              48GB
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.memory === "64GB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("memory", "64GB")}
-              disabled={
-                selectedOptions.processor ===
-                  "M4 Max chip with 14-core CPU, 32-core GPU" ||
-                selectedOptions.processor ===
-                  "M3 Ultra chip with 28-core CPU, 60-core GPU" ||
-                selectedOptions.processor ===
-                  "M3 Ultra chip with 32-core CPU, 80-core GPU"
-              }
-            >
-              64GB
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.memory === "96GB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("memory", "96GB")}
-              disabled={
-                selectedOptions.processor ===
-                  "M4 Max chip with 14-core CPU, 32-core GPU" ||
-                selectedOptions.processor ===
-                  "M4 Max chip with 16-core CPU, 40-core GPU"
-              }
-            >
-              96GB
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.memory === "128GB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("memory", "128GB")}
-              disabled={
-                selectedOptions.processor ===
-                  "M4 Max chip with 14-core CPU, 32-core GPU" ||
-                selectedOptions.processor ===
-                  "M3 Ultra chip with 28-core CPU, 60-core GPU" ||
-                selectedOptions.processor ===
-                  "M3 Ultra chip with 32-core CPU, 80-core GPU"
-              }
-            >
-              128GB
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.memory === "256GB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("memory", "256GB")}
-              disabled={
-                selectedOptions.processor ===
-                  "M4 Max chip with 14-core CPU, 32-core GPU" ||
-                selectedOptions.processor ===
-                  "M4 Max chip with 16-core CPU, 40-core GPU"
-              }
-            >
-              256GB
-            </button>
-            <button
-              className={`filter-button-selection ${
-                selectedOptions.memory === "512GB" ? "active" : ""
-              }`}
-              onClick={() => handleSelection("memory", "512GB")}
-              disabled={
-                selectedOptions.processor ===
-                  "M4 Max chip with 14-core CPU, 32-core GPU" ||
-                selectedOptions.processor ===
-                  "M3 Ultra chip with 28-core CPU, 60-core GPU" ||
-                selectedOptions.processor ===
-                  "M4 Max chip with 16-core CPU, 40-core GPU"
-              }
-            >
-              512GB
-            </button>
+            <p className="spec-title">Vinnsluminni</p>
+            <div className="spec-selection-buttons">
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.memory === "36GB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("memory", "36GB")}
+                disabled={
+                  selectedOptions.processor ===
+                    "M4 Max chip with 16-core CPU, 40-core GPU" ||
+                  selectedOptions.processor ===
+                    "M3 Ultra chip with 28-core CPU, 60-core GPU" ||
+                  selectedOptions.processor ===
+                    "M3 Ultra chip with 32-core CPU, 80-core GPU"
+                }
+              >
+                36GB
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.memory === "48GB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("memory", "48GB")}
+                disabled={
+                  selectedOptions.processor ===
+                    "M4 Max chip with 14-core CPU, 32-core GPU" ||
+                  selectedOptions.processor ===
+                    "M3 Ultra chip with 28-core CPU, 60-core GPU" ||
+                  selectedOptions.processor ===
+                    "M3 Ultra chip with 32-core CPU, 80-core GPU"
+                }
+              >
+                48GB
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.memory === "64GB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("memory", "64GB")}
+                disabled={
+                  selectedOptions.processor ===
+                    "M4 Max chip with 14-core CPU, 32-core GPU" ||
+                  selectedOptions.processor ===
+                    "M3 Ultra chip with 28-core CPU, 60-core GPU" ||
+                  selectedOptions.processor ===
+                    "M3 Ultra chip with 32-core CPU, 80-core GPU"
+                }
+              >
+                64GB
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.memory === "96GB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("memory", "96GB")}
+                disabled={
+                  selectedOptions.processor ===
+                    "M4 Max chip with 14-core CPU, 32-core GPU" ||
+                  selectedOptions.processor ===
+                    "M4 Max chip with 16-core CPU, 40-core GPU"
+                }
+              >
+                96GB
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.memory === "128GB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("memory", "128GB")}
+                disabled={
+                  selectedOptions.processor ===
+                    "M4 Max chip with 14-core CPU, 32-core GPU" ||
+                  selectedOptions.processor ===
+                    "M3 Ultra chip with 28-core CPU, 60-core GPU" ||
+                  selectedOptions.processor ===
+                    "M3 Ultra chip with 32-core CPU, 80-core GPU"
+                }
+              >
+                128GB
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.memory === "256GB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("memory", "256GB")}
+                disabled={
+                  selectedOptions.processor ===
+                    "M4 Max chip with 14-core CPU, 32-core GPU" ||
+                  selectedOptions.processor ===
+                    "M4 Max chip with 16-core CPU, 40-core GPU"
+                }
+              >
+                256GB
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.memory === "512GB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("memory", "512GB")}
+                disabled={
+                  selectedOptions.processor ===
+                    "M4 Max chip with 14-core CPU, 32-core GPU" ||
+                  selectedOptions.processor ===
+                    "M3 Ultra chip with 28-core CPU, 60-core GPU" ||
+                  selectedOptions.processor ===
+                    "M4 Max chip with 16-core CPU, 40-core GPU"
+                }
+              >
+                512GB
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </SignedIn>
   );
 }
 
