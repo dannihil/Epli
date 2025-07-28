@@ -3,6 +3,7 @@ import "../../css/CtoProduct.css";
 import Divider from "@mui/material/Divider";
 import { jsPDF } from "jspdf";
 import { SignedIn, useUser } from "@clerk/clerk-react";
+import PatchNotesModal from "../../functions/patchNotesModal";
 
 function MacMini() {
   const [date, setDate] = useState("");
@@ -186,9 +187,11 @@ function MacMini() {
       xPosition,
       yPosition
     );
+    yPosition += 7;
+    doc.text(`Ethernet: ${selectedOptions.ethernet}`, xPosition, yPosition);
 
     // Add price
-    yPosition += 48;
+    yPosition += 41;
     doc.line(157, 115, pageWidth - 10, 115);
 
     doc.setFont("georgia", "bold");
@@ -237,6 +240,7 @@ function MacMini() {
   return (
     <SignedIn>
       <div className="main-container">
+        <PatchNotesModal />
         <div className="page-container">
           <div className="image-spec-container">
             <div className="product-image-container">

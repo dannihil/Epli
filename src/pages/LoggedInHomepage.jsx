@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../css/LoggedInHomepage.css";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
+import PatchNotesModal from "../functions/patchNotesModal";
 
 function LoggedInHomepage() {
   const { user, isSignedIn } = useUser();
   const navigate = useNavigate();
+
   return (
     <div>
+      <PatchNotesModal />
       <div className="LoggedInHomepage-container">
         <div className="title-box">
           <h1>Hæ {user.firstName}!</h1>

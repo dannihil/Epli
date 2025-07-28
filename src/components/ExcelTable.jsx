@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import "../css/ExcelTable.css";
 import { FaX } from "react-icons/fa6";
+import { FaSearch, FaDownload } from "react-icons/fa";
 import { skuMap, skuMapFromIdentifier } from "../data/skuMap";
 import {
   descriptionOverride,
@@ -19,25 +20,31 @@ import {
 
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
+import PatchNotesModal from "../functions/patchNotesModal";
 
 const ExcelTable = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [activeFilter, setActiveFilter] = useState("All");
-  const [searchTerm, setSearchTerm] = useState(""); // New state for search input
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchActive, setSearchActive] = useState(false);
+  const [sortConfig, setSortConfig] = useState({
+    key: null,
+    direction: "ascending",
+  });
 
-  // Filter function based on selected LOB
+  // Filter function
   const filterDataByLOB = (lob) => {
     setActiveFilter(lob);
-    setSearchTerm(""); // Reset search bar
+    setSearchTerm("");
     const newFilteredData =
       lob === "All" ? data : data.filter((row) => row.lob === lob);
     setFilteredData(newFilteredData);
   };
 
-  // Load and process Excel data
+  // Load Excel
   useEffect(() => {
-    fetch("/data.xlsx") // Replace with actual path
+    fetch("/data.xlsx")
       .then((response) => response.blob())
       .then((blob) => {
         const reader = new FileReader();
@@ -51,7 +58,7 @@ const ExcelTable = () => {
               let formattedDate = "N/A";
               if (excelDate) {
                 const date = new Date((excelDate - 25569) * 86400000);
-                formattedDate = date.toLocaleDateString("en-GB"); // dd/mm/yyyy format
+                formattedDate = date.toLocaleDateString("en-GB");
               }
               return {
                 orderNumber: row["Customer PO Number"],
@@ -69,7 +76,6 @@ const ExcelTable = () => {
               };
             })
             .filter((row) => row.inTransit >= 1);
-
           setData(processedData);
           setFilteredData(processedData);
         };
@@ -77,16 +83,26 @@ const ExcelTable = () => {
       });
   }, []);
 
-  // Search filter logic
-  // Updated code to change partNumber if productIdentifier exists in skuMapFromIdentifier
-  const displayedData = filteredData
+  // Sorting function
+  const handleSort = (key) => {
+    if (sortConfig.key === key) {
+      if (sortConfig.direction === "ascending") {
+        setSortConfig({ key, direction: "descending" });
+      } else if (sortConfig.direction === "descending") {
+        setSortConfig({ key: null, direction: "ascending" }); // reset
+      }
+    } else {
+      setSortConfig({ key, direction: "ascending" });
+    }
+  };
+
+  // Prepare sorted and filtered data
+  const sortedData = [...filteredData]
     .map((row) => {
-      // Map part number and description
       let mappedPartNumber = skuMap[row.partNumber] || row.partNumber;
       let mappedDescription =
         descriptionOverride[row.partNumber] || row.description;
 
-      // Check for part number override using productIdentifier
       if (
         row.productIdentifier &&
         skuMapFromIdentifier[row.productIdentifier]
@@ -94,7 +110,6 @@ const ExcelTable = () => {
         mappedPartNumber = skuMapFromIdentifier[row.productIdentifier];
       }
 
-      // Check for description override using productIdentifier
       if (
         row.productIdentifier &&
         descriptionOverrideFromIdentifier[row.productIdentifier]
@@ -103,32 +118,39 @@ const ExcelTable = () => {
           descriptionOverrideFromIdentifier[row.productIdentifier];
       }
 
-      // Return the updated row with mapped part number and description
       return {
         ...row,
         partNumber: mappedPartNumber,
-        description: mappedDescription, // Use overridden description
+        description: mappedDescription,
       };
     })
-    .filter((row) => {
-      // Perform search across part number and description
-      return Object.values({
-        ...row,
-        partNumber: skuMap[row.partNumber] || row.partNumber,
-        description: row.description,
-      }).some((value) =>
+    .filter((row) =>
+      Object.values(row).some((value) =>
         value?.toString().toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    });
+      )
+    );
 
+  if (sortConfig.key) {
+    sortedData.sort((a, b) => {
+      const aVal = a[sortConfig.key] ?? "";
+      const bVal = b[sortConfig.key] ?? "";
+      const aStr = typeof aVal === "string" ? aVal.toLowerCase() : aVal;
+      const bStr = typeof bVal === "string" ? bVal.toLowerCase() : bVal;
+      if (aStr < bStr) return sortConfig.direction === "ascending" ? -1 : 1;
+      if (aStr > bStr) return sortConfig.direction === "ascending" ? 1 : -1;
+      return 0;
+    });
+  }
+
+  // Export to Excel
   const exportToExcel = async () => {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Filtered Data");
 
-    // Define header row
     const headers = [
       "Apple Order #",
       "Purchase Order #",
+      "LOB",
       "Part #",
       "Description",
       "Order Qty",
@@ -139,7 +161,6 @@ const ExcelTable = () => {
       "Estimated Delivery",
     ];
 
-    // Add header row with style
     const headerRow = worksheet.addRow(headers);
     headerRow.eachCell((cell) => {
       cell.font = { bold: true, color: { argb: "FFFFFFFF" }, size: 15 };
@@ -157,11 +178,11 @@ const ExcelTable = () => {
       };
     });
 
-    // Add the data rows
-    displayedData.forEach((row) => {
+    sortedData.forEach((row) => {
       worksheet.addRow([
         row.appleOrderNumber,
         row.orderNumber,
+        row.lob,
         row.partNumber,
         row.description,
         row.orderQty,
@@ -173,7 +194,6 @@ const ExcelTable = () => {
       ]);
     });
 
-    // Auto width for columns
     worksheet.columns.forEach((column) => {
       let maxLength = 0;
       column.eachCell({ includeEmpty: true }, (cell) => {
@@ -192,10 +212,20 @@ const ExcelTable = () => {
     saveAs(blob, "stada-sendinga-EpliPortal.xlsx");
   };
 
+  const toggleSearch = () => {
+    if (searchActive) {
+      setSearchTerm("");
+    }
+    setSearchActive(!searchActive);
+  };
+
   return (
     <div className="p-6">
-      {/* LOB Filter Buttons */}
-      <div className="filter-buttons-and-search-bar">
+      <PatchNotesModal />
+      <div
+        className="filter-buttons-and-search-bar"
+        style={{ display: "flex", alignItems: "center", gap: 10 }}
+      >
         <div className="filter-buttons">
           {[
             "All",
@@ -204,6 +234,7 @@ const ExcelTable = () => {
             "iPad",
             "Watch",
             "AirPods",
+            "Beats",
             "Home",
             "Accessories",
           ].map((lob) => (
@@ -218,61 +249,78 @@ const ExcelTable = () => {
             </button>
           ))}
         </div>
-        <button className="export-button" onClick={exportToExcel}>
-          Export data to Excel
+        <button
+          onClick={toggleSearch}
+          aria-label="Toggle search"
+          style={{ cursor: "pointer", background: "none", border: "none" }}
+        >
+          <FaSearch size={20} />
         </button>
-        <div className="search-container">
-          <input
-            type="text"
-            className="search-bar"
-            placeholder="Search..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          {searchTerm && (
-            <FaX className="search-x" onClick={() => setSearchTerm("")} />
-          )}
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <div className="search-container">
+            <input
+              type="text"
+              className="search-bar"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            {searchTerm && (
+              <FaX className="search-x" onClick={() => setSearchTerm("")} />
+            )}
+          </div>
+          <button
+            onClick={exportToExcel}
+            aria-label="Export to Excel"
+            style={{
+              cursor: "pointer",
+              background: "none",
+              border: "none",
+              color: "#333",
+            }}
+          >
+            <FaDownload size={20} />
+          </button>
         </div>
       </div>
+
       <div className="table-container-2">
         <TableContainer component={Paper} className="table-container">
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell className="sticky-header">
-                  <p className="sticky-header-text">Apple Order #</p>
-                </TableCell>
-                <TableCell className="sticky-header">
-                  <p className="sticky-header-text">Purchase Order #</p>
-                </TableCell>
-                <TableCell className="sticky-header">
-                  <p className="sticky-header-text">Part #</p>
-                </TableCell>
-                <TableCell className="sticky-header">
-                  <p className="sticky-header-text">Description</p>
-                </TableCell>
-                <TableCell className="sticky-header">
-                  <p className="sticky-header-text">Order Qty</p>
-                </TableCell>
-                <TableCell className="sticky-header">
-                  <p className="sticky-header-text">Delivered</p>
-                </TableCell>
-                <TableCell className="sticky-header">
-                  <p className="sticky-header-text">In Transit</p>
-                </TableCell>
-                <TableCell className="sticky-header">
-                  <p className="sticky-header-text">Remaining</p>
-                </TableCell>
-                <TableCell className="sticky-header">
-                  <p className="sticky-header-text">Status</p>
-                </TableCell>
-                <TableCell className="sticky-header">
-                  <p className="sticky-header-text">Estimated Delivery</p>
-                </TableCell>
+                {[
+                  { label: "Apple Order #", key: "appleOrderNumber" },
+                  { label: "Purchase Order #", key: "orderNumber" },
+                  { label: "Part #", key: "partNumber" },
+                  { label: "Description", key: "description" },
+                  { label: "Order Qty", key: "orderQty" },
+                  { label: "Delivered", key: "deliveredQty" },
+                  { label: "In Transit", key: "inTransit" },
+                  { label: "Remaining", key: "remainingQty" },
+                  { label: "Status", key: "status" },
+                  { label: "Estimated Delivery", key: "estimatedDelivery" },
+                ].map(({ label, key }) => (
+                  <TableCell
+                    key={key}
+                    className="sticky-header"
+                    onClick={() => handleSort(key)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <p className="sticky-header-text">
+                      {label}
+                      {sortConfig.key === key && (
+                        <span style={{ marginLeft: 4 }}>
+                          {sortConfig.direction === "ascending" ? "▲" : "▼"}
+                        </span>
+                      )}
+                    </p>
+                  </TableCell>
+                ))}
               </TableRow>
             </TableHead>
             <TableBody>
-              {displayedData.map((row, index) => (
+              {sortedData.map((row, index) => (
                 <TableRow key={index}>
                   <TableCell className="sticky-cell">
                     <p className="sticky-cell-text">{row.appleOrderNumber}</p>
@@ -281,13 +329,10 @@ const ExcelTable = () => {
                     <p className="sticky-cell-text">{row.orderNumber}</p>
                   </TableCell>
                   <TableCell className="sticky-cell">
-                    <p className="sticky-cell-text">
-                      {skuMap[row.partNumber] || row.partNumber}
-                    </p>
+                    <p className="sticky-cell-text">{row.partNumber}</p>
                   </TableCell>
                   <TableCell className="sticky-cell">
-                    <p className="sticky-cell-text">{row.description}</p>{" "}
-                    {/* Updated description */}
+                    <p className="sticky-cell-text">{row.description}</p>
                   </TableCell>
                   <TableCell className="sticky-cell">
                     <p className="sticky-cell-text">{row.orderQty}</p>

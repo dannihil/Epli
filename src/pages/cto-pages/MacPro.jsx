@@ -1,10 +1,12 @@
 import { SignedIn } from "@clerk/clerk-react";
 import React from "react";
+import PatchNotesModal from "../../functions/patchNotesModal";
 
 function MacPro() {
   return (
     <SignedIn>
       <div style={{ marginTop: "100px" }}>
+        <PatchNotesModal />
         <div>
           <h1>Síða í vinnslu!</h1>
           <p>Væntanleg á næstunni.</p>

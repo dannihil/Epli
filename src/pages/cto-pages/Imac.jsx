@@ -3,6 +3,7 @@ import "../../css/CtoProduct.css";
 import Divider from "@mui/material/Divider";
 import { jsPDF } from "jspdf";
 import { useUser, SignedIn } from "@clerk/clerk-react";
+import PatchNotesModal from "../../functions/patchNotesModal";
 
 function Imac() {
   const [date, setDate] = useState("");
@@ -290,6 +291,7 @@ function Imac() {
   return (
     <SignedIn>
       <div className="main-container">
+        <PatchNotesModal />
         <div className="page-container">
           <div className="image-spec-container">
             <div className="product-image-container">

@@ -3,6 +3,7 @@ import "../../css/CtoProduct.css";
 import Divider from "@mui/material/Divider";
 import { jsPDF } from "jspdf";
 import { SignedIn, useUser } from "@clerk/clerk-react";
+import PatchNotesModal from "../../functions/patchNotesModal";
 
 function MacStudio() {
   const [date, setDate] = useState("");
@@ -247,6 +248,7 @@ function MacStudio() {
   return (
     <SignedIn>
       <div className="main-container">
+        <PatchNotesModal />
         <div className="page-container">
           <div className="image-spec-container">
             <div className="product-image-container">

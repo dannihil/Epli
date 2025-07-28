@@ -2,6 +2,7 @@ import React from "react";
 import "../css/Cto.css";
 import { useNavigate } from "react-router-dom";
 import { SignedIn, SignedOut } from "@clerk/clerk-react";
+import PatchNotesModal from "../functions/patchNotesModal";
 
 function Cto() {
   const navigate = useNavigate();
@@ -9,6 +10,7 @@ function Cto() {
     <>
       <SignedIn>
         <div className="container">
+          <PatchNotesModal />
           <h1>Veldu flokk</h1>
           <div>
             <div className="category-selection-container">

@@ -46,6 +46,7 @@ export const descriptionOverride = {
   Z1CD: "Mac Studio M4 Max 14/32-core 36GB/512GB",
   "MU963ZE/A": "Mac Studio M4 Max 14/32-core 36GB/512GB",
   Z1CE: "Mac Studio M3 Ultra 28/60-core 96GB/1TB",
+  "MU973ZE/A": "Mac Studio M3 Ultra 28/60-core 96GB/1TB",
 
   "MU9D3ZE/A": "Mac mini M4 10-Core CPU/10-Core GPU/16GB/256GB",
   "MU9E3ZE/A": "Mac mini M4 10-Core CPU/10-Core GPU/16GB/512GB",
@@ -688,6 +689,66 @@ export const descriptionOverride = {
   "MXMT3ZM/A": "Apple 46mm Slate Milanese Loop - M/L",
   "MXN23ZM/A":
     "Apple Watch 49mm Tan Alpine Loop - Medium - Natural Titanium Finish",
+
+  "MREG3SO/A": "Watch Ultra 2 49mm LTE Titanium - Blue Ocean Band",
+  "MREH3SO/A": "Watch Ultra 2 49mm LTE Titanium - Orange Ocean Band",
+  "MREJ3SO/A": "Watch Ultra 2 49mm LTE Titanium - White Ocean Band",
+  "MREK3SO/A": "Watch Ultra 2 49mm LTE Titanium - Blue Alpine Loop Small",
+  "MREP3SO/A": "Watch Ultra 2 49mm LTE Titanium - Blue Alpine Loop Medium",
+  "MREQ3SO/A": "Watch Ultra 2 49mm LTE Titanium - Blue Alpine Loop Large",
+  "MRER3SO/A": "Watch Ultra 2 49mm LTE Titanium - Indigo Alpine Loop Small",
+  "MRET3SO/A": "Watch Ultra 2 49mm LTE Titanium - Indigo Alpine Loop Medium",
+  "MREW3SO/A": "Watch Ultra 2 49mm LTE Titanium - Indigo Alpine Loop Large",
+  "MREX3SO/A": "Watch Ultra 2 49mm LTE Titanium - Olive Alpine Loop Small",
+  "MREY3SO/A": "Watch Ultra 2 49mm LTE Titanium - Olive Alpine Loop Medium",
+  "MRF03SO/A": "Watch Ultra 2 49mm LTE Titanium - Olive Alpine Loop Large",
+  "MRF13SO/A":
+    "Watch Ultra 2 49mm LTE Titanium - Orange/Beige Trail Loop Small/Medium",
+  "MRF23SO/A":
+    "Watch Ultra 2 49mm LTE Titanium - Orange/Beige Trail Loop Medium/Large",
+  "MRF33SO/A":
+    "Watch Ultra 2 49mm LTE Titanium - Green/Gray Trail Loop Small/Medium",
+  "MRF43SO/A":
+    "Watch Ultra 2 49mm LTE Titanium - Green/Gray Trail Loop Medium/Large",
+  "MRF53SO/A":
+    "Watch Ultra 2 49mm LTE Titanium - Blue/Black Trail Loop Small/Medium",
+  "MRF63SO/A":
+    "Watch Ultra 2 49mm LTE Titanium - Blue/Black Trail Loop Medium/Large",
+  "MX4D3QA/A": "Watch Ultra 2 49mm LTE Natural Titanium - Navy Ocean Band",
+  "MX4E3QA/A":
+    "Watch Ultra 2 49mm LTE Natural Titanium - Tan Alpine Loop Small",
+  "MX4F3QA/A":
+    "Watch Ultra 2 49mm LTE Natural Titanium - Tan Alpine Loop Medium",
+  "MX4H3QA/A":
+    "Watch Ultra 2 49mm LTE Natural Titanium - Tan Alpine Loop Large",
+  "MX4J3QA/A":
+    "Watch Ultra 2 49mm LTE Natural Titanium - Blue Trail Loop Small/Medium",
+  "MX4L3QA/A":
+    "Watch Ultra 2 49mm LTE Natural Titanium - Blue Trail Loop Medium/Large",
+  "MX4M3QA/A":
+    "Watch Ultra 2 49mm LTE Natural Titanium - Natural Titanium Milanese Loop Small",
+  "MX4P3QA/A": "Watch Ultra 2 49mm LTE Black Titanium - Black Ocean Band",
+  "MX4Q3QA/A":
+    "Watch Ultra 2 49mm LTE Black Titanium - Dark Green Alpine Loop Small",
+  "MX4R3QA/A":
+    "Watch Ultra 2 49mm LTE Black Titanium - Dark Green Alpine Loop Medium",
+  "MX4T3QA/A":
+    "Watch Ultra 2 49mm LTE Black Titanium - Dark Green Alpine Loop Large",
+  "MX4U3QA/A":
+    "Watch Ultra 2 49mm LTE Black Titanium - Black Trail Loop Small/Medium",
+  "MX4V3QA/A":
+    "Watch Ultra 2 49mm LTE Black Titanium - Black Trail Loop Medium/Large",
+  "MX4W3QA/A":
+    "Watch Ultra 2 49mm LTE Black Titanium - Black Titanium Milanese Loop Small",
+  "MX5R3QA/A":
+    "Watch Ultra 2 49mm LTE Natural Titanium - Natural Titanium Milanese Loop Medium",
+  "MX5T3QA/A":
+    "Watch Ultra 2 49mm LTE Natural Titanium - Natural Titanium Milanese Loop Large",
+  "MX5U3QA/A":
+    "Watch Ultra 2 49mm LTE Black Titanium - Black Titanium Milanese Loop Medium",
+  "MX5V3QA/A":
+    "Watch Ultra 2 49mm LTE Black Titanium - Black Titanium Milanese Loop Large",
+
   "MXN43ZM/A": "Apple Pencil (2nd Generation)",
   "MXN53ZM/A": "Apple 70W USB-C Power Adapter",
   "MXNL2IS/A": "Smart Keyboard Folio iPad Pro 12.9 (3-6.gen) Black",
@@ -734,6 +795,15 @@ export const descriptionOverride = {
   "MYYW3ZM/A": "iPhone 16 Pro Max Silicone Case with MagSafe - Plum",
   "MYYX3ZM/A": "iPhone 16 Pro Max Silicone Case with MagSafe - Fuchsia",
   "MYYY3ZM/A": "iPhone 16 Pro Max Silicone Case with MagSafe - Ultramarine",
+
+  "MWW43ZM/A": "AirPods Max - Midnight",
+  "MWW53ZM/A": "AirPods Max - Starlight",
+  "MWW63ZM/A": "AirPods Max - Blue",
+  "MWW73ZM/A": "AirPods Max - Orange",
+  "MWW83ZM/A": "AirPods Max - Purple",
+  "MXP63ZM/A": "AirPods 4",
+  "MXP93ZM/A": "AirPods 4 with Active Noise Cancellation",
+  "MTJV3ZM/A": "AirPods Pro 2 with MagSafe Case USB-C",
   // Add more overrides as needed
 };
 
@@ -751,4 +821,5 @@ export const descriptionOverrideFromIdentifier = {
   Z1CD0024E: "Mac Studio M4 Max 16/40-core 128GB/1TB",
   Z1H2001E5: 'MacBook Air 15" M4 10/10-Core 24GB 1TB - Midnight',
   Z1H2001ED: 'MacBook Air 15" M4 10/10-Core 32GB 1TB - Midnight',
+  Z1JV000ZS: "Mac mini M4 Pro 14-Core CPU/20-Core GPU/24GB/1TB",
 };
