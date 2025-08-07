@@ -22,6 +22,7 @@ import MacMini from "./pages/cto-pages/Macmini";
 import MacPro from "./pages/cto-pages/MacPro";
 import Imac from "./pages/cto-pages/Imac";
 import MacbookProTest from "./pages/cto-pages/MacbookProTest";
+import Commissions from "./pages/Commissions";
 
 function App() {
   const { user, isSignedIn } = useUser();
@@ -50,6 +51,7 @@ function App() {
           <Route path="/cto/mac-studio" element={<MacStudio />} />
           <Route path="/cto/mac-mini" element={<MacMini />} />
           <Route path="/cto/mac-pro" element={<MacPro />} />
+          <Route path="/solubonus" element={<Commissions />} />
         </Routes>
       </div>
       {showFooter && (

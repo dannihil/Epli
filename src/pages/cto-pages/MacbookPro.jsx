@@ -7,6 +7,8 @@ import PatchNotesModal from "../../functions/patchNotesModal";
 
 function MacbookPro() {
   const [date, setDate] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [orderNumber, setOrderNumber] = useState("");
 
   useEffect(() => {
     // Set date initially
@@ -207,7 +209,7 @@ function MacbookPro() {
     });
   }
 
-  const generatePdf = async (title) => {
+  const generatePdf = async (title, orderNumber = "") => {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
     const formattedDate = new Date().toLocaleDateString("en-GB");
@@ -251,16 +253,35 @@ function MacbookPro() {
     doc.setFont("georgia", "bold");
     doc.text(`${title}"`, 10, 25);
 
-    doc.setFontSize(12);
-    doc.setFont("georgia", "bold");
-    doc.text("Dagsetning:", 150, 20);
-    doc.setFont("georgia", "normal");
-    doc.text(formattedDate, 175, 20);
+    if (orderNumber) {
+      doc.setFont("georgia", "bold");
+      doc.setFontSize(12);
+      doc.text("Pöntunarnúmer:", 150, 12); // label
+      doc.setFont("georgia", "normal");
+      doc.text(orderNumber.toUpperCase(), 150, 18); // value BELOW it
 
-    doc.setFont("georgia", "bold");
-    doc.text("Sölumaður:", 150, 28);
-    doc.setFont("georgia", "normal");
-    doc.text(`${user.user.firstName}`, 175, 28);
+      doc.setFontSize(12);
+      doc.setFont("georgia", "bold");
+      doc.text("Dagsetning:", 150, 26); // move down from 20 to 26
+      doc.setFont("georgia", "normal");
+      doc.text(formattedDate, 175, 26);
+
+      doc.setFont("georgia", "bold");
+      doc.text("Sölumaður:", 150, 32); // also move down to keep spacing consistent
+      doc.setFont("georgia", "normal");
+      doc.text(`${user.user.firstName}`, 175, 32);
+    } else {
+      doc.setFontSize(12);
+      doc.setFont("georgia", "bold");
+      doc.text("Dagsetning:", 150, 20);
+      doc.setFont("georgia", "normal");
+      doc.text(formattedDate, 175, 20);
+
+      doc.setFont("georgia", "bold");
+      doc.text("Sölumaður:", 150, 28);
+      doc.setFont("georgia", "normal");
+      doc.text(`${user.user.firstName}`, 175, 28);
+    }
 
     doc.line(10, 36, pageWidth - 10, 36);
 
@@ -455,16 +476,53 @@ function MacbookPro() {
                 </p>
                 <p style={{ fontSize: "20px" }}>{formatPriceISK(totalPrice)}</p>
               </div>
-              <button
-                onClick={() =>
-                  generatePdf(
-                    `Sérpöntun - MacBook Pro ${selectedOptions.screenSize}`
-                  )
-                }
-                className="pdf-button"
-              >
+              <button onClick={() => setShowModal(true)} className="pdf-button">
                 Búa til PDF
               </button>
+              {showModal && (
+                <div className="modal-backdrop">
+                  <div className="modal-content">
+                    <h2 style={{ marginBottom: "10px" }}>
+                      Sláðu inn sölupöntunarnúmer
+                    </h2>
+                    <input
+                      className="input-field"
+                      type="text"
+                      value={orderNumber}
+                      onChange={(e) => setOrderNumber(e.target.value)}
+                      placeholder="Dæmi: SBP0012345"
+                    />
+                    <p style={{ marginTop: "5px", fontSize: "12px" }}>
+                      Skildu reitinn eftir tóman ef pöntunarnúmer er ekki til.
+                    </p>
+
+                    <div className="modal-buttons">
+                      <button
+                        className="button-selection"
+                        onClick={() => {
+                          generatePdf(
+                            `Sérpöntun - MacBook Pro ${selectedOptions.screenSize}`,
+                            orderNumber
+                          );
+                          setShowModal(false);
+                          setOrderNumber("");
+                        }}
+                      >
+                        Staðfesta
+                      </button>
+                      <button
+                        className="button-selection"
+                        onClick={() => {
+                          setShowModal(false);
+                          setOrderNumber("");
+                        }}
+                      >
+                        Hætta við
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>{" "}
             {/* Updated total price display */}
             <Divider style={{ margin: "10px 0px 10px 0px" }} />

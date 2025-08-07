@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../css/NavBar.css";
 import { useNavigate } from "react-router-dom";
-import { FaUser, FaTruck, FaLaptop } from "react-icons/fa6";
+import { FaUser, FaTruck, FaLaptop, FaDollarSign } from "react-icons/fa6";
 
 import {
   SignedIn,
@@ -54,6 +54,13 @@ function NavBar() {
             <div className="nav-link-button" onClick={() => navigate("/cto")}>
               <FaLaptop size={windowWidth < 768 ? 20 : 30} />
               <li>Sérpöntunarverðlisti</li>
+            </div>
+            <div
+              className="nav-link-button"
+              onClick={() => navigate("/solubonus")}
+            >
+              <FaDollarSign size={windowWidth < 768 ? 20 : 30} />
+              <li>Sölubónusar</li>
             </div>
           </ul>
         </div>
