@@ -517,7 +517,7 @@ function MacbookPro() {
                           setOrderNumber("");
                         }}
                       >
-                        Hætta við
+                        Hætta við?
                       </button>
                     </div>
                   </div>
