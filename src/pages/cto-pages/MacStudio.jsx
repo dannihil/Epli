@@ -7,6 +7,9 @@ import PatchNotesModal from "../../functions/patchNotesModal";
 
 function MacStudio() {
   const [date, setDate] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [orderNumber, setOrderNumber] = useState("");
+  const user = useUser();
 
   useEffect(() => {
     // Set date initially
@@ -20,7 +23,18 @@ function MacStudio() {
     return () => clearInterval(interval); // Cleanup on component unmount
   }, []);
 
-  const user = useUser();
+  useEffect(() => {
+    if (!showModal) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") {
+        setShowModal(false);
+        setOrderNumber("");
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [showModal]);
+
   const basePrices = {
     M4MAX: 399990,
     M3ULTRA: 799990,
@@ -161,19 +175,38 @@ function MacStudio() {
     // Add title
     doc.setFontSize(25);
     doc.setFont("georgia", "bold");
-    doc.line(10, 10, pageWidth - 10, 10);
     doc.text(`${title}`, 10, 25);
 
+    // 🟡 Pöntunarnúmer
     doc.setFontSize(12);
     doc.setFont("georgia", "bold");
-    doc.text("Dagsetning:", 150, 20);
-    doc.setFont("georgia", "normal");
-    doc.text(formattedDate, 175, 20);
+    if (orderNumber) {
+      doc.text("Pöntunarnúmer:", 150, 10);
+      doc.setFont("georgia", "normal");
+      doc.text(orderNumber.toUpperCase(), 150, 16);
 
-    doc.setFont("georgia", "bold");
-    doc.text("Sölumaður:", 150, 28);
-    doc.setFont("georgia", "normal");
-    doc.text(`${user.user.firstName}`, 175, 28);
+      // 🟡 Date & Salesperson
+      doc.setFont("georgia", "bold");
+      doc.text("Dagsetning:", 150, 24);
+      doc.setFont("georgia", "normal");
+      doc.text(formattedDate, 175, 24);
+
+      doc.setFont("georgia", "bold");
+      doc.text("Sölumaður:", 150, 30);
+      doc.setFont("georgia", "normal");
+      doc.text(`${user.user.firstName}`, 175, 30);
+    } else {
+      // 🟡 Date & Salesperson
+      doc.setFont("georgia", "bold");
+      doc.text("Dagsetning:", 150, 20);
+      doc.setFont("georgia", "normal");
+      doc.text(formattedDate, 175, 20);
+
+      doc.setFont("georgia", "bold");
+      doc.text("Sölumaður:", 150, 28);
+      doc.setFont("georgia", "normal");
+      doc.text(`${user.user.firstName}`, 175, 28);
+    }
 
     doc.line(10, 36, pageWidth - 10, 36);
 
@@ -197,18 +230,25 @@ function MacStudio() {
       xPosition,
       yPosition
     );
+    yPosition += 7;
 
     // Add price
-    yPosition += 48;
-    doc.line(157, 115, pageWidth - 10, 115);
+    yPosition += 20;
+    doc.line(157, 95, pageWidth - 10, 95);
 
     doc.setFont("georgia", "bold");
     doc.text("Samtals verð með VSK:", 157, yPosition);
     doc.setFont("georgia", "normal");
     yPosition += 7;
-    doc.text(`${formatPriceISK(totalPrice)}`, 183, yPosition);
-    yPosition += 62;
-    doc.line(10, 182, pageWidth - 10, 182);
+    if (formatPriceISK(totalPrice).length === 9) {
+      doc.text(`${formatPriceISK(totalPrice)}`, 183, yPosition);
+    }
+    if (formatPriceISK(totalPrice).length > 9) {
+      doc.text(`${formatPriceISK(totalPrice)}`, 180, yPosition);
+    }
+
+    yPosition += 41;
+    doc.line(10, 140, pageWidth - 10, 140);
     doc.setFont("georgia", "bold");
     doc.text(
       "Afgreiðslutími sérpanta getur verið allt að 4-6 vikur frá degi pöntunar.",
@@ -233,16 +273,24 @@ function MacStudio() {
       10,
       yPosition
     );
-    doc.line(10, 225, pageWidth - 10, 225);
+    doc.line(10, 183, pageWidth - 10, 183);
 
-    // Add logo image (base64 format or URL)
+    yPosition += 70;
+    doc.text("Undirskrift (staðfesting á pöntun)", 10, yPosition);
+    doc.line(10, 240, pageWidth - 100, 240);
+
     const logoBase64 = await getBase64Image("../assets/epli-logo-black.png");
-    doc.addImage(logoBase64, "PNG", 30, 208, 150, 100);
+    doc.addImage(logoBase64, "PNG", 65, 240, 80, 52.5);
     doc.line(65, 285, pageWidth - 65, 285);
     doc.text("Laugavegur 182 - Smáralind - epli.is", 73, 290);
 
-    // Save the PDF
-    doc.save(`${title}.pdf`);
+    if (orderNumber) {
+      doc.save(
+        `${title.replace(/"/g, "").trim()} - ${orderNumber.toUpperCase()}.pdf`
+      );
+    } else {
+      doc.save(`${title.replace(/"/g, "").trim()}.pdf`);
+    }
   };
 
   return (
@@ -318,12 +366,84 @@ function MacStudio() {
                 </p>
                 <p style={{ fontSize: "20px" }}>{formatPriceISK(totalPrice)}</p>
               </div>
-              <button
-                onClick={() => generatePdf(`Sérpöntun - Mac Studio`)}
-                className="pdf-button"
-              >
+              <button onClick={() => setShowModal(true)} className="pdf-button">
                 Búa til PDF
               </button>
+              {/* 🟡 Modal for input */}
+              {showModal && (
+                <div
+                  onPointerDown={() => {
+                    setShowModal(false);
+                    setOrderNumber("");
+                  }}
+                  style={{
+                    position: "fixed",
+                    inset: 0, // covers top/right/bottom/left
+                    backgroundColor: "rgba(0,0,0,0.4)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    zIndex: 2147483647, // very high z-index for testing
+                    pointerEvents: "auto",
+                  }}
+                >
+                  <div
+                    role="dialog"
+                    aria-modal="true"
+                    onPointerDown={(e) => e.stopPropagation()} // STOP the same event type from reaching the overlay
+                    style={{
+                      background: "white",
+                      padding: "2rem",
+                      borderRadius: "10px",
+                      width: "100%",
+                      maxWidth: "400px",
+                    }}
+                  >
+                    {/* ...your modal content (title, input, buttons) ... */}
+                    <h2 style={{ fontWeight: 900, marginBottom: "5px" }}>
+                      Sölupöntunarnúmer:
+                    </h2>
+                    <input
+                      className="input-field"
+                      type="text"
+                      value={orderNumber}
+                      onChange={(e) => setOrderNumber(e.target.value)}
+                      placeholder="Dæmi: SBP00******"
+                      style={{ width: "100%", padding: "0.5rem" }}
+                    />
+                    <p style={{ fontSize: "12px", marginBottom: "20px" }}>
+                      Skildu reitinn eftir tómann ef pöntunarnúmer á ekki við.
+                    </p>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        gap: "1rem",
+                      }}
+                    >
+                      <button
+                        className="order-nr-pdf-button"
+                        onClick={() => {
+                          generatePdf(`Sérpöntun - Mac Studio`, orderNumber);
+                          setShowModal(false);
+                          setOrderNumber("");
+                        }}
+                      >
+                        Staðfesta
+                      </button>
+                      <button
+                        className="order-nr-pdf-button"
+                        onClick={() => {
+                          setShowModal(false);
+                          setOrderNumber("");
+                        }}
+                      >
+                        Hætta við
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>{" "}
             {/* Updated total price display */}
             <Divider style={{ margin: "10px 0px 10px 0px" }} />
