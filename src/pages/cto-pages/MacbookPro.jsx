@@ -7,19 +7,18 @@ import PatchNotesModal from "../../functions/patchNotesModal";
 
 function MacbookPro() {
   const [date, setDate] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [orderNumber, setOrderNumber] = useState("");
+  const user = useUser();
 
   useEffect(() => {
-    // Set date initially
     setDate(new Date().toLocaleDateString("en-GB"));
-
-    // Optionally, update the date every second if you want real-time updates
     const interval = setInterval(() => {
       setDate(new Date().toLocaleDateString("en-GB"));
     }, 1000);
-
-    return () => clearInterval(interval); // Cleanup on component unmount
+    return () => clearInterval(interval);
   }, []);
-  const user = useUser();
+
   const basePrices = { 14: 339990, 16: 529990 };
 
   const priceModifiers = {
@@ -207,12 +206,11 @@ function MacbookPro() {
     });
   }
 
-  const generatePdf = async (title) => {
+  const generatePdf = async (title, orderNumber = "") => {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
     const formattedDate = new Date().toLocaleDateString("en-GB");
 
-    // Add image based on screen size and color
     let imageSrc = "";
     if (
       selectedOptions.screenSize === "16" &&
@@ -229,46 +227,57 @@ function MacbookPro() {
       selectedOptions.color === "Space Black"
     ) {
       imageSrc = "../assets/mbp_14_SB.png";
-    } else if (
-      selectedOptions.screenSize === "14" &&
-      selectedOptions.color === "Silver"
-    ) {
+    } else {
       imageSrc = "../assets/mbp_14_SL.png";
     }
 
-    // Convert image to Base64
     const base64Image = await getBase64Image(imageSrc);
-
-    // Add image to the PDF (10, 25 is the position, 100, 100 is the size)
-    if (selectedOptions.screenSize == "14") {
+    if (selectedOptions.screenSize === "14") {
       doc.addImage(base64Image, "PNG", 5, 23, 100, 100);
-    } else if (selectedOptions.screenSize == "16") {
+    } else {
       doc.addImage(base64Image, "PNG", 5, 25, 100, 100);
     }
 
-    // Add title
     doc.setFontSize(25);
     doc.setFont("georgia", "bold");
-    doc.text(`${title}"`, 10, 25);
+    doc.text(`${title}`, 10, 25);
 
+    // 🟡 Pöntunarnúmer
+    doc.setFont("georgia", "bold");
     doc.setFontSize(12);
-    doc.setFont("georgia", "bold");
-    doc.text("Dagsetning:", 150, 20);
-    doc.setFont("georgia", "normal");
-    doc.text(formattedDate, 175, 20);
+    if (orderNumber) {
+      doc.text("Pöntunarnúmer:", 150, 10);
+      doc.setFont("georgia", "normal");
+      doc.text(orderNumber.toUpperCase(), 150, 16);
 
-    doc.setFont("georgia", "bold");
-    doc.text("Sölumaður:", 150, 28);
-    doc.setFont("georgia", "normal");
-    doc.text(`${user.user.firstName}`, 175, 28);
+      // 🟡 Date & Salesperson
+      doc.setFont("georgia", "bold");
+      doc.text("Dagsetning:", 150, 24);
+      doc.setFont("georgia", "normal");
+      doc.text(formattedDate, 175, 24);
+
+      doc.setFont("georgia", "bold");
+      doc.text("Sölumaður:", 150, 30);
+      doc.setFont("georgia", "normal");
+      doc.text(`${user.user.firstName}`, 175, 30);
+    } else {
+      // 🟡 Date & Salesperson
+      doc.setFont("georgia", "bold");
+      doc.text("Dagsetning:", 150, 20);
+      doc.setFont("georgia", "normal");
+      doc.text(formattedDate, 175, 20);
+
+      doc.setFont("georgia", "bold");
+      doc.text("Sölumaður:", 150, 28);
+      doc.setFont("georgia", "normal");
+      doc.text(`${user.user.firstName}`, 175, 28);
+    }
 
     doc.line(10, 36, pageWidth - 10, 36);
 
-    // Add selected options list
-    let xPosition = 105; // x-coordinate (start right of the image)
-    let yPosition = 50; // y-coordinate (aligned with the top of the image)
+    let xPosition = 105;
+    let yPosition = 50;
 
-    // Add selected options list with dynamic font size and weight
     doc.setFontSize(15);
     doc.setFont("georgia", "bold");
     doc.text("Tæknilegar upplýsingar", xPosition, yPosition);
@@ -301,15 +310,14 @@ function MacbookPro() {
       yPosition
     );
 
-    // Add price
     yPosition += 20;
     doc.line(157, 115, pageWidth - 10, 115);
-
     doc.setFont("georgia", "bold");
     doc.text("Samtals verð með VSK:", 157, yPosition);
     doc.setFont("georgia", "normal");
     yPosition += 7;
     doc.text(`${formatPriceISK(totalPrice)}`, 183, yPosition);
+
     yPosition += 20;
     doc.line(10, 140, pageWidth - 10, 140);
     doc.setFont("georgia", "bold");
@@ -338,19 +346,24 @@ function MacbookPro() {
     );
     doc.line(10, 183, pageWidth - 10, 183);
 
-    doc.setFont("georgia", "normal");
     yPosition += 70;
-    doc.text(`Undirskrift (staðfesting á pöntun)`, 10, yPosition);
+    doc.text("Undirskrift (staðfesting á pöntun)", 10, yPosition);
     doc.line(10, 240, pageWidth - 100, 240);
 
-    // Add logo image (base64 format or URL)
     const logoBase64 = await getBase64Image("../assets/epli-logo-black.png");
     doc.addImage(logoBase64, "PNG", 65, 240, 80, 52.5);
     doc.line(65, 285, pageWidth - 65, 285);
     doc.text("Laugavegur 182 - Smáralind - epli.is", 73, 290);
 
-    // Save the PDF
-    doc.save(`${title}.pdf`);
+    console.log(JSON.stringify(title));
+
+    if (orderNumber) {
+      doc.save(
+        `${title.replace(/"/g, "").trim()} - ${orderNumber.toUpperCase()}.pdf`
+      );
+    } else {
+      doc.save(`${title.replace(/"/g, "").trim()}.pdf`);
+    }
   };
 
   return (
@@ -455,16 +468,85 @@ function MacbookPro() {
                 </p>
                 <p style={{ fontSize: "20px" }}>{formatPriceISK(totalPrice)}</p>
               </div>
-              <button
-                onClick={() =>
-                  generatePdf(
-                    `Sérpöntun - MacBook Pro ${selectedOptions.screenSize}`
-                  )
-                }
-                className="pdf-button"
-              >
+              <button onClick={() => setShowModal(true)} className="pdf-button">
                 Búa til PDF
               </button>
+
+              {/* 🟡 Modal for input */}
+              {showModal && (
+                <div
+                  style={{
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    width: "100vw",
+                    height: "100vh",
+                    backgroundColor: "rgba(0,0,0,0.4)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    zIndex: 1000,
+                  }}
+                >
+                  <div
+                    style={{
+                      background: "white",
+                      padding: "2rem",
+                      borderRadius: "10px",
+                      width: "100%",
+                      maxWidth: "400px",
+                    }}
+                  >
+                    <h2 style={{ fontWeight: 900, marginBottom: "5px" }}>
+                      Sölupöntunarnúmer:
+                    </h2>
+                    <input
+                      className="input-field"
+                      type="text"
+                      value={orderNumber}
+                      onChange={(e) => setOrderNumber(e.target.value)}
+                      placeholder="Dæmi: SBP00******"
+                      style={{
+                        width: "100%",
+                        padding: "0.5rem",
+                      }}
+                    />
+                    <p style={{ fontSize: "12px", marginBottom: "20px" }}>
+                      Skildu reitinn eftir tómann ef pöntunarnúmer á ekki við.
+                    </p>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        gap: "1rem",
+                      }}
+                    >
+                      <button
+                        className="order-nr-pdf-button"
+                        onClick={() => {
+                          generatePdf(
+                            `Sérpöntun - MacBook Pro ${selectedOptions.screenSize}"`,
+                            orderNumber
+                          );
+                          setShowModal(false);
+                          setOrderNumber("");
+                        }}
+                      >
+                        Staðfesta
+                      </button>
+                      <button
+                        className="order-nr-pdf-button"
+                        onClick={() => {
+                          setShowModal(false);
+                          setOrderNumber("");
+                        }}
+                      >
+                        Hætta við
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>{" "}
             {/* Updated total price display */}
             <Divider style={{ margin: "10px 0px 10px 0px" }} />

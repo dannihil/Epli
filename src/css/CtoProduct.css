@@ -140,3 +140,37 @@
   background-color: white;
   color: rgb(0, 183, 43);
 }
+
+.input-field {
+  background-color: #fff;
+  color: #000000;
+  border: 1px solid grey;
+  border-radius: 8px;
+}
+
+.input-field:focus {
+  outline: none;
+}
+
+.order-nr-pdf-button {
+}
+
+.order-nr-pdf-button {
+  height: 35px;
+  background-color: rgb(49, 49, 49);
+  color: rgb(255, 255, 255);
+  border: 1px solid;
+  border-color: rgb(50, 50, 50);
+  border-radius: 250px;
+  font-weight: 700;
+  width: 200px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.order-nr-pdf-button:hover {
+  color: black;
+  background-color: white;
+}
