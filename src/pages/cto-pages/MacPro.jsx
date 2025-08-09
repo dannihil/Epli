@@ -9,7 +9,6 @@ function MacPro() {
         <PatchNotesModal />
         <div>
           <h1>Síða í vinnslu!</h1>
-          <p>Væntanleg á næstunni.</p>
           <button
             onClick={() => window.history.back()}
             className="content-selection"

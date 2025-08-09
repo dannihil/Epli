@@ -19,6 +19,18 @@ function MacbookPro() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    if (!showModal) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") {
+        setShowModal(false);
+        setOrderNumber("");
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [showModal]);
+
   const basePrices = { 14: 339990, 16: 529990 };
 
   const priceModifiers = {
@@ -232,12 +244,14 @@ function MacbookPro() {
     }
 
     const base64Image = await getBase64Image(imageSrc);
+
     if (selectedOptions.screenSize === "14") {
       doc.addImage(base64Image, "PNG", 5, 23, 100, 100);
     } else {
       doc.addImage(base64Image, "PNG", 5, 25, 100, 100);
     }
 
+    // Add title
     doc.setFontSize(25);
     doc.setFont("georgia", "bold");
     doc.text(`${title}`, 10, 25);
@@ -312,11 +326,17 @@ function MacbookPro() {
 
     yPosition += 20;
     doc.line(157, 115, pageWidth - 10, 115);
+
     doc.setFont("georgia", "bold");
     doc.text("Samtals verð með VSK:", 157, yPosition);
     doc.setFont("georgia", "normal");
     yPosition += 7;
-    doc.text(`${formatPriceISK(totalPrice)}`, 183, yPosition);
+    if (formatPriceISK(totalPrice).length === 9) {
+      doc.text(`${formatPriceISK(totalPrice)}`, 183, yPosition);
+    }
+    if (formatPriceISK(totalPrice).length > 9) {
+      doc.text(`${formatPriceISK(totalPrice)}`, 180, yPosition);
+    }
 
     yPosition += 20;
     doc.line(10, 140, pageWidth - 10, 140);
@@ -354,8 +374,6 @@ function MacbookPro() {
     doc.addImage(logoBase64, "PNG", 65, 240, 80, 52.5);
     doc.line(65, 285, pageWidth - 65, 285);
     doc.text("Laugavegur 182 - Smáralind - epli.is", 73, 290);
-
-    console.log(JSON.stringify(title));
 
     if (orderNumber) {
       doc.save(
@@ -475,20 +493,25 @@ function MacbookPro() {
               {/* 🟡 Modal for input */}
               {showModal && (
                 <div
+                  onPointerDown={() => {
+                    setShowModal(false);
+                    setOrderNumber("");
+                  }}
                   style={{
                     position: "fixed",
-                    top: 0,
-                    left: 0,
-                    width: "100vw",
-                    height: "100vh",
+                    inset: 0, // covers top/right/bottom/left
                     backgroundColor: "rgba(0,0,0,0.4)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    zIndex: 1000,
+                    zIndex: 2147483647, // very high z-index for testing
+                    pointerEvents: "auto",
                   }}
                 >
                   <div
+                    role="dialog"
+                    aria-modal="true"
+                    onPointerDown={(e) => e.stopPropagation()} // STOP the same event type from reaching the overlay
                     style={{
                       background: "white",
                       padding: "2rem",
@@ -497,6 +520,7 @@ function MacbookPro() {
                       maxWidth: "400px",
                     }}
                   >
+                    {/* ...your modal content (title, input, buttons) ... */}
                     <h2 style={{ fontWeight: 900, marginBottom: "5px" }}>
                       Sölupöntunarnúmer:
                     </h2>
@@ -506,10 +530,7 @@ function MacbookPro() {
                       value={orderNumber}
                       onChange={(e) => setOrderNumber(e.target.value)}
                       placeholder="Dæmi: SBP00******"
-                      style={{
-                        width: "100%",
-                        padding: "0.5rem",
-                      }}
+                      style={{ width: "100%", padding: "0.5rem" }}
                     />
                     <p style={{ fontSize: "12px", marginBottom: "20px" }}>
                       Skildu reitinn eftir tómann ef pöntunarnúmer á ekki við.

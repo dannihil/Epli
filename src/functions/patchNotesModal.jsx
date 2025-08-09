@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import "../css/patchNotesModal.css";
 
-const CURRENT_VERSION = "1.0.0"; // Update this on each new version deploy
+const CURRENT_VERSION = "1.1.0"; // Update this on each new version deploy
 
 const PatchNotesModal = () => {
   const [show, setShow] = useState(false);
@@ -18,26 +18,30 @@ const PatchNotesModal = () => {
   if (!show) return null;
 
   return (
-    <div className="modal-overlay">
-      <div className="modal">
+    <div
+      className="modal-overlay"
+      onClick={() => setShow(false)} // Close on clicking overlay
+    >
+      <div
+        className="modal"
+        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
+      >
         <h2>Breytingar í útgáfu {CURRENT_VERSION}</h2>
         <p style={{ fontWeight: "bold", marginTop: "10px" }}>
           Major uppfærslur:
         </p>
         <ol className="list-items">
-          <li>Patch notes popup þegar ný útgáfa hefur verið gefin út.</li>
           <li>
-            Hægt að raða eftir "ascending" eða "descending" í stöðu sendinga með
-            því að smella á hausinn í dálkunum. 3-click sort toggle (ascending →
-            descending → reset)
+            Þegar smellt er á "Búa til PDF" á sérpöntunarsíðum poppar upp gluggi
+            um að setja inn sölupöntunarnúmer. Ef númer er sett inn kemur það
+            inn á PDF skjalið.
           </li>
         </ol>
         <p style={{ fontWeight: "bold", marginTop: "30px" }}>
           Minor uppfærslur:
         </p>
         <ol className="list-items">
-          <li>Ethernet selection bætt við í PDF skjali fyrir Mac mini</li>
-          <li>Gögn uppfærð í stöðu sendinga.</li>
+          <li>Öll sérpöntunar PDF skjöl löguð til svo þau séu öll eins.</li>
         </ol>
         <button onClick={() => setShow(false)}>Close</button>
       </div>
