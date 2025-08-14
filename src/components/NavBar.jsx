@@ -55,6 +55,13 @@ function NavBar() {
               <FaLaptop size={windowWidth < 768 ? 20 : 30} />
               <li>Sérpöntunarverðlisti</li>
             </div>
+            <div
+              className="nav-link-button"
+              onClick={() => navigate("/commission")}
+            >
+              <FaLaptop size={windowWidth < 768 ? 20 : 30} />
+              <li>Sölubónusar</li>
+            </div>
           </ul>
         </div>
         <div className="logo">
