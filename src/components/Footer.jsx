@@ -3,10 +3,7 @@ import "../css/Footer.css";
 export default function Footer({ openModal }) {
   return (
     <div className="footer">
-      <p
-        style={{ cursor: "pointer", display: "flex", alignItems: "center" }}
-        onClick={openModal}
-      >
+      <p className="footer-modal" onClick={openModal}>
         Sérðu einhverja villu? Smelltu hér til að senda inn tilkynningu!
       </p>
       <span
