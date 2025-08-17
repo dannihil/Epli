@@ -1,11 +1,12 @@
 .footer {
-  position: fixed; /* Or absolute if desired */
+  position: fixed;
   bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 98.5%;
-  background-color: #262626ed; /* Example background color */
+  background-color: #262626ed;
   color: white;
-  padding: 1rem; /* Optional, for inner spacing */
-  margin: 0; /* Remove any default margin */
+  padding: 1rem;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: space-between;
@@ -15,6 +16,15 @@
   height: 55px;
   backdrop-filter: blur(8px);
   border-radius: 15px;
+}
+
+.footer-modal {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.footer-modal:hover {
+  color: rgb(185, 185, 185);
 }
 
 /* Media query for mobile devices */

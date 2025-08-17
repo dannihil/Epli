@@ -1,20 +1,11 @@
-import React from "react";
 import "../css/Footer.css";
-import { FaEnvelope, FaPhone } from "react-icons/fa6";
 
-function Footer() {
+export default function Footer({ openModal }) {
   return (
     <div className="footer">
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <p>
-          Ef þú rekst á einhverjar villur eða rangar upplýsingar vinsamlegast
-          hafðu samband við:
-        </p>
-        <FaEnvelope style={{ marginLeft: 10, marginRight: 3 }} />
-        <p>daniel@epli.is</p>
-        <FaPhone style={{ marginLeft: 10, marginRight: 3 }} />
-        <p>858 7174</p>
-      </div>
+      <p className="footer-modal" onClick={openModal}>
+        Sérðu einhverja villu? Smelltu hér til að senda inn tilkynningu!
+      </p>
       <span
         onClick={() => window.open("https://www.epli.is", "_blank")}
         className="footer-link"
@@ -25,5 +16,3 @@ function Footer() {
     </div>
   );
 }
-
-export default Footer;

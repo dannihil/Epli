@@ -1,43 +1,46 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Analytics } from "@vercel/analytics/react";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  SignOutButton,
-  UserButton,
-  useUser,
-} from "@clerk/clerk-react";
+import { useUser } from "@clerk/clerk-react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import NavBar from "./components/NavBar";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Footer from "./components/Footer";
+import FooterModal from "./components/FooterModal";
+
 import Home from "./pages/Home";
 import FGorder from "./pages/FGorder";
-import Footer from "./components/Footer";
 import Cto from "./pages/Cto";
 import MacbookAir from "./pages/cto-pages/MacbookAir";
 import MacbookPro from "./pages/cto-pages/MacbookPro";
+import MacbookProTest from "./pages/cto-pages/MacbookProTest";
 import MacStudio from "./pages/cto-pages/MacStudio";
 import MacMini from "./pages/cto-pages/Macmini";
 import MacPro from "./pages/cto-pages/MacPro";
 import Imac from "./pages/cto-pages/Imac";
-import MacbookProTest from "./pages/cto-pages/MacbookProTest";
+import Commissions from "./pages/Commission";
 
 function App() {
-  const { user, isSignedIn } = useUser();
+  const { user } = useUser();
 
   const [showFooter, setShowFooter] = useState(window.innerWidth > 1200);
+  const [modalOpen, setModalOpen] = useState(false);
 
+  // Handle responsive footer
   useEffect(() => {
     const handleResize = () => setShowFooter(window.innerWidth > 1200);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
   return (
     <Router>
+      {/* NavBar */}
       <div className="navbar-container">
         <NavBar />
       </div>
+
+      {/* Main Content */}
       <div className="main-content-container">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -50,13 +53,16 @@ function App() {
           <Route path="/cto/mac-studio" element={<MacStudio />} />
           <Route path="/cto/mac-mini" element={<MacMini />} />
           <Route path="/cto/mac-pro" element={<MacPro />} />
+          <Route path="/commission" element={<Commissions />} />
         </Routes>
       </div>
-      {showFooter && (
-        <div className="navbar-container">
-          <Footer />
-        </div>
-      )}
+
+      {/* Footer */}
+      {showFooter && <Footer openModal={() => setModalOpen(true)} />}
+
+      {/* Footer Modal */}
+      {modalOpen && <FooterModal closeModal={() => setModalOpen(false)} />}
+
       <Analytics />
     </Router>
   );
