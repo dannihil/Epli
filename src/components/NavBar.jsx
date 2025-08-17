@@ -58,10 +58,7 @@ function NavBar() {
             <div
               className="nav-link-button"
               onClick={() => navigate("/commission")}
-            >
-              <FaLaptop size={windowWidth < 768 ? 20 : 30} />
-              <li>Sölubónusar</li>
-            </div>
+            ></div>
           </ul>
         </div>
         <div className="logo">
