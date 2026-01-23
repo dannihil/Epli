@@ -36,8 +36,8 @@ function Imac() {
   }, [showModal]);
 
   const basePrices = {
-    M48C: 279990,
-    M410C: 319990,
+    M48C: 249990,
+    M410C: 279990,
   };
 
   const priceModifiers = {
@@ -195,7 +195,7 @@ function Imac() {
     // Add title
     doc.setFontSize(25);
     doc.setFont("georgia", "bold");
-    doc.text(`${title}"`, 10, 25);
+    doc.text(`${title}`, 10, 25);
 
     // 🟡 Pöntunarnúmer
     doc.setFontSize(12);

@@ -21,13 +21,18 @@ function Home() {
       </SignedIn>
       <SignedOut>
         <div className="homescreen-container">
-          <h1>Epli portal</h1>
+          <img
+            src="../assets/epli_portal_logo.png"
+            alt="Epli Portal"
+            style={{ width: 250 }}
+            draggable={false}
+          />
           <div className="homescreen-buttons">
             <SignInButton mode="modal">
-              <button className="signin-signup-buttons">Sign In</button>
+              <button className="signin-signup-buttons">Innskráning</button>
             </SignInButton>
             <SignUpButton mode="modal">
-              <button className="signin-signup-buttons">Sign up</button>
+              <button className="signin-signup-buttons">Nýskráning</button>
             </SignUpButton>
           </div>
         </div>

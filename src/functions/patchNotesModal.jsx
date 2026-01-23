@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import "../css/patchNotesModal.css";
 
-const CURRENT_VERSION = "1.1.0"; // Update this on each new version deploy
+const CURRENT_VERSION = "1.2.0"; // Update this on each new version deploy
 
 const PatchNotesModal = () => {
   const [show, setShow] = useState(false);
@@ -31,17 +31,22 @@ const PatchNotesModal = () => {
           Major uppfærslur:
         </p>
         <ol className="list-items">
-          <li>
-            Þegar smellt er á "Búa til PDF" á sérpöntunarsíðum poppar upp gluggi
-            um að setja inn sölupöntunarnúmer. Ef númer er sett inn kemur það
-            inn á PDF skjalið.
-          </li>
+          <p>
+            Sérpöntunarverð fyrir eftirfarandi tölvur eru orðin rétt miðað við
+            verðlækkun 02.12.2025:
+          </p>
+          <li>Mac mini</li>
+          <li>iMac</li>
+          <li>Mac Studio</li>
+          <p style={{ marginTop: 10, fontWeight: 600 }}>
+            Verið að vinna í verðum fyrir MacBook Air og MacBook Pro
+          </p>
         </ol>
         <p style={{ fontWeight: "bold", marginTop: "30px" }}>
           Minor uppfærslur:
         </p>
         <ol className="list-items">
-          <li>Öll sérpöntunar PDF skjöl löguð til svo þau séu öll eins.</li>
+          <li>Nú sést hvenær gögn voru uppfærð fyrir sendingarsíðu.</li>
         </ol>
         <button onClick={() => setShow(false)}>Close</button>
       </div>

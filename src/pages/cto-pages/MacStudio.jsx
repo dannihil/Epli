@@ -37,7 +37,7 @@ function MacStudio() {
 
   const basePrices = {
     M4MAX: 399990,
-    M3ULTRA: 799990,
+    M3ULTRA: 759990,
   };
 
   const priceModifiers = {

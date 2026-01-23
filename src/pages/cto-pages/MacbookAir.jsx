@@ -477,6 +477,9 @@ function MacbookAir() {
                   <b>Verð:</b>
                 </p>
                 <p style={{ fontSize: "20px" }}>{formatPriceISK(totalPrice)}</p>
+                <p style={{ color: "red", marginLeft: 5, marginTop: 5 }}>
+                  Verð out of date!
+                </p>
               </div>
               <button onClick={() => setShowModal(true)} className="pdf-button">
                 Búa til PDF

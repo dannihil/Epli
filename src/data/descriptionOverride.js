@@ -43,6 +43,13 @@ export const descriptionOverride = {
   Z1FV: 'MacBook Pro 16" M4 Max 14/32-core 36GB/1TB Space Black',
   Z1FW: 'MacBook Pro 16" M4 Max 16/40-core 48GB/1TB Space Black',
 
+  Z1KH: 'MacBook Pro 14" M5 10/10-core 16GB/512GB Space Black',
+  Z1KJ: 'MacBook Pro 14" M5 10/10-core 16GB/1TB Space Black',
+  Z1KK: 'MacBook Pro 14" M5 10/10-core 24GB/1TB Space Black',
+  Z1KL: 'MacBook Pro 14" M5 10/10-core 16GB/512GB Silver',
+  Z1KM: 'MacBook Pro 14" M5 10/10-core 16GB/1TB Silver',
+  Z1KN: 'MacBook Pro 14" M5 10/10-core 24GB/1TB Silver',
+
   Z1CD: "Mac Studio M4 Max 14/32-core 36GB/512GB",
   "MU963ZE/A": "Mac Studio M4 Max 14/32-core 36GB/512GB",
   Z1CE: "Mac Studio M3 Ultra 28/60-core 96GB/1TB",
@@ -172,6 +179,51 @@ export const descriptionOverride = {
   "MYX53QN/A": "iPhone 16 Pro Max 1TB White Titanium",
   "MYX63QN/A": "iPhone 16 Pro Max 1TB Desert Titanium",
   "MYX73QN/A": "iPhone 16 Pro Max 1TB Natural Titanium",
+
+  "MFYM4QN/A": "iPhone 17 Pro Max 256GB Silver",
+  "MFYN4QN/A": "iPhone 17 Pro Max 256GB Cosmic Orange",
+  "MFYP4QN/A": "iPhone 17 Pro Max 256GB Deep Blue",
+  "MFYQ4QN/A": "iPhone 17 Pro Max 512GB Silver",
+  "MFYT4QN/A": "iPhone 17 Pro Max 512GB Cosmic Orange",
+  "MFYU4QN/A": "iPhone 17 Pro Max 512GB Deep Blue",
+  "MFYV4QN/A": "iPhone 17 Pro Max 1TB Silver",
+  "MFYW4QN/A": "iPhone 17 Pro Max 1TB Cosmic Orange",
+  "MFYX4QN/A": "iPhone 17 Pro Max 1TB Deep Blue",
+  "MFYY4QN/A": "iPhone 17 Pro Max 2TB Silver",
+  "MG004QN/A": "iPhone 17 Pro Max 2TB Cosmic Orange",
+  "MG014QN/A": "iPhone 17 Pro Max 2TB Deep Blue",
+  "MG6J4QN/A": "iPhone 17 256GB Black",
+  "MG6K4QN/A": "iPhone 17 256GB White",
+  "MG6L4QN/A": "iPhone 17 256GB Mist Blue",
+  "MG6M4QN/A": "iPhone 17 256GB Lavender",
+  "MG6N4QN/A": "iPhone 17 256GB Sage",
+  "MG6P4QN/A": "iPhone 17 512GB Black",
+  "MG6Q4QN/A": "iPhone 17 512GB White",
+  "MG6T4QN/A": "iPhone 17 512GB Mist Blue",
+  "MG6U4QN/A": "iPhone 17 512GB Lavender",
+  "MG6V4QN/A": "iPhone 17 512GB Sage",
+  "MG8G4QN/A": "iPhone 17 Pro 256GB Silver",
+  "MG8H4QN/A": "iPhone 17 Pro 256GB Cosmic Orange",
+  "MG8J4QN/A": "iPhone 17 Pro 256GB Deep Blue",
+  "MG8K4QN/A": "iPhone 17 Pro 512GB Silver",
+  "MG8M4QN/A": "iPhone 17 Pro 512GB Cosmic Orange",
+  "MG8N4QN/A": "iPhone 17 Pro 512GB Deep Blue",
+  "MG8P4QN/A": "iPhone 17 Pro 1TB Silver",
+  "MG8Q4QN/A": "iPhone 17 Pro 1TB Cosmic Orange",
+  "MG8R4QN/A": "iPhone 17 Pro 1TB Deep Blue",
+
+  "MG2L4QN/A": "iPhone Air 256GB Space Black",
+  "MG2M4QN/A": "iPhone Air 256GB Cloud White",
+  "MG2N4QN/A": "iPhone Air 256GB Light Gold",
+  "MG2P4QN/A": "iPhone Air 256GB Sky Blue",
+  "MG2Q4QN/A": "iPhone Air 512GB Space Black",
+  "MG2T4QN/A": "iPhone Air 512GB Cloud White",
+  "MG2U4QN/A": "iPhone Air 512GB Light Gold",
+  "MG2V4QN/A": "iPhone Air 512GB Sky Blue",
+  "MG2W4QN/A": "iPhone Air 1TB Space Black",
+  "MG2X4QN/A": "iPhone Air 1TB Cloud White",
+  "MG2Y4QN/A": "iPhone Air 1TB Light Gold",
+  "MG304QN/A": "iPhone Air 1TB Sky Blue",
 
   "MD3Y4KN/A": 'iPad 11" 128GB (A16) - Silver 11th gen.',
   "MD4A4KN/A": 'iPad 11" 128GB (A16) - Blue 11th gen.',
@@ -314,6 +366,55 @@ export const descriptionOverride = {
   "MWT13NF/A": 'iPad Pro 13" M4 5G 2TB Nano Texture - Space Black',
   "MWT23NF/A": 'iPad Pro 13" M4 5G 2TB Nano Texture - Silver',
 
+  "MDWK4KN/A": 'iPad Pro 11" M5 WiFi 256GB - Space Black',
+  "MDWL4KN/A": 'iPad Pro 11" M5 WiFi 256GB - Silver',
+  "MDWM4KN/A": 'iPad Pro 11" M5 WiFi 512GB - Space Black',
+  "MDWN4KN/A": 'iPad Pro 11" M5 WiFi 512GB - Silver',
+  "MDWP4KN/A": 'iPad Pro 11" M5 WiFi 1TB - Space Black',
+  "MDWQ4KN/A": 'iPad Pro 11" M5 WiFi 1TB - Silver',
+  "MDWR4KN/A": 'iPad Pro 11" M5 WiFi 1TB Nano Texture - Space Black',
+  "MDWT4KN/A": 'iPad Pro 11" M5 WiFi 1TB Nano Texture - Silver',
+  "MDWU4KN/A": 'iPad Pro 11" M5 WiFi 2TB - Space Black',
+  "MDWV4KN/A": 'iPad Pro 11" M5 WiFi 2TB - Silver',
+  "MDWW4KN/A": 'iPad Pro 11" M5 WiFi 2TB Nano Texture - Space Black',
+  "MDWX4KN/A": 'iPad Pro 11" M5 WiFi 2TB Nano Texture - Silver',
+  "ME2N4KN/A": 'iPad Pro 11" M5 5G 256GB - Space Black',
+  "ME2P4KN/A": 'iPad Pro 11" M5 5G 256GB - Silver',
+  "ME2Q4KN/A": 'iPad Pro 11" M5 5G 512GB - Space Black',
+  "ME2T4KN/A": 'iPad Pro 11" M5 5G 512GB - Silver',
+  "ME2U4KN/A": 'iPad Pro 11" M5 5G 1TB - Space Black',
+  "ME2V4KN/A": 'iPad Pro 11" M5 5G 1TB - Silver',
+  "ME2W4KN/A": 'iPad Pro 11" M5 5G 1TB Nano Texture - Space Black',
+  "ME2X4KN/A": 'iPad Pro 11" M5 5G 1TB Nano Texture - Silver',
+  "ME2Y4KN/A": 'iPad Pro 11" M5 5G 2TB - Space Black',
+  "ME6A4KN/A": 'iPad Pro 11" M5 5G 2TB - Silver',
+  "ME6C4KN/A": 'iPad Pro 11" M5 5G 2TB Nano Texture - Space Black',
+  "ME6D4KN/A": 'iPad Pro 11" M5 5G 2TB Nano Texture - Silver',
+  "MDYJ4KN/A": 'iPad Pro 13" M5 WiFi 256GB - Space Black',
+  "MDYK4KN/A": 'iPad Pro 13" M5 WiFi 256GB - Silver',
+  "MDYL4KN/A": 'iPad Pro 13" M5 WiFi 512GB - Space Black',
+  "MDYM4KN/A": 'iPad Pro 13" M5 WiFi 512GB - Silver',
+  "MDYN4KN/A": 'iPad Pro 13" M5 WiFi 1TB - Space Black',
+  "MDYP4KN/A": 'iPad Pro 13" M5 WiFi 1TB - Silver',
+  "MDYQ4KN/A": 'iPad Pro 13" M5 WiFi 1TB Nano Texture - Space Black',
+  "MDYR4KN/A": 'iPad Pro 13" M5 WiFi 1TB Nano Texture - Silver',
+  "MDYT4KN/A": 'iPad Pro 13" M5 WiFi 2TB - Space Black',
+  "MDYU4KN/A": 'iPad Pro 13" M5 WiFi 2TB - Silver',
+  "MDYV4KN/A": 'iPad Pro 13" M5 WiFi 2TB Nano Texture - Space Black',
+  "MDYW4KN/A": 'iPad Pro 13" M5 WiFi 2TB Nano Texture - Silver',
+  "ME7W4KN/A": 'iPad Pro 13" M5 5G 256GB - Space Black',
+  "ME7X4KN/A": 'iPad Pro 13" M5 5G 256GB - Silver',
+  "ME7Y4KN/A": 'iPad Pro 13" M5 5G 512GB - Space Black',
+  "ME8C4KN/A": 'iPad Pro 13" M5 5G 512GB - Silver',
+  "ME8D4KN/A": 'iPad Pro 13" M5 5G 1TB - Space Black',
+  "ME8F4KN/A": 'iPad Pro 13" M5 5G 1TB - Silver',
+  "ME8G4KN/A": 'iPad Pro 13" M5 5G 1TB Nano Texture - Space Black',
+  "ME8H4KN/A": 'iPad Pro 13" M5 5G 1TB Nano Texture - Silver',
+  "ME8J4KN/A": 'iPad Pro 13" M5 5G 2TB - Space Black',
+  "ME8K4KN/A": 'iPad Pro 13" M5 5G 2TB - Silver',
+  "ME8M4KN/A": 'iPad Pro 13" M5 5G 2TB Nano Texture - Space Black',
+  "ME8N4KN/A": 'iPad Pro 13" M5 5G 2TB Nano Texture - Silver',
+
   "MXN63NF/A": "iPad mini 128GB - Space Gray",
   "MXN73NF/A": "iPad mini 128GB - Blue",
   "MXN83NF/A": "iPad mini 128GB - Starlight",
@@ -385,6 +486,112 @@ export const descriptionOverride = {
   "MX063QA/A": "Watch S10 42mm LTE Gold Titanium - Starlight Sport Band S/M",
   "MX073QA/A": "Watch S10 42mm LTE Gold Titanium - Starlight Sport Band M/L",
   "MX083QA/A": "Watch S10 42mm LTE Gold Titanium - Gold Milanese Loop",
+  "MEQT4MP/A":
+    "Apple Watch Series 11 42mm Jet Black Aluminium - Black Sport Band - S/M",
+  "MEQU4MP/A":
+    "Apple Watch Series 11 42mm Jet Black Aluminium - Black Sport Band - M/L",
+  "MEQW4MP/A":
+    "Apple Watch Series 11 42mm Space Grey Aluminium - Black Sport Band - S/M",
+  "MEQX4MP/A":
+    "Apple Watch Series 11 42mm Space Grey Aluminium - Black Sport Band - M/L",
+  "MEU04MP/A":
+    "Apple Watch Series 11 42mm Rose Gold Aluminium - Light Blush Sport Band - S/M",
+  "MEU44MP/A":
+    "Apple Watch Series 11 42mm Rose Gold Aluminium - Light Blush Sport Band - M/L",
+  "MEU64MP/A":
+    "Apple Watch Series 11 42mm Silver Aluminium - Purple Fog Sport Band - S/M",
+  "MEU74MP/A":
+    "Apple Watch Series 11 42mm Silver Aluminium - Purple Fog Sport Band - M/L",
+  "MEUW4MP/A":
+    "Apple Watch Series 11 46mm Jet Black Aluminium - Black Sport Band - S/M",
+  "MEUX4MP/A":
+    "Apple Watch Series 11 46mm Jet Black Aluminium - Black Sport Band - M/L",
+  "MEV04MP/A":
+    "Apple Watch Series 11 46mm Space Grey Aluminium - Black Sport Band - S/M",
+  "MEV44MP/A":
+    "Apple Watch Series 11 46mm Space Grey Aluminium - Black Sport Band - M/L",
+  "MEV64MP/A":
+    "Apple Watch Series 11 46mm Rose Gold Aluminium - Light Blush Sport Band - S/M",
+  "MEV74MP/A":
+    "Apple Watch Series 11 46mm Rose Gold Aluminium - Light Blush Sport Band - M/L",
+  "MEV94MP/A":
+    "Apple Watch Series 11 46mm Silver Aluminium - Purple Fog Sport Band - S/M",
+  "MEVA4MP/A":
+    "Apple Watch Series 11 46mm Silver Aluminium - Purple Fog Sport Band - M/L",
+  "MF834MP/A":
+    "Apple Watch Series 11 LTE 42mm Jet Black Aluminium - Black Sport Band - S/M",
+  "MF854MP/A":
+    "Apple Watch Series 11 LTE 42mm Jet Black Aluminium - Black Sport Band - M/L",
+  "MF8A4MP/A":
+    "Apple Watch Series 11 LTE 42mm Space Grey Aluminium - Black Sport Band - S/M",
+  "MF8C4MP/A":
+    "Apple Watch Series 11 LTE 42mm Space Grey Aluminium - Black Sport Band - M/L",
+  "MF8E4MP/A":
+    "Apple Watch Series 11 LTE 42mm Rose Gold Aluminium - Light Blush Sport Band - S/M",
+  "MF8F4MP/A":
+    "Apple Watch Series 11 LTE 42mm Rose Gold Aluminium - Light Blush Sport Band - M/L",
+  "MF8H4MP/A":
+    "Apple Watch Series 11 LTE 42mm Silver Aluminium - Purple Fog Sport Band - S/M",
+  "MF8J4MP/A":
+    "Apple Watch Series 11 LTE 42mm Silver Aluminium - Purple Fog Sport Band - M/L",
+  "MF8M4MP/A":
+    "Apple Watch Series 11 LTE 42mm Natural Titanium - Stone Grey Sport Band - S/M",
+  "MF8N4MP/A":
+    "Apple Watch Series 11 LTE 42mm Natural Titanium - Stone Grey Sport Band - M/L",
+  "MF8P4MP/A":
+    "Apple Watch Series 11 LTE 42mm Natural Titanium - Natural Milanese Loop",
+  "MF8R4MP/A":
+    "Apple Watch Series 11 LTE 42mm Slate Titanium - Black Sport Band - S/M",
+  "MF8T4MP/A":
+    "Apple Watch Series 11 LTE 42mm Slate Titanium - Black Sport Band - M/L",
+  "MF8U4MP/A":
+    "Apple Watch Series 11 LTE 42mm Slate Titanium - Slate Milanese Loop",
+  "MF8W4MP/A":
+    "Apple Watch Series 11 LTE 42mm Gold Titanium - Light Blush Sport Band - S/M",
+  "MF8X4MP/A":
+    "Apple Watch Series 11 LTE 42mm Gold Titanium - Light Blush Sport Band - M/L",
+  "MF8Y4MP/A":
+    "Apple Watch Series 11 LTE 42mm Gold Titanium - Gold Milanese Loop",
+  "MFC24MP/A":
+    "Apple Watch Series 11 LTE 46mm Jet Black Aluminium - Black Sport Band - S/M",
+  "MFC44MP/A":
+    "Apple Watch Series 11 LTE 46mm Jet Black Aluminium - Black Sport Band - M/L",
+  "MFC94MP/A":
+    "Apple Watch Series 11 LTE 46mm Space Grey Aluminium - Black Sport Band - S/M",
+  "MFCA4MP/A":
+    "Apple Watch Series 11 LTE 46mm Space Grey Aluminium - Black Sport Band - M/L",
+  "MFCG4MP/A":
+    "Apple Watch Series 11 LTE 46mm Rose Gold Aluminium - Light Blush Sport Band - S/M",
+  "MFCJ4MP/A":
+    "Apple Watch Series 11 LTE 46mm Rose Gold Aluminium - Light Blush Sport Band - M/L",
+  "MFCP4MP/A":
+    "Apple Watch Series 11 LTE 46mm Silver Aluminium - Purple Fog Sport Band - S/M",
+  "MFCR4MP/A":
+    "Apple Watch Series 11 LTE 46mm Silver Aluminium - Purple Fog Sport Band - M/L",
+  "MFCW4MP/A":
+    "Apple Watch Series 11 LTE 46mm Natural Titanium - Stone Grey Sport Band - S/M",
+  "MFCX4MP/A":
+    "Apple Watch Series 11 LTE 46mm Natural Titanium - Stone Grey Sport Band - M/L",
+  "MFCY4MP/A":
+    "Apple Watch Series 11 LTE 46mm Natural Titanium - Natural Milanese Loop - S/M",
+  "MFD04MP/A":
+    "Apple Watch Series 11 LTE 46mm Natural Titanium - Natural Milanese Loop - M/L",
+  "MFD14MP/A":
+    "Apple Watch Series 11 LTE 46mm Slate Titanium - Black Sport Band - S/M",
+  "MFD24MP/A":
+    "Apple Watch Series 11 LTE 46mm Slate Titanium - Black Sport Band - M/L",
+  "MFD34MP/A":
+    "Apple Watch Series 11 LTE 46mm Slate Titanium - Slate Milanese Loop - S/M",
+  "MFD44MP/A":
+    "Apple Watch Series 11 LTE 46mm Slate Titanium - Slate Milanese Loop - M/L",
+  "MFD54MP/A":
+    "Apple Watch Series 11 LTE 46mm Gold Titanium - Light Blush Sport Band - S/M",
+  "MFD64MP/A":
+    "Apple Watch Series 11 LTE 46mm Gold Titanium - Light Blush Sport Band - M/L",
+  "MFD74MP/A":
+    "Apple Watch Series 11 LTE 46mm Gold Titanium - Gold Milanese Loop - S/M",
+  "MFD84MP/A":
+    "Apple Watch Series 11 LTE 46mm Gold Titanium - Gold Milanese Loop - M/L",
 
   "MNJP3SO/A": "Watch SE 40mm Starlight -Starlight ól",
   "MNJT3SO/A": "Watch SE 40mm Midnight - Midnight ól",
@@ -470,6 +677,26 @@ export const descriptionOverride = {
   "MXGT3QA/A": "Watch SE 44mm LTE Starlight - Starlight Sport Band  S/M",
   "MXGU3QA/A": "Watch SE 44mm LTE Starlight - Starlight Sport Band  M/L",
   "MXGV3QA/A": "Watch SE 44mm LTE Starlight - Lake Green Sport Loop",
+  "MEH34MP/A": "Apple Watch SE 3 40mm Starlight - Starlight Sport Band - S/M",
+  "MEH54MP/A": "Apple Watch SE 3 40mm Starlight - Starlight Sport Band - M/L",
+  "MEH94MP/A": "Apple Watch SE 3 40mm Midnight - Midnight Sport Band - S/M",
+  "MEHC4MP/A": "Apple Watch SE 3 40mm Midnight - Midnight Sport Band - M/L",
+  "MEHG4MP/A": "Apple Watch SE 3 44mm Starlight - Starlight Sport Band - S/M",
+  "MEHJ4MP/A": "Apple Watch SE 3 44mm Starlight - Starlight Sport Band - M/L",
+  "MEHN4MP/A": "Apple Watch SE 3 44mm Midnight - Midnight Sport Band - S/M",
+  "MEHQ4MP/A": "Apple Watch SE 3 44mm Midnight - Midnight Sport Band - M/L",
+  "MEP64MP/A":
+    "Apple Watch SE 3 LTE 40mm Starlight - Starlight Sport Band - S/M",
+  "MEP74MP/A":
+    "Apple Watch SE 3 LTE 40mm Starlight - Starlight Sport Band - M/L",
+  "MEP94MP/A": "Apple Watch SE 3 LTE 40mm Midnight - Midnight Sport Band - S/M",
+  "MEPC4MP/A": "Apple Watch SE 3 LTE 40mm Midnight - Midnight Sport Band - M/L",
+  "MEPE4MP/A":
+    "Apple Watch SE 3 LTE 44mm Starlight - Starlight Sport Band - S/M",
+  "MEPF4MP/A":
+    "Apple Watch SE 3 LTE 44mm Starlight - Starlight Sport Band - M/L",
+  "MEPH4MP/A": "Apple Watch SE 3 LTE 44mm Midnight - Midnight Sport Band - S/M",
+  "MEPJ4MP/A": "Apple Watch SE 3 LTE 44mm Midnight - Midnight Sport Band - M/L",
 
   "MN873SO/A": "Apple TV 4K 3. gen. Wi-Fi 64GB",
   "MN893SO/A": "Apple TV 4K 3. gen. Wi-Fi+Ethernet 128GB",
@@ -748,6 +975,41 @@ export const descriptionOverride = {
     "Watch Ultra 2 49mm LTE Black Titanium - Black Titanium Milanese Loop Medium",
   "MX5V3QA/A":
     "Watch Ultra 2 49mm LTE Black Titanium - Black Titanium Milanese Loop Large",
+  "MEWH4DH/A":
+    "Apple Watch Ultra 3 LTE 49mm Natural Titanium - Anchor Blue Ocean Band",
+  "MEWK4DH/A":
+    "Apple Watch Ultra 3 LTE 49mm Natural Titanium - Light Blue Alpine Loop - Small",
+  "MEWM4DH/A":
+    "Apple Watch Ultra 3 LTE 49mm Natural Titanium - Light Blue Alpine Loop - Medium",
+  "MEWP4DH/A":
+    "Apple Watch Ultra 3 LTE 49mm Natural Titanium - Light Blue Alpine Loop - Large",
+  "MEWR4DH/A":
+    "Apple Watch Ultra 3 LTE 49mm Natural Titanium - Blue/Bright Blue Trail Loop - S/M",
+  "MEWU4DH/A":
+    "Apple Watch Ultra 3 LTE 49mm Natural Titanium - Blue/Bright Blue Trail Loop - M/L",
+  "MEWW4DH/A":
+    "Apple Watch Ultra 3 LTE 49mm Natural Titanium - Natural Titanium Milanese Loop - Small",
+  "MEWY4DH/A":
+    "Apple Watch Ultra 3 LTE 49mm Natural Titanium - Natural Titanium Milanese Loop - Medium",
+  "MF0E4DH/A":
+    "Apple Watch Ultra 3 LTE 49mm Natural Titanium - Natural Titanium Milanese Loop - Large",
+  "MF0J4DH/A": "Apple Watch Ultra 3 LTE 49mm Black Titanium - Black Ocean Band",
+  "MF0Q4DH/A":
+    "Apple Watch Ultra 3 LTE 49mm Black Titanium - Black Alpine Loop - Small",
+  "MF0V4DH/A":
+    "Apple Watch Ultra 3 LTE 49mm Black Titanium - Black Alpine Loop - Medium",
+  "MF0X4DH/A":
+    "Apple Watch Ultra 3 LTE 49mm Black Titanium - Black Alpine Loop - Large",
+  "MF1D4DH/A":
+    "Apple Watch Ultra 3 LTE 49mm Black Titanium - Black/Charcoal Trail Loop - S/M",
+  "MF1H4DH/A":
+    "Apple Watch Ultra 3 LTE 49mm Black Titanium - Black/Charcoal Trail Loop - M/L",
+  "MF1N4DH/A":
+    "Apple Watch Ultra 3 LTE 49mm Black Titanium - Black Titanium Milanese Loop - Small",
+  "MF1Q4DH/A":
+    "Apple Watch Ultra 3 LTE 49mm Black Titanium - Black Titanium Milanese Loop - Medium",
+  "MF1T4DH/A":
+    "Apple Watch Ultra 3 LTE 49mm Black Titanium - Black Titanium Milanese Loop - Large",
 
   "MXN43ZM/A": "Apple Pencil (2nd Generation)",
   "MXN53ZM/A": "Apple 70W USB-C Power Adapter",
@@ -795,6 +1057,61 @@ export const descriptionOverride = {
   "MYYW3ZM/A": "iPhone 16 Pro Max Silicone Case with MagSafe - Plum",
   "MYYX3ZM/A": "iPhone 16 Pro Max Silicone Case with MagSafe - Fuchsia",
   "MYYY3ZM/A": "iPhone 16 Pro Max Silicone Case with MagSafe - Ultramarine",
+  "MGH24ZM/A": "iPhone Air Case with MagSafe - Shadow",
+  "MGH34ZM/A": "iPhone Air Case with MagSafe - Frost",
+  "MGPG4ZM/A": "iPhone Air MagSafe Battery",
+  "MH004ZM/A": "iPhone Air Bumper - Black",
+  "MH014ZM/A": "iPhone Air Bumper - Light Gray",
+  "MH024ZM/A": "iPhone Air Bumper - Light Blue",
+  "MH044ZM/A": "iPhone Air Bumper - Tan",
+  "MGEV4ZM/A": "iPhone 17 Silicone Case with MagSafe - Neon Yellow",
+  "MGEW4ZM/A": "iPhone 17 Silicone Case with MagSafe - Anchor Blue",
+  "MGEX4ZM/A": "iPhone 17 Silicone Case with MagSafe - Light Moss",
+  "MGF04ZM/A": "iPhone 17 Silicone Case with MagSafe - Purple Fog",
+  "MGF14ZM/A": "iPhone 17 Silicone Case with MagSafe - Black",
+  "MGF24ZM/A": "iPhone 17 Clear Case with MagSafe",
+  "MGF34ZM/A": "iPhone 17 Pro TechWoven Case with MagSafe - Black",
+  "MGF44ZM/A": "iPhone 17 Pro TechWoven Case with MagSafe - Blue",
+  "MGF54ZM/A": "iPhone 17 Pro TechWoven Case with MagSafe - Purple",
+  "MGF64ZM/A": "iPhone 17 Pro TechWoven Case with MagSafe - Sienna",
+  "MGF74ZM/A": "iPhone 17 Pro TechWoven Case with MagSafe - Green",
+  "MGF84ZM/A": "iPhone 17 Pro Max TechWoven Case with MagSafe - Black",
+  "MGF94ZM/A": "iPhone 17 Pro Max TechWoven Case with MagSafe - Blue",
+  "MGFA4ZM/A": "iPhone 17 Pro Max TechWoven Case with MagSafe - Purple",
+  "MGFC4ZM/A": "iPhone 17 Pro Max TechWoven Case with MagSafe - Sienna",
+  "MGFD4ZM/A": "iPhone 17 Pro Max TechWoven Case with MagSafe - Green",
+  "MGFE4ZM/A": "iPhone 17 Pro Silicone Case with MagSafe - Orange",
+  "MGFF4ZM/A": "iPhone 17 Pro Silicone Case with MagSafe - Neon Yellow",
+  "MGFG4ZM/A": "iPhone 17 Pro Silicone Case with MagSafe - Purple Fog",
+  "MGFH4ZM/A": "iPhone 17 Pro Silicone Case with MagSafe - Midnight",
+  "MGFJ4ZM/A": "iPhone 17 Pro Silicone Case with MagSafe - Terra Cotta",
+  "MGFK4ZM/A": "iPhone 17 Pro Silicone Case with MagSafe - Black",
+  "MGFL4ZM/A": "iPhone 17 Pro Max Silicone Case with MagSafe - Orange",
+  "MGFM4ZM/A": "iPhone 17 Pro Max Silicone Case with MagSafe - Neon Yellow",
+  "MGFN4ZM/A": "iPhone 17 Pro Max Silicone Case with MagSafe - Purple Fog",
+  "MGFP4ZM/A": "iPhone 17 Pro Max Silicone Case with MagSafe - Midnight",
+  "MGFQ4ZM/A": "iPhone 17 Pro Max Silicone Case with MagSafe - Terra Cotta",
+  "MGFR4ZM/A": "iPhone 17 Pro Max Silicone Case with MagSafe - Black",
+  "MGFT4ZM/A": "iPhone 17 Pro Clear Case with MagSafe",
+  "MGFW4ZM/A": "iPhone 17 Pro Max Clear Case with MagSafe",
+
+  "MGGD4ZM/A": "Crossbody Strap - Orange",
+  "MGGE4ZM/A": "Crossbody Strap - Neon Yellow",
+  "MGGF4ZM/A": "Crossbody Strap - Green",
+  "MGGG4ZM/A": "Crossbody Strap - Blue",
+  "MGGH4ZM/A": "Crossbody Strap - Light Blue",
+  "MGGJ4ZM/A": "Crossbody Strap - Purple",
+  "MGGK4ZM/A": "Crossbody Strap - Tan",
+  "MGGL4ZM/A": "Crossbody Strap - Black",
+  "MGGM4ZM/A": "Crossbody Strap - Light Gray",
+  "MGGN4ZM/A": "Crossbody Strap - Sienna",
+  "MGFX4ZM/A": "AirTag FineWoven Key Ring - Moss",
+  "MGFY4ZM/A": "AirTag FineWoven Key Ring - Fox Orange",
+  "MGG04ZM/A": "AirTag FineWoven Key Ring - Midnight Purple",
+  "MGG14ZM/A": "AirTag FineWoven Key Ring - Navy",
+  "MGG24ZM/A": "AirTag FineWoven Key Ring - Black",
+  "MGYX4IS/A": 'Magic Keyboard for iPad Air 11" (M3/M2) Black',
+  "MGYY4IS/A": 'Magic Keyboard for iPad Air 13" (M3/M2) Black',
 
   "MWW43ZM/A": "AirPods Max - Midnight",
   "MWW53ZM/A": "AirPods Max - Starlight",
@@ -804,6 +1121,9 @@ export const descriptionOverride = {
   "MXP63ZM/A": "AirPods 4",
   "MXP93ZM/A": "AirPods 4 with Active Noise Cancellation",
   "MTJV3ZM/A": "AirPods Pro 2 with MagSafe Case USB-C",
+  "MFHP4ZM/A": "AirPods Pro 3",
+
+  "MGJ74ZM/A": "Apple 46mm Slate Milanese Loop - M/L",
   // Add more overrides as needed
 };
 

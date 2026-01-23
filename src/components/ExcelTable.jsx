@@ -21,6 +21,8 @@ import {
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
 import PatchNotesModal from "../functions/patchNotesModal";
+import { buildDate } from "../../buildInfo";
+import { Snackbar, Alert, CircularProgress } from "@mui/material";
 
 const ExcelTable = () => {
   const [data, setData] = useState([]);
@@ -41,6 +43,13 @@ const ExcelTable = () => {
       lob === "All" ? data : data.filter((row) => row.lob === lob);
     setFilteredData(newFilteredData);
   };
+
+  const [exporting, setExporting] = useState(false);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
 
   // Load Excel
   useEffect(() => {
@@ -144,72 +153,96 @@ const ExcelTable = () => {
 
   // Export to Excel
   const exportToExcel = async () => {
-    const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet("Filtered Data");
+    try {
+      setExporting(true);
 
-    const headers = [
-      "Apple Order #",
-      "Purchase Order #",
-      "LOB",
-      "Part #",
-      "Description",
-      "Order Qty",
-      "Delivered",
-      "In Transit",
-      "Remaining",
-      "Status",
-      "Estimated Delivery",
-    ];
+      const workbook = new ExcelJS.Workbook();
+      const worksheet = workbook.addWorksheet("Filtered Data");
 
-    const headerRow = worksheet.addRow(headers);
-    headerRow.eachCell((cell) => {
-      cell.font = { bold: true, color: { argb: "FFFFFFFF" }, size: 15 };
-      cell.fill = {
-        type: "pattern",
-        pattern: "solid",
-        fgColor: { argb: "4d77b1" },
-      };
-      cell.alignment = { vertical: "middle", horizontal: "center" };
-      cell.border = {
-        top: { style: "thin" },
-        left: { style: "thin" },
-        bottom: { style: "thin" },
-        right: { style: "thin" },
-      };
-    });
+      const headers = [
+        "Apple Order #",
+        "Purchase Order #",
+        "LOB",
+        "Part #",
+        "Description",
+        "Order Qty",
+        "Delivered",
+        "In Transit",
+        "Remaining",
+        "Status",
+        "Estimated Delivery",
+      ];
 
-    sortedData.forEach((row) => {
-      worksheet.addRow([
-        row.appleOrderNumber,
-        row.orderNumber,
-        row.lob,
-        row.partNumber,
-        row.description,
-        row.orderQty,
-        row.deliveredQty,
-        row.inTransit,
-        row.remainingQty,
-        row.status,
-        row.estimatedDelivery,
-      ]);
-    });
+      const headerRow = worksheet.addRow(headers);
 
-    worksheet.columns.forEach((column) => {
-      let maxLength = 0;
-      column.eachCell({ includeEmpty: true }, (cell) => {
-        maxLength = Math.max(
-          maxLength,
-          cell.value ? cell.value.toString().length : 0
-        );
+      // ✅ ORIGINAL HEADER STYLING (UNCHANGED)
+      headerRow.eachCell((cell) => {
+        cell.font = { bold: true, color: { argb: "FFFFFFFF" }, size: 15 };
+        cell.fill = {
+          type: "pattern",
+          pattern: "solid",
+          fgColor: { argb: "4d77b1" },
+        };
+        cell.alignment = { vertical: "middle", horizontal: "center" };
+        cell.border = {
+          top: { style: "thin" },
+          left: { style: "thin" },
+          bottom: { style: "thin" },
+          right: { style: "thin" },
+        };
       });
-      column.width = maxLength + 5;
-    });
 
-    const buffer = await workbook.xlsx.writeBuffer();
-    const blob = new Blob([buffer], {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    });
-    saveAs(blob, "stada-sendinga-EpliPortal.xlsx");
+      sortedData.forEach((row) => {
+        worksheet.addRow([
+          row.appleOrderNumber,
+          row.orderNumber,
+          row.lob,
+          row.partNumber,
+          row.description,
+          row.orderQty,
+          row.deliveredQty,
+          row.inTransit,
+          row.remainingQty,
+          row.status,
+          row.estimatedDelivery,
+        ]);
+      });
+
+      // ✅ ORIGINAL AUTO-COLUMN WIDTH (UNCHANGED)
+      worksheet.columns.forEach((column) => {
+        let maxLength = 0;
+        column.eachCell({ includeEmpty: true }, (cell) => {
+          maxLength = Math.max(
+            maxLength,
+            cell.value ? cell.value.toString().length : 0
+          );
+        });
+        column.width = maxLength + 5;
+      });
+
+      const buffer = await workbook.xlsx.writeBuffer();
+      const blob = new Blob([buffer], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+
+      saveAs(blob, "stada-sendinga-EpliPortal.xlsx");
+
+      // ⭐ SUCCESS FEEDBACK
+      setSnackbar({
+        open: true,
+        severity: "success",
+        message: `Exported ${sortedData.length} rows successfully 🎉`,
+      });
+    } catch (error) {
+      // ❌ ERROR FEEDBACK
+      setSnackbar({
+        open: true,
+        severity: "error",
+        message: "Export failed. Please try again.",
+      });
+    } finally {
+      setExporting(false);
+    }
   };
 
   const toggleSearch = () => {
@@ -220,11 +253,28 @@ const ExcelTable = () => {
   };
 
   return (
-    <div className="p-6">
+    <div>
       <PatchNotesModal />
+      <p
+        style={{
+          fontSize: "20px",
+          fontWeight: "600",
+          marginTop: 90,
+          marginBottom: 10,
+          textAlign: "left",
+        }}
+      >
+        Gögn uppfærð: {buildDate.replaceAll("/", ".")}
+      </p>
       <div
         className="filter-buttons-and-search-bar"
-        style={{ display: "flex", alignItems: "center", gap: 10 }}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          marginTop: 40,
+          marginBottom: 20,
+        }}
       >
         <div className="filter-buttons">
           {[
@@ -249,13 +299,13 @@ const ExcelTable = () => {
             </button>
           ))}
         </div>
-        <button
+        {/*<button
           onClick={toggleSearch}
           aria-label="Toggle search"
           style={{ cursor: "pointer", background: "none", border: "none" }}
         >
           <FaSearch size={20} />
-        </button>
+        </button>*/}
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div className="search-container">
             <input
@@ -272,14 +322,14 @@ const ExcelTable = () => {
           <button
             onClick={exportToExcel}
             aria-label="Export to Excel"
-            style={{
-              cursor: "pointer",
-              background: "none",
-              border: "none",
-              color: "#333",
-            }}
+            disabled={exporting}
+            className="export-icon-button"
           >
-            <FaDownload size={20} />
+            {exporting ? (
+              <CircularProgress size={18} />
+            ) : (
+              <FaDownload size={20} />
+            )}
           </button>
         </div>
       </div>
@@ -347,7 +397,17 @@ const ExcelTable = () => {
                     <p className="sticky-cell-text">{row.remainingQty}</p>
                   </TableCell>
                   <TableCell className="sticky-cell">
-                    <p className="sticky-cell-text">{row.status}</p>
+                    <span
+                      className={`status-pill ${
+                        row.status === "Delivered"
+                          ? "status-delivered"
+                          : row.status === "Shipment Delay"
+                          ? "status-delayed"
+                          : "status-default"
+                      }`}
+                    >
+                      {row.status}
+                    </span>
                   </TableCell>
                   <TableCell className="sticky-cell">
                     <p className="sticky-cell-text">{row.estimatedDelivery}</p>
@@ -358,6 +418,20 @@ const ExcelTable = () => {
           </Table>
         </TableContainer>
       </div>
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3500}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          severity={snackbar.severity}
+          variant="filled"
+          onClose={() => setSnackbar({ ...snackbar, open: false })}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

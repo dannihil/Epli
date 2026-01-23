@@ -33,6 +33,7 @@
 .filter-button-selection.active {
   background-color: rgb(57, 57, 57);
   color: white;
+  box-shadow: inset 0 0 0 2px black;
 }
 
 .filter-button-selection:disabled,
@@ -59,6 +60,7 @@
 .filter-button-processor.active {
   background-color: rgb(57, 57, 57);
   color: white;
+  box-shadow: inset 0 0 0 2px black;
 }
 
 .filter-button-processor:disabled,

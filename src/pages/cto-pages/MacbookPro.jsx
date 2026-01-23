@@ -31,14 +31,14 @@ function MacbookPro() {
     return () => window.removeEventListener("keydown", onKey);
   }, [showModal]);
 
-  const basePrices = { 14: 339990, 16: 529990 };
+  const basePrices = { 14: 309990, 16: 469990 };
 
   const priceModifiers = {
     processor: {
-      "M4 chip with 10-core CPU, 10-core GPU": 0,
-      "M4 Pro chip with 12-core CPU, 16-core GPU": 40000,
-      "M4 Pro chip with 14-core CPU, 20-core GPU": 80000,
-      "M4 Max chip with 14-core CPU, 32-core GPU": 300000,
+      "M5 chip with 10-core CPU, 10-core GPU": 0,
+      "M4 Pro chip with 12-core CPU, 16-core GPU": 30000,
+      "M4 Pro chip with 14-core CPU, 20-core GPU": 70000,
+      "M4 Max chip with 14-core CPU, 32-core GPU": 260000,
       "M4 Max chip with 16-core CPU, 40-core GPU": 320000,
     },
     storage: {
@@ -74,7 +74,7 @@ function MacbookPro() {
 
   const [selectedOptions, setSelectedOptions] = useState({
     screenSize: "14", // Default selection
-    processor: "M4 chip with 10-core CPU, 10-core GPU", // Default selection
+    processor: "M5 chip with 10-core CPU, 10-core GPU", // Default selection
     storage: "512GB", // Default selection
     memory: "16GB", // Default selection
     color: "Space Black", // Default selection
@@ -136,7 +136,7 @@ function MacbookPro() {
       let newSelection = { ...prev, [category]: option };
 
       if (category === "screenSize" && option === "14") {
-        newSelection.processor = "M4 chip with 10-core CPU, 10-core GPU";
+        newSelection.processor = "M5 chip with 10-core CPU, 10-core GPU";
         newSelection.storage = "512GB";
         newSelection.memory = "16GB";
         newSelection.accessories = "70W Power Adapter";
@@ -149,7 +149,7 @@ function MacbookPro() {
       }
       if (
         category === "processor" &&
-        option === "M4 chip with 10-core CPU, 10-core GPU"
+        option === "M5 chip with 10-core CPU, 10-core GPU"
       ) {
         newSelection.memory = "16GB";
       }
@@ -485,6 +485,18 @@ function MacbookPro() {
                   <b>Verð:</b>
                 </p>
                 <p style={{ fontSize: "20px" }}>{formatPriceISK(totalPrice)}</p>
+                {selectedOptions.screenSize === "16" && (
+                  <p
+                    style={{
+                      color: "red",
+                      fontSize: "16px",
+                      marginLeft: 10,
+                      marginTop: 5,
+                    }}
+                  >
+                    Verð out of date!
+                  </p>
+                )}
               </div>
               <button onClick={() => setShowModal(true)} className="pdf-button">
                 Búa til PDF
@@ -595,7 +607,7 @@ function MacbookPro() {
               <div
                 className={`filter-button-processor ${
                   selectedOptions.processor ===
-                  "M4 chip with 10-core CPU, 10-core GPU"
+                  "M5 chip with 10-core CPU, 10-core GPU"
                     ? "active"
                     : ""
                 } ${selectedOptions.screenSize === "16" ? "disabled" : ""}`}
@@ -603,14 +615,14 @@ function MacbookPro() {
                   if (selectedOptions.screenSize !== "16") {
                     handleSelection(
                       "processor",
-                      "M4 chip with 10-core CPU, 10-core GPU"
+                      "M5 chip with 10-core CPU, 10-core GPU"
                     );
                   }
                 }}
               >
                 <img
-                  src="../assets/m4.svg"
-                  alt="M4 logo"
+                  src="../assets/m5.svg"
+                  alt="M5 logo"
                   className="button-processor-logo"
                 />
                 <p className="filter-button-processor-text">
@@ -751,7 +763,7 @@ function MacbookPro() {
                 onClick={() => handleSelection("storage", "4TB")}
                 disabled={
                   selectedOptions.processor ===
-                  "M4 chip with 10-core CPU, 10-core GPU"
+                  "M5 chip with 10-core CPU, 10-core GPU"
                 }
               >
                 4TB
@@ -763,7 +775,7 @@ function MacbookPro() {
                 onClick={() => handleSelection("storage", "8TB")}
                 disabled={
                   selectedOptions.processor ===
-                    "M4 chip with 10-core CPU, 10-core GPU" ||
+                    "M5 chip with 10-core CPU, 10-core GPU" ||
                   selectedOptions.processor ===
                     "M4 Pro chip with 12-core CPU, 16-core GPU" ||
                   selectedOptions.processor ===
@@ -833,7 +845,7 @@ function MacbookPro() {
                 onClick={() => handleSelection("memory", "36GB")}
                 disabled={
                   selectedOptions.processor ===
-                    "M4 chip with 10-core CPU, 10-core GPU" ||
+                    "M5 chip with 10-core CPU, 10-core GPU" ||
                   selectedOptions.processor ===
                     "M4 Pro chip with 12-core CPU, 16-core GPU" ||
                   selectedOptions.processor ===
@@ -851,7 +863,7 @@ function MacbookPro() {
                 onClick={() => handleSelection("memory", "48GB")}
                 disabled={
                   selectedOptions.processor ===
-                    "M4 chip with 10-core CPU, 10-core GPU" ||
+                    "M5 chip with 10-core CPU, 10-core GPU" ||
                   selectedOptions.processor ===
                     "M4 Max chip with 14-core CPU, 32-core GPU"
                 }
@@ -865,7 +877,7 @@ function MacbookPro() {
                 onClick={() => handleSelection("memory", "64GB")}
                 disabled={
                   selectedOptions.processor ===
-                    "M4 chip with 10-core CPU, 10-core GPU" ||
+                    "M5 chip with 10-core CPU, 10-core GPU" ||
                   selectedOptions.processor ===
                     "M4 Pro chip with 12-core CPU, 16-core GPU" ||
                   selectedOptions.processor ===
@@ -883,7 +895,7 @@ function MacbookPro() {
                 onClick={() => handleSelection("memory", "128GB")}
                 disabled={
                   selectedOptions.processor ===
-                    "M4 chip with 10-core CPU, 10-core GPU" ||
+                    "M5 chip with 10-core CPU, 10-core GPU" ||
                   selectedOptions.processor ===
                     "M4 Pro chip with 12-core CPU, 16-core GPU" ||
                   selectedOptions.processor ===

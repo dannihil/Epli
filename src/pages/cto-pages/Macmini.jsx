@@ -66,6 +66,13 @@ function MacMini() {
     },
   };
 
+  const displayStorage = (storage) => {
+    return storage.replace("-M4PRO", ""); // removes "-M4PRO" if present
+  };
+  const displayMemory = (memory) => {
+    return memory.replace("-M4PRO", ""); // removes "-M4PRO" if present
+  };
+
   const [selectedOptions, setSelectedOptions] = useState({
     processor: "M4 chip with 10-core CPU, 10-core GPU",
     storage: "256GB",
@@ -74,8 +81,8 @@ function MacMini() {
   });
 
   const basePrices = {
-    M4: 129990,
-    M4PRO: 289990,
+    M4: 119990,
+    M4PRO: 269990,
   };
 
   const getBasePrice = () => {
@@ -211,10 +218,14 @@ function MacMini() {
     doc.setFont("georgia", "normal");
     doc.text(`Örgjörvi: ${selectedOptions.processor}`, xPosition, yPosition);
     yPosition += 7;
-    doc.text(`Geymsla: ${selectedOptions.storage} SSD`, xPosition, yPosition);
+    doc.text(
+      `Geymsla: ${displayStorage(selectedOptions.storage)} SSD`,
+      xPosition,
+      yPosition
+    );
     yPosition += 7;
     doc.text(
-      `Vinnsluminni: ${selectedOptions.memory} Unified Memory`,
+      `Vinnsluminni: ${displayMemory(selectedOptions.memory)} Unified Memory`,
       xPosition,
       yPosition
     );
@@ -296,10 +307,10 @@ function MacMini() {
               <ul>
                 <li className="spec-list-item">{selectedOptions.processor}</li>
                 <li className="spec-list-item">
-                  {selectedOptions.storage} SSD geymsla
+                  {displayStorage(selectedOptions.storage)} SSD geymsla
                 </li>
                 <li className="spec-list-item">
-                  {selectedOptions.memory} Unified vinnsluminni
+                  {displayMemory(selectedOptions.memory)} Unified vinnsluminni
                 </li>
                 <li className="spec-list-item">{selectedOptions.ethernet}</li>
               </ul>

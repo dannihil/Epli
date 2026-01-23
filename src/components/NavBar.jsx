@@ -8,12 +8,10 @@ import {
   SignedOut,
   SignInButton,
   UserButton,
-  useUser,
 } from "@clerk/clerk-react";
 
 function NavBar() {
   const logo = "/assets/thumbnail_Epli_logo_invert.png";
-  const userIcon = "/assets/user_icon.png";
   const navigate = useNavigate();
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -24,59 +22,54 @@ function NavBar() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Responsive size and margin
-  const logoStyle = {
-    width: windowWidth < 768 ? 30 : 60,
-    marginLeft: windowWidth < 768 ? 10 : 19,
-  };
+  const iconSize = windowWidth < 768 ? 20 : 28;
+  const logoSize = windowWidth < 768 ? 30 : 55;
 
   return (
-    <div className="navbar">
-      <div className="epli-icon">
+    <nav className="navbar">
+      {/* Left */}
+      <div className="navbar-left">
         <img
           src={logo}
-          alt="Logo"
-          style={logoStyle}
+          alt="Epli logo"
+          className="navbar-logo"
+          style={{ width: logoSize }}
           draggable="false"
           onClick={() => navigate("/")}
         />
       </div>
-      <SignedIn>
-        <div>
-          <ul className="navbar-links">
-            <div
-              className="nav-link-button"
-              onClick={() => navigate("/stada-sendinga")}
-            >
-              <FaTruck size={windowWidth < 768 ? 20 : 30} />
-              <li>Staða sendinga</li>
-            </div>
-            <div className="nav-link-button" onClick={() => navigate("/cto")}>
-              <FaLaptop size={windowWidth < 768 ? 20 : 30} />
-              <li>Sérpöntunarverðlisti</li>
-            </div>
-            <div
-              className="nav-link-button"
-              onClick={() => navigate("/commission")}
-            ></div>
-          </ul>
-        </div>
-        <div className="logo">
+
+      {/* Center */}
+      <div className="navbar-center">
+        <ul className="navbar-links">
+          <li
+            className="nav-link-button"
+            onClick={() => navigate("/stada-sendinga")}
+          >
+            <FaTruck size={iconSize} />
+            <span>Staða sendinga</span>
+          </li>
+
+          <li className="nav-link-button" onClick={() => navigate("/cto")}>
+            <FaLaptop size={iconSize} />
+            <span>Sérpöntunarverðlisti</span>
+          </li>
+        </ul>
+      </div>
+
+      {/* Right */}
+      <div className="navbar-right">
+        <SignedIn>
           <UserButton userProfileMode="modal" />
-        </div>
-      </SignedIn>
-      <SignedOut>
-        <div className="navbar-signinbutton">
+        </SignedIn>
+
+        <SignedOut>
           <SignInButton mode="modal">
-            <FaUser
-              size={windowWidth < 768 ? 20 : 30}
-              className="login-icon"
-              onClick
-            />
+            <FaUser size={iconSize} className="login-icon" />
           </SignInButton>
-        </div>
-      </SignedOut>
-    </div>
+        </SignedOut>
+      </div>
+    </nav>
   );
 }
 
