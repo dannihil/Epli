@@ -27,48 +27,60 @@ function NavBar() {
 
   return (
     <nav className="navbar">
-      {/* Left */}
-      <div className="navbar-left">
-        <img
-          src={logo}
-          alt="Epli logo"
-          className="navbar-logo"
-          style={{ width: logoSize }}
-          draggable="false"
-          onClick={() => navigate("/")}
-        />
-      </div>
+      {/* SIGNED IN */}
+      <SignedIn>
+        <div className="navbar-left">
+          <img
+            src={logo}
+            alt="Epli logo"
+            className="navbar-logo"
+            style={{ width: logoSize }}
+            draggable="false"
+            onClick={() => navigate("/")}
+          />
+        </div>
 
-      {/* Center */}
-      <div className="navbar-center">
-        <ul className="navbar-links">
-          <li
-            className="nav-link-button"
-            onClick={() => navigate("/stada-sendinga")}
-          >
-            <FaTruck size={iconSize} />
-            <span>Staða sendinga</span>
-          </li>
+        <div className="navbar-center">
+          <ul className="navbar-links">
+            <li
+              className="nav-link-button"
+              onClick={() => navigate("/stada-sendinga")}
+            >
+              <FaTruck size={iconSize} />
+              <span>Staða sendinga</span>
+            </li>
 
-          <li className="nav-link-button" onClick={() => navigate("/cto")}>
-            <FaLaptop size={iconSize} />
-            <span>Sérpöntunarverðlisti</span>
-          </li>
-        </ul>
-      </div>
+            <li className="nav-link-button" onClick={() => navigate("/cto")}>
+              <FaLaptop size={iconSize} />
+              <span>Sérpöntunarverðlisti</span>
+            </li>
+          </ul>
+        </div>
 
-      {/* Right */}
-      <div className="navbar-right">
-        <SignedIn>
+        <div className="navbar-right">
           <UserButton userProfileMode="modal" />
-        </SignedIn>
+        </div>
+      </SignedIn>
 
-        <SignedOut>
+      {/* SIGNED OUT */}
+      <SignedOut>
+        <div className="navbar-left">
+          <img
+            src={logo}
+            alt="Epli logo"
+            className="navbar-logo"
+            style={{ width: logoSize }}
+            draggable="false"
+            onClick={() => navigate("/")}
+          />
+        </div>
+
+        <div className="navbar-right">
           <SignInButton mode="modal">
             <FaUser size={iconSize} className="login-icon" />
           </SignInButton>
-        </SignedOut>
-      </div>
+        </div>
+      </SignedOut>
     </nav>
   );
 }

@@ -38,8 +38,8 @@ function MacbookPro() {
       "M5 chip with 10-core CPU, 10-core GPU": 0,
       "M4 Pro chip with 12-core CPU, 16-core GPU": 30000,
       "M4 Pro chip with 14-core CPU, 20-core GPU": 70000,
-      "M4 Max chip with 14-core CPU, 32-core GPU": 260000,
-      "M4 Max chip with 16-core CPU, 40-core GPU": 320000,
+      "M4 Max chip with 14-core CPU, 32-core GPU": 300000,
+      "M4 Max chip with 16-core CPU, 40-core GPU": 300000,
     },
     storage: {
       "512GB": 0,
@@ -86,7 +86,7 @@ function MacbookPro() {
     basePrices[selectedOptions.screenSize] +
     Object.keys(priceModifiers).reduce(
       (sum, key) => sum + priceModifiers[key][selectedOptions[key]],
-      0
+      0,
     ) +
     (selectedOptions.processor ===
       "M4 Pro chip with 12-core CPU, 16-core GPU" &&
@@ -124,6 +124,32 @@ function MacbookPro() {
     (selectedOptions.screenSize === "16" &&
     selectedOptions.processor === "M4 Max chip with 16-core CPU, 40-core GPU"
       ? 80000
+      : 0) +
+    (selectedOptions.screenSize === "16" &&
+    selectedOptions.processor === "M4 Pro chip with 14-core CPU, 20-core GPU" &&
+    selectedOptions.memory === "48GB"
+      ? 10000
+      : 0) +
+    (selectedOptions.screenSize === "16" &&
+    selectedOptions.processor === "M4 Pro chip with 14-core CPU, 20-core GPU" &&
+    selectedOptions.storage === "1TB"
+      ? 10000
+      : 0) +
+    (selectedOptions.screenSize === "16" &&
+    selectedOptions.processor === "M4 Pro chip with 14-core CPU, 20-core GPU" &&
+    selectedOptions.storage === "2TB"
+      ? 10000
+      : 0) +
+    (selectedOptions.screenSize === "16" &&
+    selectedOptions.processor === "M4 Pro chip with 14-core CPU, 20-core GPU" &&
+    selectedOptions.storage === "4TB"
+      ? 10000
+      : 0) -
+    (selectedOptions.screenSize === "16" &&
+    selectedOptions.processor === "M4 Pro chip with 14-core CPU, 20-core GPU" &&
+    selectedOptions.storage === "1TB" &&
+    selectedOptions.memory === "48GB"
+      ? 10000
       : 0);
 
   const formatPriceISK = (price) => {
@@ -172,11 +198,7 @@ function MacbookPro() {
       ) {
         newSelection.accessories = "96W Power Adapter";
       }
-      if (
-        newSelection.screenSize === "16" &&
-        category === "processor" &&
-        option === "M4 Pro chip with 14-core CPU, 20-core GPU"
-      ) {
+      if (newSelection.screenSize === "16") {
         newSelection.accessories = "140W Power Adapter";
       }
       if (
@@ -303,7 +325,7 @@ function MacbookPro() {
     doc.text(
       `Skjástærð: ${selectedOptions.screenSize}" Retina skjár`,
       xPosition,
-      yPosition
+      yPosition,
     );
     yPosition += 7;
     doc.text(`Örgjörvi: ${selectedOptions.processor}`, xPosition, yPosition);
@@ -313,7 +335,7 @@ function MacbookPro() {
     doc.text(
       `Vinnsluminni: ${selectedOptions.memory} Unified Memory`,
       xPosition,
-      yPosition
+      yPosition,
     );
     yPosition += 7;
     doc.text(`Skjár: ${selectedOptions.display}`, xPosition, yPosition);
@@ -321,7 +343,7 @@ function MacbookPro() {
     doc.text(
       `Aukahlutir: ${selectedOptions.accessories}`,
       xPosition,
-      yPosition
+      yPosition,
     );
 
     yPosition += 20;
@@ -344,25 +366,25 @@ function MacbookPro() {
     doc.text(
       "Afgreiðslutími sérpanta getur verið allt að 4-6 vikur frá degi pöntunar.",
       10,
-      yPosition
+      yPosition,
     );
     yPosition += 7;
     doc.text(
       "Gerð er krafa um að lágmarki 30% fyrirframgreiðslu við pöntun.",
       10,
-      yPosition
+      yPosition,
     );
     yPosition += 7;
     doc.text(
       "Ekki er hægt að hætta við sérpöntun sé varan komin í framleiðsluferli.",
       10,
-      yPosition
+      yPosition,
     );
     yPosition += 12;
     doc.text(
       `Ef þú hefur einhverjar spurningar vinsamlegast hafðu samband í netfangið ${user.user.emailAddresses}`,
       10,
-      yPosition
+      yPosition,
     );
     doc.line(10, 183, pageWidth - 10, 183);
 
@@ -377,7 +399,7 @@ function MacbookPro() {
 
     if (orderNumber) {
       doc.save(
-        `${title.replace(/"/g, "").trim()} - ${orderNumber.toUpperCase()}.pdf`
+        `${title.replace(/"/g, "").trim()} - ${orderNumber.toUpperCase()}.pdf`,
       );
     } else {
       doc.save(`${title.replace(/"/g, "").trim()}.pdf`);
@@ -485,18 +507,6 @@ function MacbookPro() {
                   <b>Verð:</b>
                 </p>
                 <p style={{ fontSize: "20px" }}>{formatPriceISK(totalPrice)}</p>
-                {selectedOptions.screenSize === "16" && (
-                  <p
-                    style={{
-                      color: "red",
-                      fontSize: "16px",
-                      marginLeft: 10,
-                      marginTop: 5,
-                    }}
-                  >
-                    Verð out of date!
-                  </p>
-                )}
               </div>
               <button onClick={() => setShowModal(true)} className="pdf-button">
                 Búa til PDF
@@ -559,7 +569,7 @@ function MacbookPro() {
                         onClick={() => {
                           generatePdf(
                             `Sérpöntun - MacBook Pro ${selectedOptions.screenSize}"`,
-                            orderNumber
+                            orderNumber,
                           );
                           setShowModal(false);
                           setOrderNumber("");
@@ -615,7 +625,7 @@ function MacbookPro() {
                   if (selectedOptions.screenSize !== "16") {
                     handleSelection(
                       "processor",
-                      "M5 chip with 10-core CPU, 10-core GPU"
+                      "M5 chip with 10-core CPU, 10-core GPU",
                     );
                   }
                 }}
@@ -640,7 +650,7 @@ function MacbookPro() {
                   if (selectedOptions.screenSize !== "16") {
                     handleSelection(
                       "processor",
-                      "M4 Pro chip with 12-core CPU, 16-core GPU"
+                      "M4 Pro chip with 12-core CPU, 16-core GPU",
                     );
                   }
                 }}
@@ -664,7 +674,7 @@ function MacbookPro() {
                 onClick={() =>
                   handleSelection(
                     "processor",
-                    "M4 Pro chip with 14-core CPU, 20-core GPU"
+                    "M4 Pro chip with 14-core CPU, 20-core GPU",
                   )
                 }
               >
@@ -687,7 +697,7 @@ function MacbookPro() {
                 onClick={() =>
                   handleSelection(
                     "processor",
-                    "M4 Max chip with 14-core CPU, 32-core GPU"
+                    "M4 Max chip with 14-core CPU, 32-core GPU",
                   )
                 }
               >
@@ -710,7 +720,7 @@ function MacbookPro() {
                 onClick={() =>
                   handleSelection(
                     "processor",
-                    "M4 Max chip with 16-core CPU, 40-core GPU"
+                    "M4 Max chip with 16-core CPU, 40-core GPU",
                   )
                 }
               >

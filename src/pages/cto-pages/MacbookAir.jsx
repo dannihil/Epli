@@ -35,7 +35,7 @@ function MacbookAir() {
     return () => window.removeEventListener("keydown", onKey);
   }, [showModal]);
 
-  const basePrices = { 13: 199990, 15: 249990 };
+  const basePrices = { 13: 189990, 15: 229990 };
 
   const priceModifiers = {
     processor: {
@@ -44,7 +44,7 @@ function MacbookAir() {
     },
     storage: {
       "256GB": 0,
-      "512GB": 50000,
+      "512GB": 40000,
       "1TB": 90000,
       "2TB": 170000,
     },
@@ -267,7 +267,7 @@ function MacbookAir() {
     doc.text(
       `Skjástærð: ${selectedOptions.screenSize}" Retina skjár`,
       xPosition,
-      yPosition
+      yPosition,
     );
     yPosition += 7;
     doc.text(`Örgjörvi: ${selectedOptions.processor}`, xPosition, yPosition);
@@ -277,7 +277,7 @@ function MacbookAir() {
     doc.text(
       `Vinnsluminni: ${selectedOptions.memory} Unified Memory`,
       xPosition,
-      yPosition
+      yPosition,
     );
     yPosition += 7;
     doc.text("Skjár: Standard glass", xPosition, yPosition);
@@ -285,7 +285,7 @@ function MacbookAir() {
     doc.text(
       `Aukahlutir: ${selectedOptions.accessories}`,
       xPosition,
-      yPosition
+      yPosition,
     );
 
     // Add price
@@ -308,25 +308,25 @@ function MacbookAir() {
     doc.text(
       "Afgreiðslutími sérpanta getur verið allt að 4-6 vikur frá degi pöntunar.",
       10,
-      yPosition
+      yPosition,
     );
     yPosition += 7;
     doc.text(
       "Gerð er krafa um að lágmarki 30% fyrirframgreiðslu við pöntun.",
       10,
-      yPosition
+      yPosition,
     );
     yPosition += 7;
     doc.text(
       "Ekki er hægt að hætta við sérpöntun sé varan komin í framleiðsluferli.",
       10,
-      yPosition
+      yPosition,
     );
     yPosition += 12;
     doc.text(
       `Ef þú hefur einhverjar spurningar vinsamlegast hafðu samband í netfangið   ${user.user.emailAddresses}`,
       10,
-      yPosition
+      yPosition,
     );
     doc.line(10, 183, pageWidth - 10, 183);
 
@@ -341,7 +341,7 @@ function MacbookAir() {
 
     if (orderNumber) {
       doc.save(
-        `${title.replace(/"/g, "").trim()} - ${orderNumber.toUpperCase()}.pdf`
+        `${title.replace(/"/g, "").trim()} - ${orderNumber.toUpperCase()}.pdf`,
       );
     } else {
       doc.save(`${title.replace(/"/g, "").trim()}.pdf`);
@@ -477,9 +477,6 @@ function MacbookAir() {
                   <b>Verð:</b>
                 </p>
                 <p style={{ fontSize: "20px" }}>{formatPriceISK(totalPrice)}</p>
-                <p style={{ color: "red", marginLeft: 5, marginTop: 5 }}>
-                  Verð out of date!
-                </p>
               </div>
               <button onClick={() => setShowModal(true)} className="pdf-button">
                 Búa til PDF
@@ -541,7 +538,7 @@ function MacbookAir() {
                         onClick={() => {
                           generatePdf(
                             `Sérpöntun - MacBook Air ${selectedOptions.screenSize}"`,
-                            orderNumber
+                            orderNumber,
                           );
                           setShowModal(false);
                           setOrderNumber("");
@@ -596,18 +593,18 @@ function MacbookAir() {
                   selectedOptions.storage === "512GB"
                     ? "disabled"
                     : "" || selectedOptions.storage === "1TB"
-                    ? "disabled"
-                    : "" || selectedOptions.storage === "2TB"
-                    ? "disabled"
-                    : "" || selectedOptions.screenSize === "15"
-                    ? "disabled"
-                    : ""
+                      ? "disabled"
+                      : "" || selectedOptions.storage === "2TB"
+                        ? "disabled"
+                        : "" || selectedOptions.screenSize === "15"
+                          ? "disabled"
+                          : ""
                 }`}
                 onClick={() => {
                   if (selectedOptions.screenSize !== "15") {
                     handleSelection(
                       "processor",
-                      "M4 chip with 10-core CPU, 8-core GPU"
+                      "M4 chip with 10-core CPU, 8-core GPU",
                     );
                   }
                 }}
@@ -631,7 +628,7 @@ function MacbookAir() {
                 onClick={() =>
                   handleSelection(
                     "processor",
-                    "M4 chip with 10-core CPU, 10-core GPU"
+                    "M4 chip with 10-core CPU, 10-core GPU",
                   )
                 }
               >

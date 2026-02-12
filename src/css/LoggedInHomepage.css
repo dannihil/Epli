@@ -1,16 +1,20 @@
+/* =====================================================
+   BASE LAYOUT
+   ===================================================== */
+
 .LoggedInHomepage-container {
-  color: rgb(0, 0, 0);
   height: 200px;
-  display: flex; /* Needed for align-items and justify-content to work */
+  width: 98.5vw;
+  display: flex;
   justify-content: center;
+  text-align: center;
+  color: #000;
   background: linear-gradient(
     0deg,
     rgba(208, 208, 208, 1) 0%,
     rgba(255, 255, 255, 1) 100%
   );
-  width: 98.5vw;
   border-radius: 0 0 15px 15px;
-  text-align: center;
 }
 
 .title-box {
@@ -22,6 +26,19 @@
   font-weight: 700;
 }
 
+.greeting-soft {
+  font-weight: 400;
+  color: #777;
+}
+
+.greeting-name {
+  font-weight: 800;
+}
+
+/* =====================================================
+   BUTTONS / MAIN ACTION CARDS
+   ===================================================== */
+
 .button-container {
   display: flex;
   justify-content: center;
@@ -30,36 +47,179 @@
   margin: 50px auto;
 }
 
-.card-icon {
-  font-size: 40px;
-  margin-bottom: 10px;
-}
-
 .content-selection {
   flex: 1;
   max-width: 450px;
   padding: 10px;
-  border-radius: 30px;
-  background-color: rgb(49, 49, 49);
-  color: rgb(255, 255, 255);
-  border: 1px solid rgb(50, 50, 50);
-  box-shadow: 0px 0px 4px 0px rgb(37, 37, 37);
   border-radius: 250px;
+  background: rgb(49, 49, 49);
+  color: #fff;
+  border: 1px solid rgb(50, 50, 50);
+  box-shadow: 0 0 4px rgb(37, 37, 37);
   cursor: pointer;
   text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .content-selection:hover {
-  color: black;
-  background-color: white;
+  background: #fff;
+  color: #000;
   transform: translateY(-6px);
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
-/* ===== Responsive ===== */
+/* =====================================================
+   NEWS SECTION
+   ===================================================== */
 
-/* Small devices (mobile, 0px - 600px) */
+.news-section {
+  max-width: 1000px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.news-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* =====================================================
+   NEWS CARDS (BASE)
+   ===================================================== */
+
+.news-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  color: #000;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.news-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* =====================================================
+   IMAGE WRAPPER (FIXED SIZE, CLIPS IMAGE)
+   ===================================================== */
+
+.image-wrapper {
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+/* Featured image height */
+.news-card.featured .image-wrapper {
+  height: 360px;
+}
+
+/* Secondary image height */
+.news-card.secondary .image-wrapper {
+  height: 180px;
+  margin-bottom: 12px;
+}
+
+/* =====================================================
+   IMAGE (PIXELS ONLY ANIMATE)
+   ===================================================== */
+
+.image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition:
+    transform 0.45s ease,
+    filter 0.3s ease;
+  will-change: transform;
+}
+
+.news-card:hover .image-wrapper img {
+  transform: scale(1.05);
+  filter: brightness(1.05);
+}
+
+.news-card.featured:hover .image-wrapper img {
+  transform: scale(1.06);
+}
+
+/* =====================================================
+   FEATURED STORY TEXT
+   ===================================================== */
+
+.news-card.featured {
+  grid-column: 1 / -1;
+}
+
+.news-card.featured h3 {
+  font-size: 1.6rem;
+}
+
+.news-card.featured p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* =====================================================
+   TEXT CONTENT
+   ===================================================== */
+
+.news-card h3 {
+  margin: 12px 0 8px;
+}
+
+.news-card p {
+  color: #555;
+  line-height: 1.5;
+}
+
+.news-content {
+  flex: 1;
+}
+
+.news-footer {
+  margin-top: 16px;
+}
+
+/* =====================================================
+   READ MORE BUTTON
+   ===================================================== */
+
+.more-button {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #0071e3;
+  border: 1px solid rgba(0, 113, 227, 0.4);
+  transition: all 0.2s ease;
+}
+
+.news-card:hover .more-button {
+  background: #0071e3;
+  color: #fff;
+  border-color: #0071e3;
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+/* Mobile */
 @media (max-width: 600px) {
   .LoggedInHomepage-container {
     height: 15vh;
@@ -68,7 +228,7 @@
 
   .title-box {
     font-size: 12px;
-    padding: 0px 30px;
+    padding: 0 30px;
     margin-top: -5vh;
   }
 
@@ -76,9 +236,11 @@
     font-size: 24px;
   }
 
-  .content-container {
+  .button-container {
     flex-direction: column;
     gap: 15px;
+    max-width: 70vw;
+    margin: 30px auto;
   }
 
   .content-selection {
@@ -86,12 +248,12 @@
     font-size: 12px;
   }
 
-  .button-container {
-    max-width: 70vw;
-    margin: 30px auto; /* Center the container horizontally */
+  .news-layout {
+    grid-template-columns: 1fr;
   }
 }
-/* Medium devices (tablet, 600px - 1024px) */
+
+/* Tablet */
 @media (min-width: 601px) and (max-width: 1024px) {
   .LoggedInHomepage-container {
     height: 300px;
@@ -106,21 +268,15 @@
     font-size: 30px;
   }
 
-  .content-container {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
   .content-selection {
     width: 250px;
     font-size: 15px;
   }
 }
 
-/* Large devices (desktop, 1025px and up) */
+/* Desktop */
 @media (min-width: 1025px) {
   .content-selection {
     width: 300px;
   }
 }
-  

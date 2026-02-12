@@ -29,32 +29,51 @@ ul {
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
 
-  transition: height 0.25s ease, box-shadow 0.25s ease,
+  transition:
+    height 0.25s ease,
+    box-shadow 0.25s ease,
     backdrop-filter 0.25s ease;
 }
 
-/* Scroll state (optional JS hook) */
+/* Optional scroll state */
 .navbar.scrolled {
   height: 64px;
   backdrop-filter: blur(14px);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
 }
 
-/* ===== Left ===== */
+/* ===== Grid Positions ===== */
 .navbar-left {
+  grid-column: 1;
   display: flex;
   align-items: center;
 }
 
-.navbar-logo {
-  cursor: pointer;
-}
-
-/* ===== Center ===== */
 .navbar-center {
+  grid-column: 2;
   justify-self: center;
 }
 
+.navbar-right {
+  grid-column: 3;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Signed-out special layout */
+.navbar-right-signedout {
+  gap: 16px;
+}
+
+/* ===== Logo ===== */
+.navbar-logo {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ===== Center Links ===== */
 .navbar-links {
   display: flex;
   gap: 12rem;
@@ -73,10 +92,11 @@ ul {
   color: white;
   cursor: pointer;
 
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
-/* Hover motion */
 .nav-link-button:hover {
   color: #bdbdbd;
   transform: translateY(-2px);
@@ -93,7 +113,9 @@ ul {
   background: white;
   border-radius: 2px;
 
-  transition: width 0.25s ease, left 0.25s ease;
+  transition:
+    width 0.25s ease,
+    left 0.25s ease;
 }
 
 .nav-link-button.active::after {
@@ -101,19 +123,14 @@ ul {
   left: 0;
 }
 
-/* ===== Right ===== */
-.navbar-right {
-  justify-self: end;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-/* Login icon */
+/* ===== Login Icon ===== */
 .login-icon {
   color: white;
   cursor: pointer;
-  transition: color 0.2s ease, transform 0.2s ease;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .login-icon:hover {
