@@ -45,7 +45,7 @@ function LoggedInHomepage() {
           onClick={() => navigate("/stada-sendinga")}
         >
           <h2>Staða sendinga</h2>
-          <p>Skoðaðu stöðu á Apple sendingum</p>
+          <p>FG order</p>
         </div>
 
         <div className="content-selection" onClick={() => navigate("/cto")}>

@@ -190,6 +190,13 @@
   flex: 1;
 }
 
+.news-content p {
+  display: -webkit-box;
+  -webkit-line-clamp: 5; /* Number of lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .news-footer {
   margin-top: 16px;
 }

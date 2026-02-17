@@ -74,7 +74,7 @@ function Cto() {
                 />
                 <p className="category-text">Mac mini</p>
               </div>
-              <div
+              {/*<div
                 className="category-selection-box"
                 onClick={() => navigate("/cto/mac-pro")}
               >
@@ -85,7 +85,7 @@ function Cto() {
                   draggable={false}
                 />
                 <p className="category-text">Mac Pro</p>
-              </div>
+              </div>*/}
             </div>
           </div>
         </div>
