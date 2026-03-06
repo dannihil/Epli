@@ -27,6 +27,14 @@
   color: rgb(185, 185, 185);
 }
 
+.footer-link {
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: rgb(185, 185, 185);
+}
+
 /* Media query for mobile devices */
 @media (min-width: 601px) and (max-width: 1200px) {
   .footer {

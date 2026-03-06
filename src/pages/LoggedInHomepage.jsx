@@ -35,7 +35,7 @@ function LoggedInHomepage() {
           <h1 className="greeting">
             <span className="greeting-soft">{greeting}</span>
             <br />
-            <span className="greeting-name">{user.firstName}</span>
+            <span className="greeting-name">{user.fullName}</span>
           </h1>
         </div>
       </div>

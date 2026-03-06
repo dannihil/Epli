@@ -895,6 +895,9 @@ export const descriptionOverride = {
   "MGDM4ZM/A": "Apple MagSafe Charger (2 m)",
   "MX723ZM/A": "Beats Powerbeats Pro 2 High-Performance Earbuds - Jet Black",
   "MX733ZM/A": "Beats Powerbeats Pro 2 High-Performance Earbuds - Quick Sand",
+  "MX743ZM/A":
+    "Beats Powerbeats Pro 2 High-Performance Earbuds - Electric Orange",
+  "MX753ZM/A": "Beats Powerbeats Pro 2 High-Performance Earbuds - Hyper Purple",
   "MX763ZM/A": "Apple Pencil Tips - 4 pack",
   "MXCK3IS/A": "Magic Keyboard with Touch ID (USB-C)",
   "MXCL3IS/A": "Magic Keyboard (USB-C)",
@@ -1134,6 +1137,32 @@ export const descriptionOverride = {
   "MFHP4ZM/A": "AirPods Pro 3",
 
   "MGJ74ZM/A": "Apple 46mm Slate Milanese Loop - M/L",
+
+  "MHRV4QN/A": "iPhone 17e 256GB Black",
+  "MHRW4QN/A": "iPhone 17e 256GB White",
+  "MHRX4QN/A": "iPhone 17e 256GB Soft Pink",
+  "MHRY4QN/A": "iPhone 17e 512GB Black",
+  "MHU04QN/A": "iPhone 17e 512GB White",
+  "MHU34QN/A": "iPhone 17e 512GB Soft Pink",
+  "MHWC4ZM/A": "iPhone 17e Clear Case with MagSafe",
+  "MHWD4ZM/A": "iPhone 17e Silicone Case with MagSafe - Black",
+  "MHWE4ZM/A": "iPhone 17e Silicone Case with MagSafe - Anchor Blue",
+  "MHWF4ZM/A": "iPhone 17e Silicone Case with MagSafe - Light Moss",
+  "MHWG4ZM/A": "iPhone 17e Silicone Case with MagSafe - Vanilla",
+  "MHWH4ZM/A": "iPhone 17e Silicone Case with MagSafe - Bright Guava",
+  "MHWJ4ZM/A": "iPhone 17e Silicone Case with MagSafe - Soft Pink",
+
+  "MFEL4Z/A": "Studio Display XDR - Standard glass - Tilt and height adj.",
+  "MFEN4Z/A": "Studio Display XDR - Standard glass - VESA",
+  "MFEP4Z/A": "Studio Display XDR - Nano glass - Tilt and height adj.",
+  "MFEQ4Z/A": "Studio Display XDR - Nano glass - VESA",
+  "MFEW4Z/A": "Studio Display - Standard glass - Tilt and height adj.",
+  "MFEX4Z/A": "Studio Display - Standard glass - Tilt adj.",
+  "MFEY4Z/A": "Studio Display - Standard glass - VESA",
+  "MFF04Z/A": "Studio Display - Nano glass - Tilt and height adj.",
+  "MFF14Z/A": "Studio Display - Nano glass - Tilt adj.",
+  "MFF24Z/A": "Studio Display - Nano glass - VESA",
+
   // Add more overrides as needed
 };
 

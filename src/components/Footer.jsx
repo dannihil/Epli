@@ -4,7 +4,7 @@ export default function Footer({ openModal }) {
   return (
     <div className="footer">
       <p className="footer-modal" onClick={openModal}>
-        Sérðu einhverja villu? Smelltu hér til að senda inn tilkynningu!
+        Smelltu hér til þess að senda ábendingu.
       </p>
       <span
         onClick={() => window.open("https://www.epli.is", "_blank")}

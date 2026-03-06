@@ -70,7 +70,9 @@
   font-size: 15px;
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .filter-button:hover {
@@ -128,7 +130,9 @@
   border-radius: 25px;
   height: 25px;
   width: 25px;
-  transition: color 0.3s ease, background-color 0.3s ease;
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease;
 }
 
 .search-x:hover {
@@ -144,7 +148,9 @@
   padding: 10px 15px;
   height: 40px;
   font-size: 15px;
-  transition: color 0.3s ease, background-color 0.3s ease;
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease;
   margin-left: 12px;
   margin-right: 12px;
   display: flex;
@@ -304,7 +310,9 @@
   cursor: pointer;
   padding: 8px;
   border-radius: 8px;
-  transition: background 0.2s ease, transform 0.1s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease;
 }
 
 .export-icon-button:hover:not(:disabled) {

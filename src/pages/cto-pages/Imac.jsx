@@ -250,7 +250,7 @@ function Imac() {
     doc.text(
       `Vinnsluminni: ${selectedOptions.memory} Unified Memory`,
       xPosition,
-      yPosition
+      yPosition,
     );
     yPosition += 7;
     doc.text(`Skjár: ${selectedOptions.display}`, xPosition, yPosition);
@@ -258,7 +258,7 @@ function Imac() {
     doc.text(
       `Mús eða trackpad: ${selectedOptions.mouseTrackpad}`,
       xPosition,
-      yPosition
+      yPosition,
     );
     yPosition += 7;
     if (selectedOptions.keyboard === "Magic Keyboard with Touch ID") {
@@ -293,25 +293,25 @@ function Imac() {
     doc.text(
       "Afgreiðslutími sérpanta getur verið allt að 4-6 vikur frá degi pöntunar.",
       10,
-      yPosition
+      yPosition,
     );
     yPosition += 7;
     doc.text(
       "Gerð er krafa um að lágmarki 30% fyrirframgreiðslu við pöntun.",
       10,
-      yPosition
+      yPosition,
     );
     yPosition += 7;
     doc.text(
       "Ekki er hægt að hætta við sérpöntun sé varan komin í framleiðsluferli.",
       10,
-      yPosition
+      yPosition,
     );
     yPosition += 12;
     doc.text(
       `Ef þú hefur einhverjar spurningar vinsamlegast hafðu samband í netfangið ${user.user.emailAddresses}`,
       10,
-      yPosition
+      yPosition,
     );
     doc.line(10, 183, pageWidth - 10, 183);
 
@@ -326,7 +326,7 @@ function Imac() {
 
     if (orderNumber) {
       doc.save(
-        `${title.replace(/"/g, "").trim()} - ${orderNumber.toUpperCase()}.pdf`
+        `${title.replace(/"/g, "").trim()} - ${orderNumber.toUpperCase()}.pdf`,
       );
     } else {
       doc.save(`${title.replace(/"/g, "").trim()}.pdf`);
@@ -527,7 +527,7 @@ function Imac() {
                 onClick={() => {
                   handleSelection(
                     "processor",
-                    "M4 chip with 8-core CPU, 8-core GPU"
+                    "M4 chip with 8-core CPU, 8-core GPU",
                   );
                 }}
               >
@@ -550,7 +550,7 @@ function Imac() {
                 onClick={() => {
                   handleSelection(
                     "processor",
-                    "M4 chip with 10-core CPU, 10-core GPU"
+                    "M4 chip with 10-core CPU, 10-core GPU",
                   );
                 }}
               >
@@ -769,7 +769,7 @@ function Imac() {
                 onClick={() =>
                   handleSelection(
                     "keyboard",
-                    "Magic Keyboard with Touch ID and Numeric Keypad"
+                    "Magic Keyboard with Touch ID and Numeric Keypad",
                   )
                 }
               >
