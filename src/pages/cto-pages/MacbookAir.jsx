@@ -35,18 +35,18 @@ function MacbookAir() {
     return () => window.removeEventListener("keydown", onKey);
   }, [showModal]);
 
-  const basePrices = { 13: 189990, 15: 229990 };
+  const basePrices = { 13: 219990, 15: 259990 };
 
   const priceModifiers = {
     processor: {
-      "M4 chip with 10-core CPU, 8-core GPU": 0,
-      "M4 chip with 10-core CPU, 10-core GPU": 20000,
+      "M5 chip with 10-core CPU, 8-core GPU": 0,
+      "M5 chip with 10-core CPU, 10-core GPU": 20000,
     },
     storage: {
-      "256GB": 0,
-      "512GB": 40000,
-      "1TB": 90000,
-      "2TB": 170000,
+      "512GB": 0,
+      "1TB": 40000,
+      "2TB": 120000,
+      "4TB": 240000,
     },
     memory: {
       "16GB": 0,
@@ -60,20 +60,15 @@ function MacbookAir() {
       Midnight: 0,
     },
     display: {},
-    accessories: {
-      "30W Power Adapter": 0,
-      "35W Dual USB-C Power Adapter": 5000,
-      "70W Power Adapter": 5000,
-    },
+    accessories: {},
   };
 
   const [selectedOptions, setSelectedOptions] = useState({
     screenSize: "13", // Default selection
-    processor: "M4 chip with 10-core CPU, 8-core GPU", // Default selection
-    storage: "256GB", // Default selection
+    processor: "M5 chip with 10-core CPU, 8-core GPU", // Default selection
+    storage: "512GB", // Default selection
     memory: "16GB", // Default selection
     color: "Sky Blue", // Default selection
-    accessories: "30W Power Adapter", // Default selection
   });
 
   const totalPrice =
@@ -82,14 +77,9 @@ function MacbookAir() {
       const modifier = priceModifiers[key][selectedOptions[key]];
       return sum + (modifier || 0);
     }, 0) -
-    // 35W dual adapter discount (only for 15")
-    (selectedOptions.screenSize === "15" &&
-    selectedOptions.accessories === "35W Dual USB-C Power Adapter"
-      ? 5000
-      : 0) -
     // M4 10-core is free if used with qualifying memory or storage
-    ((selectedOptions.processor === "M4 chip with 10-core CPU, 10-core GPU" &&
-      (["512GB", "1TB", "2TB"].includes(selectedOptions.storage) ||
+    ((selectedOptions.processor === "M5 chip with 10-core CPU, 10-core GPU" &&
+      (["1TB", "2TB", "4TB"].includes(selectedOptions.storage) ||
         ["24GB", "32GB"].includes(selectedOptions.memory))) ||
     ["15"].includes(selectedOptions.screenSize)
       ? 20000
@@ -105,29 +95,28 @@ function MacbookAir() {
       let newSelection = { ...prev, [category]: option };
 
       if (category === "screenSize" && option === "13") {
-        newSelection.processor = "M4 chip with 10-core CPU, 8-core GPU";
-        newSelection.storage = "256GB";
+        newSelection.processor = "M5 chip with 10-core CPU, 8-core GPU";
+        newSelection.storage = "512GB";
         newSelection.memory = "16GB";
-        newSelection.accessories = "30W Power Adapter";
       }
       if (category === "screenSize" && option === "15") {
-        newSelection.processor = "M4 chip with 10-core CPU, 10-core GPU";
-        newSelection.storage = "256GB";
+        newSelection.processor = "M5 chip with 10-core CPU, 10-core GPU";
+        newSelection.storage = "512GB";
         newSelection.memory = "16GB";
-        newSelection.accessories = "35W Dual USB-C Power Adapter";
       }
       if (
         (category === "memory" && option === "24GB") ||
         (category === "memory" && option === "32GB") ||
         (category === "storage" && option === "512GB") ||
         (category === "storage" && option === "1TB") ||
-        (category === "storage" && option === "2TB")
+        (category === "storage" && option === "2TB") ||
+        (category === "storage" && option === "4TB")
       ) {
-        newSelection.processor = "M4 chip with 10-core CPU, 10-core GPU";
+        newSelection.processor = "M5 chip with 10-core CPU, 10-core GPU";
       }
       if (
         category === "processor" &&
-        option === "M4 chip with 10-core CPU, 8-core GPU"
+        option === "M5 chip with 10-core CPU, 8-core GPU"
       ) {
         newSelection.memory = "16GB";
       }
@@ -461,7 +450,7 @@ function MacbookAir() {
           </div>
           <div className="cto-spec-selection">
             <h1 style={{ fontWeight: 900, fontSize: 40, marginBottom: 10 }}>
-              Macbook Air {selectedOptions.screenSize}"
+              MacBook Air {selectedOptions.screenSize}"
             </h1>
             <div
               style={{
@@ -586,15 +575,15 @@ function MacbookAir() {
               <div
                 className={`filter-button-processor ${
                   selectedOptions.processor ===
-                  "M4 chip with 10-core CPU, 8-core GPU"
+                  "M5 chip with 10-core CPU, 8-core GPU"
                     ? "active"
                     : ""
                 } ${
-                  selectedOptions.storage === "512GB"
+                  selectedOptions.storage === "1TB"
                     ? "disabled"
-                    : "" || selectedOptions.storage === "1TB"
+                    : "" || selectedOptions.storage === "2TB"
                       ? "disabled"
-                      : "" || selectedOptions.storage === "2TB"
+                      : "" || selectedOptions.storage === "4TB"
                         ? "disabled"
                         : "" || selectedOptions.screenSize === "15"
                           ? "disabled"
@@ -604,14 +593,14 @@ function MacbookAir() {
                   if (selectedOptions.screenSize !== "15") {
                     handleSelection(
                       "processor",
-                      "M4 chip with 10-core CPU, 8-core GPU",
+                      "M5 chip with 10-core CPU, 8-core GPU",
                     );
                   }
                 }}
               >
                 <img
-                  src="../assets/m4.svg"
-                  alt="M4 logo"
+                  src="../assets/m5.svg"
+                  alt="M5 logo"
                   className="button-processor-logo"
                 />
                 <p className="filter-button-processor-text">
@@ -621,20 +610,20 @@ function MacbookAir() {
               <div
                 className={`filter-button-processor ${
                   selectedOptions.processor ===
-                  "M4 chip with 10-core CPU, 10-core GPU"
+                  "M5 chip with 10-core CPU, 10-core GPU"
                     ? "active"
                     : ""
                 }`}
                 onClick={() =>
                   handleSelection(
                     "processor",
-                    "M4 chip with 10-core CPU, 10-core GPU",
+                    "M5 chip with 10-core CPU, 10-core GPU",
                   )
                 }
               >
                 <img
-                  src="../assets/m4.svg"
-                  alt="M4 logo"
+                  src="../assets/m5.svg"
+                  alt="M5 logo"
                   className="button-processor-logo"
                 />
                 <p className="filter-button-processor-text">
@@ -644,14 +633,6 @@ function MacbookAir() {
             </div>
             <p className="spec-title">Geymsla</p>
             <div className="spec-selection-buttons">
-              <button
-                className={`filter-button-selection ${
-                  selectedOptions.storage === "256GB" ? "active" : ""
-                }`}
-                onClick={() => handleSelection("storage", "256GB")}
-              >
-                256GB
-              </button>
               <button
                 className={`filter-button-selection ${
                   selectedOptions.storage === "512GB" ? "active" : ""
@@ -675,6 +656,14 @@ function MacbookAir() {
                 onClick={() => handleSelection("storage", "2TB")}
               >
                 2TB
+              </button>
+              <button
+                className={`filter-button-selection ${
+                  selectedOptions.storage === "4TB" ? "active" : ""
+                }`}
+                onClick={() => handleSelection("storage", "4TB")}
+              >
+                4TB
               </button>
             </div>
             <p className="spec-title">Vinnsluminni</p>
@@ -737,46 +726,6 @@ function MacbookAir() {
                 onClick={() => handleSelection("color", "Midnight")}
               >
                 Midnight
-              </button>
-            </div>
-            <p className="spec-title">Aukahlutir</p>
-            <div className="spec-selection-buttons">
-              <button
-                className={`filter-button-selection ${
-                  selectedOptions.accessories === "30W Power Adapter"
-                    ? "active"
-                    : ""
-                }`}
-                onClick={() =>
-                  handleSelection("accessories", "30W Power Adapter")
-                }
-                disabled={selectedOptions.screenSize === "15"}
-              >
-                30W Power Adapter
-              </button>
-              <button
-                className={`filter-button-selection ${
-                  selectedOptions.accessories === "35W Dual USB-C Power Adapter"
-                    ? "active"
-                    : ""
-                }`}
-                onClick={() =>
-                  handleSelection("accessories", "35W Dual USB-C Power Adapter")
-                }
-              >
-                35W Dual USB-C Power Adapter
-              </button>
-              <button
-                className={`filter-button-selection ${
-                  selectedOptions.accessories === "70W Power Adapter"
-                    ? "active"
-                    : ""
-                }`}
-                onClick={() =>
-                  handleSelection("accessories", "70W Power Adapter")
-                }
-              >
-                70W Power Adapter
               </button>
             </div>
           </div>

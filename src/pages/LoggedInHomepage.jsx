@@ -52,6 +52,14 @@ function LoggedInHomepage() {
           <h2>Sérpöntunarverðlisti</h2>
           <p>Sjáðu verð og útfærslur fyrir sérpantanir</p>
         </div>
+
+        <div
+          className="content-selection"
+          onClick={() => navigate("/solutorg")}
+        >
+          <h2>Sölutorg</h2>
+          <p>Gagnabanki - Sölutorg</p>
+        </div>
       </div>
       <div className="news-section">
         <div className="news-layout">

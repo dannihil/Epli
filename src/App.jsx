@@ -13,12 +13,14 @@ import FGorder from "./pages/FGorder";
 import Cto from "./pages/Cto";
 import MacbookAir from "./pages/cto-pages/MacbookAir";
 import MacbookPro from "./pages/cto-pages/MacbookPro";
+/*import MacbookProVinnsla from "./pages/cto-pages/MacbookProVinnsla";*/
 import MacbookProTest from "./pages/cto-pages/MacbookProTest";
 import MacStudio from "./pages/cto-pages/MacStudio";
 import MacMini from "./pages/cto-pages/Macmini";
 import MacPro from "./pages/cto-pages/MacPro";
 import Imac from "./pages/cto-pages/Imac";
 import Commissions from "./pages/Commission";
+import Solutorg from "./pages/Solutorg";
 
 function App() {
   const { user } = useUser();
@@ -47,13 +49,22 @@ function App() {
           <Route path="/stada-sendinga" element={<FGorder />} />
           <Route path="/cto" element={<Cto />} />
           <Route path="/cto/macbook-air" element={<MacbookAir />} />
+          {/*<Route
+            path="/cto/macbook-air-vinnsla"
+            element={<MacbookAirVinnsla />}
+          />*/}
           <Route path="/cto/macbook-pro" element={<MacbookPro />} />
+          {/*<Route
+            path="/cto/macbook-pro-vinnsla"
+            element={<MacbookProVinnsla />}
+          />*/}
           <Route path="/cto/macbook-pro-test" element={<MacbookProTest />} />
           <Route path="/cto/imac" element={<Imac />} />
           <Route path="/cto/mac-studio" element={<MacStudio />} />
           <Route path="/cto/mac-mini" element={<MacMini />} />
           <Route path="/cto/mac-pro" element={<MacPro />} />
           <Route path="/commission" element={<Commissions />} />
+          <Route path="/solutorg" element={<Solutorg />} />
         </Routes>
       </div>
 
