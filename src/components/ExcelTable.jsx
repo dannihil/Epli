@@ -135,8 +135,8 @@ const ExcelTable = () => {
     })
     .filter((row) =>
       Object.values(row).some((value) =>
-        value?.toString().toLowerCase().includes(searchTerm.toLowerCase())
-      )
+        value?.toString().toLowerCase().includes(searchTerm.toLowerCase()),
+      ),
     );
 
   if (sortConfig.key) {
@@ -214,7 +214,7 @@ const ExcelTable = () => {
         column.eachCell({ includeEmpty: true }, (cell) => {
           maxLength = Math.max(
             maxLength,
-            cell.value ? cell.value.toString().length : 0
+            cell.value ? cell.value.toString().length : 0,
           );
         });
         column.width = maxLength + 5;
@@ -253,29 +253,28 @@ const ExcelTable = () => {
   };
 
   return (
-    <div>
+    <div className="excel-table-root">
       <PatchNotesModal />
-      <p
-        style={{
-          fontSize: "20px",
-          fontWeight: "600",
-          marginTop: 90,
-          marginBottom: 10,
-          textAlign: "left",
-        }}
-      >
-        Gögn uppfærð: {buildDate.replaceAll("/", ".")}
-      </p>
-      <div
-        className="filter-buttons-and-search-bar"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 10,
-          marginTop: 40,
-          marginBottom: 20,
-        }}
-      >
+      {(() => {
+        const [datePart] = buildDate.split(",");
+        const [d, m, y] = datePart.trim().split("/").map(Number);
+        const updated = new Date(y, m - 1, d);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const daysOld = Math.floor((today - updated) / 86400000);
+        return daysOld >= 2 ? (
+          <div className="build-date stale">
+            <span className="stale-icon">⚠️</span>
+            <span>Gögn úrelt — uppfært {buildDate.replaceAll("/", ".")} — þarf að endurnýja</span>
+          </div>
+        ) : (
+          <div className="build-date fresh">
+            <span className="fresh-dot" />
+            <span>Gögn uppfærð: {buildDate.replaceAll("/", ".")}</span>
+          </div>
+        );
+      })()}
+      <div className="filter-buttons-and-search-bar">
         <div className="filter-buttons">
           {[
             "All",
@@ -306,7 +305,7 @@ const ExcelTable = () => {
         >
           <FaSearch size={20} />
         </button>*/}
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        <div className="search-and-export">
           <div className="search-container">
             <input
               type="text"
@@ -332,6 +331,55 @@ const ExcelTable = () => {
             )}
           </button>
         </div>
+      </div>
+
+      {/* Mobile card view */}
+      <div className="mobile-cards">
+        {sortedData.map((row, index) => (
+          <div key={index} className="mobile-card">
+            <div className="mobile-card-header">
+              <span className="mobile-card-apple-order">{row.description}</span>
+            </div>
+            <div className="mobile-card-meta">
+              <span className="mobile-card-label">Part</span>
+              <span className="mobile-card-value">{row.partNumber}</span>
+            </div>
+            <div className="mobile-card-meta">
+              <span className="mobile-card-label">Apple</span>
+              <span className="mobile-card-value">{row.appleOrderNumber}</span>
+            </div>
+            <div className="mobile-card-meta">
+              <span className="mobile-card-label">PO</span>
+              <span className="mobile-card-value">{row.orderNumber}</span>
+            </div>
+            <div className="mobile-card-stats">
+              <div className="mobile-stat">
+                <span>{row.orderQty}</span>
+                <label>Ordered</label>
+              </div>
+              <div className="mobile-stat">
+                <span>{row.deliveredQty}</span>
+                <label>Delivered</label>
+              </div>
+              <div className="mobile-stat mobile-stat-highlight">
+                <span>{row.inTransit}</span>
+                <label>In Transit</label>
+              </div>
+              <div className="mobile-stat">
+                <span>{row.remainingQty}</span>
+                <label>Remaining</label>
+              </div>
+            </div>
+            {row.estimatedDelivery && row.estimatedDelivery !== "N/A" && (
+              <div className="mobile-card-delivery">
+                Est. Delivery: <strong>{row.estimatedDelivery}</strong>
+              </div>
+            )}
+            <span className={`status-pill ${row.status === "Delivered" ? "status-delivered" : row.status === "Shipment Delay" ? "status-delayed" : "status-default"}`}>
+              {row.status}
+            </span>
+          </div>
+        ))}
       </div>
 
       <div className="table-container-2">
@@ -402,8 +450,8 @@ const ExcelTable = () => {
                         row.status === "Delivered"
                           ? "status-delivered"
                           : row.status === "Shipment Delay"
-                          ? "status-delayed"
-                          : "status-default"
+                            ? "status-delayed"
+                            : "status-default"
                       }`}
                     >
                       {row.status}

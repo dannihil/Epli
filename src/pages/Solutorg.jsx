@@ -26,6 +26,8 @@ export default function Solutorg() {
   const [editStatus, setEditStatus] = useState("Á lager");
   const [editNotes, setEditNotes] = useState("");
 
+  const [statusFilter, setStatusFilter] = useState("All");
+
   const [touchStartX, setTouchStartX] = useState(null);
   const [touchEndX, setTouchEndX] = useState(null);
 
@@ -212,14 +214,21 @@ export default function Solutorg() {
 
   const filteredProducts = products.filter((product) => {
     const value = search.toLowerCase();
-
-    return (
+    const matchesSearch =
       product.serial_number?.toLowerCase().includes(value) ||
       product.model?.toLowerCase().includes(value) ||
       product.status?.toLowerCase().includes(value) ||
-      product.notes?.toLowerCase().includes(value)
-    );
+      product.notes?.toLowerCase().includes(value);
+    const matchesStatus =
+      statusFilter === "All" || product.status === statusFilter;
+    return matchesSearch && matchesStatus;
   });
+
+  function cycleStatus(product) {
+    const cycle = ["Á lager", "Í útláni", "Selt"];
+    const next = cycle[(cycle.indexOf(product.status) + 1) % cycle.length];
+    updateStatus(product.id, next);
+  }
 
   function openEditModal(product) {
     setEditingProduct(product);
@@ -399,12 +408,25 @@ export default function Solutorg() {
         </button>
       </div>
 
-      <input
-        className="search-input"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="Search serial, model, status, or notes..."
-      />
+      <div className="solutorg-filter-row">
+        <input
+          className="search-input"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search serial, model, status, or notes..."
+        />
+        <div className="status-filter-pills">
+          {["All", "Á lager", "Í útláni", "Selt"].map((s) => (
+            <button
+              key={s}
+              className={`status-filter-pill ${statusFilter === s ? "active" : ""}`}
+              onClick={() => setStatusFilter(s)}
+            >
+              {s}
+            </button>
+          ))}
+        </div>
+      </div>
 
       <div className="product-grid">
         {filteredProducts.map((product) => (
@@ -419,18 +441,13 @@ export default function Solutorg() {
             <div className="product-meta">
               <div className="meta-row">
                 <span>Status</span>
-
-                <select
-                  value={product.status}
-                  onChange={(e) => updateStatus(product.id, e.target.value)}
+                <button
                   className={`status-pill-solutorg ${getStatusStyle(product.status)}`}
+                  onClick={() => cycleStatus(product)}
                 >
-                  {statusOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
+                  {product.status}
+                  <span className="status-pill-cycle-icon">↻</span>
+                </button>
               </div>
 
               <div className="meta-row">
@@ -446,6 +463,7 @@ export default function Solutorg() {
               </div>
             </div>
 
+            <div className="product-card-bottom">
             {product.product_images?.length > 0 && (
               <div className="image-grid">
                 {product.product_images.slice(0, 2).map((image, index) => {
@@ -463,7 +481,7 @@ export default function Solutorg() {
                       <img
                         src={image.image_url}
                         alt={product.serial_number}
-                        className="product-image"
+                        className="product-image-solutorg"
                       />
 
                       {showOverlay && (
@@ -492,6 +510,7 @@ export default function Solutorg() {
                   Delete
                 </button>
               </div>
+            </div>
             </div>
           </div>
         ))}

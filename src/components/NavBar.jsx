@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../css/NavBar.css";
 import { useNavigate } from "react-router-dom";
-import { FaUser, FaTruck, FaLaptop, FaDollarSign } from "react-icons/fa6";
+import { FaUser, FaTruck, FaLaptop, FaDollarSign, FaBars, FaXmark } from "react-icons/fa6";
 
 import {
   SignedIn,
@@ -15,17 +15,34 @@ function NavBar() {
   const navigate = useNavigate();
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+      if (window.innerWidth >= 768) setMenuOpen(false);
+    };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    const handleKey = (e) => { if (e.key === "Escape") setMenuOpen(false); };
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, []);
+
   const iconSize = windowWidth < 768 ? 20 : 28;
   const logoSize = windowWidth < 768 ? 30 : 55;
+  const isMobile = windowWidth < 768;
+
+  function navTo(path) {
+    setMenuOpen(false);
+    navigate(path);
+  }
 
   return (
+    <>
     <nav className="navbar">
       {/* SIGNED IN */}
       <SignedIn>
@@ -36,37 +53,36 @@ function NavBar() {
             className="navbar-logo"
             style={{ width: logoSize }}
             draggable="false"
-            onClick={() => navigate("/")}
+            onClick={() => navTo("/")}
           />
         </div>
 
-        <div className="navbar-center">
-          <ul className="navbar-links">
-            <li
-              className="nav-link-button"
-              onClick={() => navigate("/stada-sendinga")}
-            >
-              <FaTruck size={iconSize} />
-              <span>Staða sendinga</span>
-            </li>
-
-            <li className="nav-link-button" onClick={() => navigate("/cto")}>
-              <FaLaptop size={iconSize} />
-              <span>Sérpöntunarverðlisti</span>
-            </li>
-
-            <li
-              className="nav-link-button"
-              onClick={() => navigate("/solutorg")}
-            >
-              <FaDollarSign size={iconSize} />
-              <span>Sölutorg</span>
-            </li>
-          </ul>
-        </div>
+        {!isMobile && (
+          <div className="navbar-center">
+            <ul className="navbar-links">
+              <li className="nav-link-button" onClick={() => navTo("/stada-sendinga")}>
+                <FaTruck size={iconSize} />
+                <span>Staða sendinga</span>
+              </li>
+              <li className="nav-link-button" onClick={() => navTo("/cto")}>
+                <FaLaptop size={iconSize} />
+                <span>Sérpöntunarverðlisti</span>
+              </li>
+              <li className="nav-link-button" onClick={() => navTo("/solutorg")}>
+                <FaDollarSign size={iconSize} />
+                <span>Sölutorg</span>
+              </li>
+            </ul>
+          </div>
+        )}
 
         <div className="navbar-right">
           <UserButton userProfileMode="modal" />
+          {isMobile && (
+            <button className="hamburger-button" onClick={() => setMenuOpen((o) => !o)}>
+              {menuOpen ? <FaXmark size={22} /> : <FaBars size={22} />}
+            </button>
+          )}
         </div>
       </SignedIn>
 
@@ -79,7 +95,7 @@ function NavBar() {
             className="navbar-logo"
             style={{ width: logoSize }}
             draggable="false"
-            onClick={() => navigate("/")}
+            onClick={() => navTo("/")}
           />
         </div>
 
@@ -90,6 +106,30 @@ function NavBar() {
         </div>
       </SignedOut>
     </nav>
+
+    {/* Mobile dropdown menu */}
+    {menuOpen && (
+      <>
+        <div className="mobile-menu-backdrop" onClick={() => setMenuOpen(false)} />
+        <div className="mobile-menu">
+          <ul>
+            <li className="mobile-menu-item" onClick={() => navTo("/stada-sendinga")}>
+              <FaTruck size={20} />
+              <span>Staða sendinga</span>
+            </li>
+            <li className="mobile-menu-item" onClick={() => navTo("/cto")}>
+              <FaLaptop size={20} />
+              <span>Sérpöntunarverðlisti</span>
+            </li>
+            <li className="mobile-menu-item" onClick={() => navTo("/solutorg")}>
+              <FaDollarSign size={20} />
+              <span>Sölutorg</span>
+            </li>
+          </ul>
+        </div>
+      </>
+    )}
+    </>
   );
 }
 

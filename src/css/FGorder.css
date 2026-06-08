@@ -1,3 +1,4 @@
 .fgorder-container {
-  height: 50vw;
+  width: 100%;
+  box-sizing: border-box;
 }
