@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "../css/Commission.css";
-import { BiBorderRadius } from "react-icons/bi";
 
 function Commissions() {
   const [selectedCategory, setSelectedCategory] = useState(null);

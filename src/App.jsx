@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { Analytics } from "@vercel/analytics/react";
-import { useUser } from "@clerk/clerk-react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useAuth, useUser } from "@clerk/clerk-react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
 import NavBar from "./components/NavBar";
-import Footer from "./components/Footer";
+import FeedbackFab from "./components/FeedbackFab";
 import FooterModal from "./components/FooterModal";
 
 import Home from "./pages/Home";
@@ -13,7 +18,6 @@ import FGorder from "./pages/FGorder";
 import Cto from "./pages/Cto";
 import MacbookAir from "./pages/cto-pages/MacbookAir";
 import MacbookPro from "./pages/cto-pages/MacbookPro";
-/*import MacbookProVinnsla from "./pages/cto-pages/MacbookProVinnsla";*/
 import MacbookProTest from "./pages/cto-pages/MacbookProTest";
 import MacStudio from "./pages/cto-pages/MacStudio";
 import MacMini from "./pages/cto-pages/Macmini";
@@ -21,19 +25,27 @@ import MacPro from "./pages/cto-pages/MacPro";
 import Imac from "./pages/cto-pages/Imac";
 import Commissions from "./pages/Commission";
 import Solutorg from "./pages/Solutorg";
+import PriceList from "./pages/PriceList";
+
+function ProtectedRoute({ children }) {
+  const { isSignedIn, isLoaded } = useAuth();
+  if (!isLoaded) return null;
+  if (!isSignedIn) return <Navigate to="/" replace />;
+  return children;
+}
+
+function EditorRoute({ children }) {
+  const { isSignedIn, isLoaded } = useAuth();
+  const { user, isLoaded: userLoaded } = useUser();
+  if (!isLoaded || !userLoaded) return null;
+  if (!isSignedIn) return <Navigate to="/" replace />;
+  const role = user?.publicMetadata?.role;
+  if (role !== "admin" && role !== "editor") return <Navigate to="/" replace />;
+  return children;
+}
 
 function App() {
-  const { user } = useUser();
-
-  const [showFooter, setShowFooter] = useState(window.innerWidth > 1200);
   const [modalOpen, setModalOpen] = useState(false);
-
-  // Handle responsive footer
-  useEffect(() => {
-    const handleResize = () => setShowFooter(window.innerWidth > 1200);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   return (
     <Router>
@@ -46,30 +58,107 @@ function App() {
       <div className="main-content-container">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/stada-sendinga" element={<FGorder />} />
-          <Route path="/cto" element={<Cto />} />
-          <Route path="/cto/macbook-air" element={<MacbookAir />} />
-          {/*<Route
-            path="/cto/macbook-air-vinnsla"
-            element={<MacbookAirVinnsla />}
-          />*/}
-          <Route path="/cto/macbook-pro" element={<MacbookPro />} />
-          {/*<Route
-            path="/cto/macbook-pro-vinnsla"
-            element={<MacbookProVinnsla />}
-          />*/}
-          <Route path="/cto/macbook-pro-test" element={<MacbookProTest />} />
-          <Route path="/cto/imac" element={<Imac />} />
-          <Route path="/cto/mac-studio" element={<MacStudio />} />
-          <Route path="/cto/mac-mini" element={<MacMini />} />
-          <Route path="/cto/mac-pro" element={<MacPro />} />
-          <Route path="/commission" element={<Commissions />} />
-          <Route path="/solutorg" element={<Solutorg />} />
+          <Route
+            path="/stada-sendinga"
+            element={
+              <ProtectedRoute>
+                <FGorder />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/cto"
+            element={
+              <ProtectedRoute>
+                <Cto />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/cto/macbook-air"
+            element={
+              <ProtectedRoute>
+                <MacbookAir />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/cto/macbook-pro"
+            element={
+              <ProtectedRoute>
+                <MacbookPro />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/cto/macbook-pro-test"
+            element={
+              <ProtectedRoute>
+                <MacbookProTest />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/cto/imac"
+            element={
+              <ProtectedRoute>
+                <Imac />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/cto/mac-studio"
+            element={
+              <ProtectedRoute>
+                <MacStudio />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/cto/mac-mini"
+            element={
+              <ProtectedRoute>
+                <MacMini />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/cto/mac-pro"
+            element={
+              <ProtectedRoute>
+                <MacPro />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/commission"
+            element={
+              <ProtectedRoute>
+                <Commissions />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/solutorg"
+            element={
+              <ProtectedRoute>
+                <Solutorg />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/verdlistar"
+            element={
+              <EditorRoute>
+                <PriceList />
+              </EditorRoute>
+            }
+          />
         </Routes>
       </div>
 
-      {/* Footer */}
-      {showFooter && <Footer openModal={() => setModalOpen(true)} />}
+      {/* Persistent feedback access */}
+      <FeedbackFab onFeedbackClick={() => setModalOpen(true)} />
 
       {/* Footer Modal */}
       {modalOpen && <FooterModal closeModal={() => setModalOpen(false)} />}

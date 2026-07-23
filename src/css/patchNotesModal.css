@@ -1,43 +1,102 @@
-/* css/PatchNotesModal.css */
-
-.modal-overlay {
+.patchnotes-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 9999;
+  padding: 20px;
+  backdrop-filter: blur(4px);
 }
 
-.modal {
+.patchnotes-modal {
   background: #fff;
-  padding: 2rem;
-  max-width: 500px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 460px;
+  border-radius: 24px;
+  padding: 32px 28px 24px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
   text-align: left;
 }
 
-.modal h2 {
-  margin-top: 0;
+.patchnotes-header {
+  margin-bottom: 24px;
+  text-align: center;
 }
 
-.modal button {
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  background: #4d77b1;
-  color: white;
+.patchnotes-version {
+  display: inline-block;
+  background: #f0f0f0;
+  color: #555;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+.patchnotes-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #111;
+  margin: 0 0 6px;
+}
+
+.patchnotes-subtitle {
+  font-size: 14px;
+  color: #888;
+  margin: 0;
+}
+
+.patchnotes-items {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.patchnotes-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.patchnotes-check {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #111;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.patchnotes-item p {
+  margin: 0;
+  font-size: 14px;
+  color: #444;
+  line-height: 1.6;
+}
+
+.patchnotes-close {
+  width: 100%;
+  padding: 13px;
+  background: #111;
+  color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
   cursor: pointer;
+  transition: opacity 0.2s;
 }
 
-.list-items {
-  margin-right: 20px;
-  margin-left: 25px;
-  margin-top: 10px;
+.patchnotes-close:hover {
+  opacity: 0.8;
 }

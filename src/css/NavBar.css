@@ -13,7 +13,7 @@ ul {
 .navbar {
   position: fixed;
   top: 10px;
-  width: 98.5%;
+  width: 98.7%;
   height: 82px;
   padding: 0 24px;
 
@@ -76,7 +76,7 @@ ul {
 /* ===== Center Links ===== */
 .navbar-links {
   display: flex;
-  gap: 12rem;
+  gap: clamp(1.25rem, 6vw, 8rem);
 }
 
 /* ===== Nav Buttons ===== */
@@ -202,14 +202,44 @@ ul {
   background: rgba(255, 255, 255, 0.08);
 }
 
+.mobile-menu-item-active {
+  color: white;
+  background: rgba(255, 255, 255, 0.06);
+  border-left: 3px solid white;
+  padding-left: 21px;
+}
+
 .mobile-menu-item:not(:last-child) {
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 /* ===== Responsive ===== */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .navbar {
     height: 56px;
     padding: 0 16px;
   }
+}
+
+/* Fallback in case Clerk's appearance prop key changes */
+.cl-userButtonPopoverFooter {
+  display: none !important;
+}
+
+/* Account modal's dev-mode notice: last child of the navbar, no public
+   appearance key exists for it. .cl-internal-1dauvpw is Clerk's current
+   (unversioned) class for this wrapper and may change on a Clerk upgrade;
+   the :last-child rule is the resilient fallback if it does. */
+.cl-navbar .cl-internal-1dauvpw,
+.cl-navbar > div:last-child {
+  display: none !important;
+}
+
+/* Belt-and-suspenders: strip the orange dev-mode stripe/background in case
+   it's painted on an ancestor rather than the wrapper hidden above. An
+   opaque background-color is needed too, since the watermark bleeds
+   through .cl-navbar's own (partially transparent) background. */
+.cl-navbar {
+  background-color: #fafafa !important;
+  background-image: none !important;
 }

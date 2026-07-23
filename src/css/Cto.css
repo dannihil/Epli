@@ -6,7 +6,7 @@
 }
 
 .cto-heading {
-  font-size: 32px;
+  font-size: clamp(24px, 3vw, 32px);
   font-weight: 800;
   color: #111;
   margin-bottom: 8px;
@@ -15,10 +15,10 @@
 .category-selection-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 18px;
+  gap: clamp(12px, 2vw, 18px);
   justify-content: center;
-  margin-top: 28px;
-  padding: 0 20px;
+  margin-top: clamp(18px, 3vw, 28px);
+  padding: 0 clamp(16px, 4vw, 20px);
 }
 
 .category-selection-box {
@@ -26,9 +26,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  width: 260px;
-  height: 340px;
-  padding: 30px 20px 24px;
+  width: clamp(170px, 22vw, 260px);
+  height: clamp(220px, 28vw, 340px);
+  padding: clamp(16px, 3vw, 30px) clamp(12px, 2.5vw, 20px) clamp(14px, 2vw, 24px);
   border-radius: 18px;
   border: 1px solid #e0e0e0;
   background: #fff;
@@ -58,8 +58,8 @@
 }
 
 .category-image {
-  height: 190px;
-  width: 210px;
+  height: clamp(110px, 16vw, 190px);
+  width: clamp(120px, 18vw, 210px);
   object-fit: contain;
   transition: transform 0.3s ease;
 }
@@ -76,79 +76,97 @@
 }
 
 .category-text {
-  font-size: 18px;
+  font-size: clamp(15px, 1.6vw, 18px);
   font-weight: 700;
   color: #111;
   margin: 0;
 }
 
 .category-chip {
-  font-size: 12px;
+  font-size: clamp(11px, 1vw, 12px);
   font-weight: 500;
   color: #888;
   margin: 0;
 }
 
 .category-price {
-  font-size: 12px;
+  font-size: clamp(11px, 1vw, 12px);
   font-weight: 600;
   color: #111;
   margin: 4px 0 0;
 }
 
-@media (max-width: 600px) {
+/* Below this width, cards read better as full-width rows than as a
+   cramped multi-column grid — chip labels like "M5 · M5 Pro · M5 Max"
+   need more than ~170px to avoid wrapping. */
+@media (max-width: 640px) {
   .cto-container {
-    margin-top: 8vh;
+    /* Navbar is fixed at top:10px, height:56px on mobile (NavBar.css) —
+       clear its bottom edge (~66px) with room to spare. */
+    margin-top: calc(66px + env(safe-area-inset-top, 0px) + 28px);
   }
 
   .cto-heading {
-    font-size: 26px;
+    font-size: clamp(22px, 5vw, 26px);
+    padding: 0 16px;
   }
 
   .category-selection-container {
-    gap: 12px;
-    padding: 0 12px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 0 16px;
     margin-top: 20px;
   }
 
   .category-selection-box {
-    width: 150px;
-    height: 200px;
-    padding: 16px 12px 14px;
-    border-radius: 14px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: auto;
+    padding: 18px 20px;
+    border-radius: 18px;
+    gap: 18px;
+    transform: translateX(-8px);
+  }
+
+  @keyframes fadeUp {
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .category-selection-box:hover,
+  .category-selection-box:active {
+    transform: none;
+    box-shadow: none;
   }
 
   .category-image {
-    height: 110px;
-    width: 120px;
+    height: clamp(76px, 22vw, 96px);
+    width: clamp(76px, 22vw, 96px);
+    flex-shrink: 0;
+  }
+
+  .category-label {
+    align-items: flex-start;
+    text-align: left;
+    flex: 1;
+    min-width: 0;
+    gap: 4px;
   }
 
   .category-text {
-    font-size: 15px;
+    font-size: clamp(17px, 4.6vw, 20px);
   }
 
   .category-chip {
-    font-size: 11px;
-  }
-}
-
-@media (min-width: 601px) and (max-width: 1024px) {
-  .cto-container {
-    margin-top: 10vh;
+    font-size: clamp(13px, 3.2vw, 14px);
   }
 
-  .category-selection-box {
-    width: 180px;
-    height: 240px;
-    padding: 20px 14px 16px;
-  }
-
-  .category-image {
-    height: 130px;
-    width: 150px;
-  }
-
-  .category-text {
-    font-size: 16px;
+  .category-price {
+    font-size: clamp(13px, 3.2vw, 14px);
   }
 }

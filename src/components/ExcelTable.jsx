@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import * as XLSX from "xlsx";
 import {
   Table,
@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import "../css/ExcelTable.css";
 import { FaX } from "react-icons/fa6";
-import { FaSearch, FaDownload } from "react-icons/fa";
+import { FaDownload, FaUpload } from "react-icons/fa";
 import { skuMap, skuMapFromIdentifier } from "../data/skuMap";
 import {
   descriptionOverride,
@@ -21,19 +21,61 @@ import {
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
 import PatchNotesModal from "../functions/patchNotesModal";
-import { buildDate } from "../../buildInfo";
 import { Snackbar, Alert, CircularProgress } from "@mui/material";
+import { useUser } from "@clerk/clerk-react";
+import { supabase } from "../lib/supabase";
+
+const BUCKET = "excel-data";
+const FILE_PATH = "data.xlsx";
+
+// Known shipping pipeline stages, earliest to latest. Statuses not in this
+// list (or new ones Apple adds) safely fall back to "status-default".
+const STATUS_STAGE_ORDER = [
+  "order received",
+  "in production",
+  "shipment picked up",
+  "origin airport terminal",
+  "departed origin",
+  "in transit",
+  "final destination airport terminal",
+  "released from customs at destination",
+  "out for delivery",
+];
+const STATUS_STAGE_BUCKETS = 4;
+
+function getStatusClass(status) {
+  if (!status) return "status-default";
+  const normalized = status.trim().toLowerCase();
+  if (normalized === "delivered") return "status-delivered";
+  if (normalized === "shipment delay") return "status-delayed";
+
+  const stageIndex = STATUS_STAGE_ORDER.indexOf(normalized);
+  if (stageIndex === -1) return "status-default";
+
+  const bucket = Math.min(
+    STATUS_STAGE_BUCKETS - 1,
+    Math.floor((stageIndex / STATUS_STAGE_ORDER.length) * STATUS_STAGE_BUCKETS),
+  );
+  return `status-stage-${bucket}`;
+}
 
 const ExcelTable = () => {
+  const { user, isLoaded } = useUser();
+  const isAdmin = isLoaded && user?.publicMetadata?.role === "admin";
+
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [activeFilter, setActiveFilter] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchActive, setSearchActive] = useState(false);
   const [sortConfig, setSortConfig] = useState({
     key: null,
     direction: "ascending",
   });
+  const [fileUpdatedAt, setFileUpdatedAt] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const loadStartRef = useRef(null);
+  const [uploadingExcel, setUploadingExcel] = useState(false);
+  const uploadInputRef = useRef(null);
 
   // Filter function
   const filterDataByLOB = (lob) => {
@@ -51,46 +93,119 @@ const ExcelTable = () => {
     severity: "success",
   });
 
-  // Load Excel
-  useEffect(() => {
-    fetch("/data.xlsx")
-      .then((response) => response.blob())
-      .then((blob) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const workbook = XLSX.read(e.target.result, { type: "binary" });
-          const sheetName = workbook.SheetNames[0];
-          const sheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
-          const processedData = sheet
-            .map((row) => {
-              const excelDate = row["Estimated Delivery Date on or before"];
-              let formattedDate = "N/A";
-              if (excelDate) {
-                const date = new Date((excelDate - 25569) * 86400000);
-                formattedDate = date.toLocaleDateString("en-GB");
-              }
-              return {
-                orderNumber: row["Customer PO Number"],
-                appleOrderNumber: row["Apple Sales Order Number"],
-                partNumber: row["Apple Part #"],
-                description: row["Apple Part Description"],
-                orderQty: row["Order Quantity"],
-                deliveredQty: row["Delivered Quantity"],
-                inTransit: row["In-Transit"],
-                remainingQty: row["Remaining Quantity"],
-                status: row["Shipping Status"],
-                productIdentifier: row["Product Configuration Identifier"],
-                estimatedDelivery: formattedDate,
-                lob: row["LOB"],
-              };
-            })
-            .filter((row) => row.inTransit >= 1);
-          setData(processedData);
-          setFilteredData(processedData);
-        };
-        reader.readAsBinaryString(blob);
+  function parseBlob(blob, updatedAt) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const workbook = XLSX.read(e.target.result, { type: "binary" });
+      const sheetName = workbook.SheetNames[0];
+
+      // Row 4 (index 3) contains "Data Refreshed: YYYY-MM-DD HH:MM:SS GMT"
+      const rawRows = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], {
+        header: 1,
       });
+      const dataRefreshedCell = rawRows[3]?.[0];
+      const dateMatch =
+        typeof dataRefreshedCell === "string" &&
+        dataRefreshedCell.match(/Data Refreshed:\s*(.+)/i);
+      const sheetDate = dateMatch
+        ? new Date(
+            dateMatch[1]
+              .trim()
+              .replace(" ", "T")
+              .replace(/\s*GMT\s*$/, "Z"),
+          )
+        : null;
+
+      const sheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], {
+        range: 5,
+      });
+      const processedData = sheet
+        .map((row) => {
+          const excelDate = row["Estimated Delivery Date on or before"];
+          let formattedDate = "N/A";
+          if (excelDate) {
+            const date = new Date((excelDate - 25569) * 86400000);
+            formattedDate = date.toLocaleDateString("en-GB");
+          }
+          return {
+            orderNumber: row["Customer PO Number"],
+            appleOrderNumber: row["Apple Sales Order Number"],
+            partNumber: row["Apple Part #"],
+            description: row["Apple Part Description"],
+            orderQty: row["Order Quantity"],
+            deliveredQty: row["Delivered Quantity"],
+            inTransit: row["In-Transit"],
+            remainingQty: row["Remaining Quantity"],
+            status: row["Shipping Status"],
+            productIdentifier: row["Product Configuration Identifier"],
+            estimatedDelivery: formattedDate,
+            lob: row["LOB"],
+          };
+        })
+        .filter((row) => row.inTransit > 0);
+      setData(processedData);
+      setFilteredData(processedData);
+      setFileUpdatedAt(sheetDate || (updatedAt ? new Date(updatedAt) : null));
+      const elapsed = Date.now() - (loadStartRef.current ?? 0);
+      setTimeout(() => setLoading(false), Math.max(0, 1000 - elapsed));
+    };
+    reader.readAsBinaryString(blob);
+  }
+
+  async function loadData() {
+    loadStartRef.current = Date.now();
+    setLoading(true);
+    try {
+      const { data: files } = await supabase.storage
+        .from(BUCKET)
+        .list("", { search: FILE_PATH });
+
+      const updatedAt = files?.[0]?.updated_at ?? null;
+
+      const { data: signedData, error: signedError } = await supabase.storage
+        .from(BUCKET)
+        .createSignedUrl(FILE_PATH, 300);
+
+      if (signedError) throw signedError;
+
+      const response = await fetch(signedData.signedUrl, { cache: "no-store" });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const blob = await response.blob();
+      parseBlob(blob, updatedAt);
+    } catch (err) {
+      console.error("Failed to load data from Supabase:", err);
+      const elapsed = Date.now() - (loadStartRef.current ?? 0);
+      setTimeout(() => setLoading(false), Math.max(0, 1000 - elapsed));
+    }
+  }
+
+  useEffect(() => {
+    loadData();
   }, []);
+
+  async function handleExcelUpload(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingExcel(true);
+    const { error } = await supabase.storage
+      .from(BUCKET)
+      .upload(FILE_PATH, file, { upsert: true });
+
+    if (error) {
+      setSnackbar({ open: true, severity: "error", message: "Upload failed." });
+    } else {
+      await loadData();
+      setSnackbar({
+        open: true,
+        severity: "success",
+        message: "Gögn uppfærð!",
+      });
+    }
+
+    setUploadingExcel(false);
+    e.target.value = "";
+  }
 
   // Sorting function
   const handleSort = (key) => {
@@ -245,35 +360,37 @@ const ExcelTable = () => {
     }
   };
 
-  const toggleSearch = () => {
-    if (searchActive) {
-      setSearchTerm("");
-    }
-    setSearchActive(!searchActive);
-  };
-
   return (
     <div className="excel-table-root">
       <PatchNotesModal />
-      {(() => {
-        const [datePart] = buildDate.split(",");
-        const [d, m, y] = datePart.trim().split("/").map(Number);
-        const updated = new Date(y, m - 1, d);
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        const daysOld = Math.floor((today - updated) / 86400000);
-        return daysOld >= 2 ? (
-          <div className="build-date stale">
-            <span className="stale-icon">⚠️</span>
-            <span>Gögn úrelt — uppfært {buildDate.replaceAll("/", ".")} — þarf að endurnýja</span>
-          </div>
-        ) : (
-          <div className="build-date fresh">
-            <span className="fresh-dot" />
-            <span>Gögn uppfærð: {buildDate.replaceAll("/", ".")}</span>
-          </div>
-        );
-      })()}
+      {fileUpdatedAt
+        ? (() => {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const daysOld = Math.floor((today - fileUpdatedAt) / 86400000);
+            const label = fileUpdatedAt
+              .toLocaleString("is-IS", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false,
+              })
+              .replace(/\//g, ".");
+            return daysOld >= 2 ? (
+              <div className="build-date stale">
+                <span className="stale-icon">⚠️</span>
+                <span>Gögn úrelt — uppfært {label} — þarf að endurnýja</span>
+              </div>
+            ) : (
+              <div className="build-date fresh">
+                <span className="fresh-dot" />
+                <span>Gögn uppfærð: {label}</span>
+              </div>
+            );
+          })()
+        : null}
       <div className="filter-buttons-and-search-bar">
         <div className="filter-buttons">
           {[
@@ -286,17 +403,22 @@ const ExcelTable = () => {
             "Beats",
             "Home",
             "Accessories",
-          ].map((lob) => (
-            <button
-              key={lob}
-              className={`filter-button ${
-                activeFilter === lob ? "active" : ""
-              }`}
-              onClick={() => filterDataByLOB(lob)}
-            >
-              {lob}
-            </button>
-          ))}
+          ].map((lob) => {
+            const count =
+              lob === "All"
+                ? data.length
+                : data.filter((r) => r.lob === lob).length;
+            return (
+              <button
+                key={lob}
+                className={`filter-button ${activeFilter === lob ? "active" : ""} ${count === 0 ? "disabled" : ""}`}
+                onClick={() => count > 0 && filterDataByLOB(lob)}
+                disabled={count === 0}
+              >
+                {lob} <span className="filter-count">{count}</span>
+              </button>
+            );
+          })}
         </div>
         {/*<button
           onClick={toggleSearch}
@@ -330,11 +452,56 @@ const ExcelTable = () => {
               <FaDownload size={20} />
             )}
           </button>
+
+          {isAdmin && (
+            <>
+              <input
+                ref={uploadInputRef}
+                type="file"
+                accept=".xlsx,.xls"
+                style={{ display: "none" }}
+                onChange={handleExcelUpload}
+              />
+              <button
+                className="export-icon-button"
+                aria-label="Upload new Excel"
+                disabled={uploadingExcel}
+                onClick={() => uploadInputRef.current?.click()}
+                title="Hlaða upp nýjum gögnum (admin)"
+              >
+                {uploadingExcel ? (
+                  <CircularProgress size={18} />
+                ) : (
+                  <FaUpload size={20} />
+                )}
+              </button>
+            </>
+          )}
         </div>
       </div>
 
+      {loading && (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 16,
+            height: 300,
+            color: "#888",
+          }}
+        >
+          <CircularProgress size={36} thickness={4} style={{ color: "#888" }} />
+          <span style={{ fontSize: 20, fontWeight: 700 }}>Hleð gögnum...</span>
+        </div>
+      )}
+
       {/* Mobile card view */}
-      <div className="mobile-cards">
+      <div
+        className="mobile-cards"
+        style={{ display: loading ? "none" : undefined }}
+      >
         {sortedData.map((row, index) => (
           <div key={index} className="mobile-card">
             <div className="mobile-card-header">
@@ -375,14 +542,17 @@ const ExcelTable = () => {
                 Est. Delivery: <strong>{row.estimatedDelivery}</strong>
               </div>
             )}
-            <span className={`status-pill ${row.status === "Delivered" ? "status-delivered" : row.status === "Shipment Delay" ? "status-delayed" : "status-default"}`}>
+            <span className={`status-pill ${getStatusClass(row.status)}`}>
               {row.status}
             </span>
           </div>
         ))}
       </div>
 
-      <div className="table-container-2">
+      <div
+        className="table-container-2"
+        style={{ display: loading ? "none" : undefined }}
+      >
         <TableContainer component={Paper} className="table-container">
           <Table>
             <TableHead>
@@ -445,15 +615,7 @@ const ExcelTable = () => {
                     <p className="sticky-cell-text">{row.remainingQty}</p>
                   </TableCell>
                   <TableCell className="sticky-cell">
-                    <span
-                      className={`status-pill ${
-                        row.status === "Delivered"
-                          ? "status-delivered"
-                          : row.status === "Shipment Delay"
-                            ? "status-delayed"
-                            : "status-default"
-                      }`}
-                    >
+                    <span className={`status-pill ${getStatusClass(row.status)}`}>
                       {row.status}
                     </span>
                   </TableCell>

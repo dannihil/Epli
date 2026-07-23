@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
+import "../css/SharedModal.css";
 import "../css/Solutorg.css";
 
 export default function Solutorg() {
@@ -33,9 +34,17 @@ export default function Solutorg() {
 
   const [addProductError, setAddProductError] = useState("");
 
+  const [confirmDeleteId, setConfirmDeleteId] = useState(null);
+
   useEffect(() => {
     loadProducts();
   }, []);
+
+  useEffect(() => {
+    if (!editingProduct) return;
+    const updated = products.find((p) => p.id === editingProduct.id);
+    if (updated && updated !== editingProduct) setEditingProduct(updated);
+  }, [products, editingProduct]);
 
   function openGallery(images, startImage) {
     setGalleryImages(images);
@@ -65,11 +74,8 @@ export default function Solutorg() {
     function handleKeyDown(event) {
       if (event.key === "Escape") {
         setShowAddModal(false);
-
-        if (typeof setShowEditModal !== "undefined") {
-          setShowEditModal(false);
-        }
-
+        setShowEditModal(false);
+        setConfirmDeleteId(null);
         setActiveGalleryImage(null);
         setGalleryImages([]);
         return;
@@ -316,12 +322,6 @@ export default function Solutorg() {
   }
 
   async function deleteProduct(productId) {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this product and all linked images?",
-    );
-
-    if (!confirmed) return;
-
     const { data: images, error: imageFetchError } = await supabase
       .from("product_images")
       .select("id, image_url, storage_path")
@@ -416,18 +416,38 @@ export default function Solutorg() {
           placeholder="Search serial, model, status, or notes..."
         />
         <div className="status-filter-pills">
-          {["All", "Á lager", "Í útláni", "Selt"].map((s) => (
-            <button
-              key={s}
-              className={`status-filter-pill ${statusFilter === s ? "active" : ""}`}
-              onClick={() => setStatusFilter(s)}
-            >
-              {s}
-            </button>
-          ))}
+          {["All", "Á lager", "Í útláni", "Selt"].map((s) => {
+            const count =
+              s === "All"
+                ? products.length
+                : products.filter((p) => p.status === s).length;
+            return (
+              <button
+                key={s}
+                className={`status-filter-pill ${statusFilter === s ? "active" : ""}`}
+                onClick={() => setStatusFilter(s)}
+              >
+                {s} <span className="status-filter-count">{count}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
+      {filteredProducts.length === 0 ? (
+        <div className="solutorg-empty-state">
+          <p className="solutorg-empty-title">
+            {products.length === 0
+              ? "No products yet"
+              : "No products match your search"}
+          </p>
+          <p className="solutorg-empty-text">
+            {products.length === 0
+              ? "Add your first product to get started."
+              : "Try a different search term or status filter."}
+          </p>
+        </div>
+      ) : (
       <div className="product-grid">
         {filteredProducts.map((product) => (
           <div key={product.id} className="product-card">
@@ -464,85 +484,92 @@ export default function Solutorg() {
             </div>
 
             <div className="product-card-bottom">
-            {product.product_images?.length > 0 && (
-              <div className="image-grid">
-                {product.product_images.slice(0, 2).map((image, index) => {
-                  const extraCount = product.product_images.length - 2;
-                  const showOverlay = index === 1 && extraCount > 0;
+              {product.product_images?.length > 0 && (
+                <div className="image-grid">
+                  {product.product_images.slice(0, 2).map((image, index) => {
+                    const extraCount = product.product_images.length - 2;
+                    const showOverlay = index === 1 && extraCount > 0;
 
-                  return (
-                    <div
-                      key={image.id}
-                      className="image-wrapper"
-                      onClick={() =>
-                        openGallery(product.product_images, image.image_url)
-                      }
-                    >
-                      <img
-                        src={image.image_url}
-                        alt={product.serial_number}
-                        className="product-image-solutorg"
-                      />
+                    return (
+                      <div
+                        key={image.id}
+                        className="image-wrapper"
+                        onClick={() =>
+                          openGallery(product.product_images, image.image_url)
+                        }
+                      >
+                        <img
+                          src={image.image_url}
+                          alt={product.serial_number}
+                          className="product-image-solutorg"
+                        />
 
-                      {showOverlay && (
-                        <div className="image-count-overlay">+{extraCount}</div>
-                      )}
-                    </div>
-                  );
-                })}
+                        {showOverlay && (
+                          <div className="image-count-overlay">
+                            +{extraCount}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              <div className="product-card-actions">
+                <div className="product-edit-delete-row">
+                  <button
+                    className="edit-button"
+                    onClick={() => openEditModal(product)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="delete-button"
+                    onClick={() => setConfirmDeleteId(product.id)}
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
-            )}
-
-            <div className="product-card-actions">
-              <label className="upload-button">
-                + Upload Images
-                <input
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  onChange={(e) => uploadImages(e, product.id)}
-                />
-              </label>
-
-              <div className="product-edit-delete-row">
-                <button onClick={() => openEditModal(product)}>Edit</button>
-                <button onClick={() => deleteProduct(product.id)}>
-                  Delete
-                </button>
-              </div>
-            </div>
             </div>
           </div>
         ))}
       </div>
+      )}
 
       {showAddModal && (
         <div className="modal-overlay" onClick={() => setShowAddModal(false)}>
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-            <h2>Add Product</h2>
+            <h2 className="modal-title">Add Product</h2>
 
+            <label className="modal-field-label">Serial number</label>
             <input
-              style={{ backgroundColor: "#fff", color: "#000" }}
+              className="modal-input"
               value={serialNumber}
               onChange={(e) => {
                 setSerialNumber(e.target.value.toUpperCase());
                 setAddProductError("");
               }}
-              placeholder="Serial number"
+              placeholder="XXXXXXXXXX"
             />
-
             {addProductError && (
               <p className="modal-error">{addProductError}</p>
             )}
 
+            <label className="modal-field-label">Model</label>
             <input
-              style={{ backgroundColor: "#fff", color: "#000" }}
+              className="modal-input"
               value={model}
               onChange={(e) => setModel(e.target.value)}
-              placeholder="Model"
+              placeholder="e.g. MWW63ZM/A"
             />
 
-            <select value={status} onChange={(e) => setStatus(e.target.value)}>
+            <label className="modal-field-label">Status</label>
+            <select
+              className="modal-input"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
               {statusOptions.map((option) => (
                 <option key={option} value={option}>
                   {option}
@@ -550,18 +577,20 @@ export default function Solutorg() {
               ))}
             </select>
 
+            <label className="modal-field-label">Notes</label>
             <textarea
-              style={{ backgroundColor: "#fff", color: "#000" }}
+              className="modal-input modal-textarea"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="Notes"
+              placeholder="Condition, accessories included, etc."
             />
 
             <label className="modal-upload-button">
-              {newProductImages.length > 0
-                ? `${newProductImages.length} image(s) selected`
-                : "+ Choose Images"}
-
+              <span>
+                {newProductImages.length > 0
+                  ? `${newProductImages.length} mynd${newProductImages.length > 1 ? "ir" : ""} valdar`
+                  : "+ Choose images"}
+              </span>
               <input
                 type="file"
                 accept="image/*"
@@ -573,8 +602,15 @@ export default function Solutorg() {
             </label>
 
             <div className="modal-actions">
-              <button onClick={addProduct}>Save Product</button>
-              <button onClick={() => setShowAddModal(false)}>Cancel</button>
+              <button className="modal-save-button" onClick={addProduct}>
+                Add product
+              </button>
+              <button
+                className="modal-cancel-button"
+                onClick={() => setShowAddModal(false)}
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </div>
@@ -638,21 +674,27 @@ export default function Solutorg() {
       {showEditModal && (
         <div className="modal-overlay" onClick={() => setShowEditModal(false)}>
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-            <h2>Edit Product</h2>
+            <h2 className="modal-title">Edit product</h2>
 
+            <label className="modal-field-label">Serial number</label>
             <input
+              className="modal-input"
               value={editSerialNumber}
               onChange={(e) => setEditSerialNumber(e.target.value)}
-              placeholder="Serial number"
+              placeholder="XXXXXXXXXX"
             />
 
+            <label className="modal-field-label">Model</label>
             <input
+              className="modal-input"
               value={editModel}
               onChange={(e) => setEditModel(e.target.value)}
-              placeholder="Model"
+              placeholder="e.g. MWW63ZM/A"
             />
 
+            <label className="modal-field-label">Status</label>
             <select
+              className="modal-input"
               value={editStatus}
               onChange={(e) => setEditStatus(e.target.value)}
             >
@@ -663,15 +705,82 @@ export default function Solutorg() {
               ))}
             </select>
 
+            <label className="modal-field-label">Notes</label>
             <textarea
+              className="modal-input modal-textarea"
               value={editNotes}
               onChange={(e) => setEditNotes(e.target.value)}
-              placeholder="Notes"
+              placeholder="Ástand, fylgihlutir, o.fl."
             />
 
+            <label className="modal-field-label">Images</label>
+            {editingProduct?.product_images?.length > 0 && (
+              <div className="modal-image-strip">
+                {editingProduct.product_images.map((image) => (
+                  <img
+                    key={image.id}
+                    src={image.image_url}
+                    alt=""
+                    className="modal-image-thumb"
+                  />
+                ))}
+              </div>
+            )}
+            <label className="modal-upload-button">
+              <span>+ Upload images</span>
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={(e) => uploadImages(e, editingProduct.id)}
+              />
+            </label>
+
             <div className="modal-actions">
-              <button onClick={saveProductEdits}>Save Changes</button>
-              <button onClick={() => setShowEditModal(false)}>Cancel</button>
+              <button className="modal-save-button" onClick={saveProductEdits}>
+                Save changes
+              </button>
+              <button
+                className="modal-cancel-button"
+                onClick={() => setShowEditModal(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {confirmDeleteId && (
+        <div
+          className="modal-overlay"
+          onClick={() => setConfirmDeleteId(null)}
+        >
+          <div
+            className="modal-box confirm-modal-box"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 className="modal-title">Eyða vöru?</h2>
+            <p className="confirm-modal-text">
+              Þessari aðgerð er ekki hægt að afturkalla. Öllum tengdum myndum
+              verður einnig eytt.
+            </p>
+            <div className="modal-actions">
+              <button
+                className="modal-save-button modal-danger-button"
+                onClick={() => {
+                  deleteProduct(confirmDeleteId);
+                  setConfirmDeleteId(null);
+                }}
+              >
+                Eyða
+              </button>
+              <button
+                className="modal-cancel-button"
+                onClick={() => setConfirmDeleteId(null)}
+              >
+                Hætta við
+              </button>
             </div>
           </div>
         </div>

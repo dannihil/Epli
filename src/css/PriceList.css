@@ -1,0 +1,388 @@
+.pricelist-page {
+  width: 100%;
+  max-width: 1300px;
+  margin: 100px auto 100px;
+  padding: 20px;
+}
+
+.pricelist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.pricelist-subtitle {
+  margin: 4px 0 0;
+  color: #888;
+  font-size: 14px;
+}
+
+.pricelist-header-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.add-product-button,
+.save-all-button,
+.add-row-button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 10px;
+  background: #111;
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.save-all-button {
+  background: #166534;
+}
+
+.add-row-button {
+  padding: 6px 12px;
+  font-size: 13px;
+  background: #f0f0f0;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.search-input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 24px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+  color: #000;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+.pricelist-status {
+  color: #888;
+  font-size: 15px;
+  padding: 20px 0;
+}
+
+.pricelist-error {
+  color: #dc2626;
+}
+
+.pricelist-group {
+  margin-bottom: 36px;
+}
+
+.pricelist-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.pricelist-group-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.pricelist-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid #e5e5e5;
+  border-radius: 14px;
+  background: white;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+.pricelist-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+.pricelist-table th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 12px 10px;
+  border-bottom: 1px solid #e5e5e5;
+  white-space: nowrap;
+}
+
+.pricelist-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: middle;
+}
+
+.pricelist-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.pricelist-row-dirty {
+  background: #fffbeb;
+}
+
+.pricelist-price-cell {
+  font-weight: 700;
+}
+
+th.pricelist-price-cell {
+  font-weight: 800;
+  color: #111;
+}
+
+.cell-input {
+  width: 100%;
+  min-width: 90px;
+  padding: 8px 10px;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #f9f9f9;
+  color: #111;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.cell-input-narrow {
+  min-width: 60px;
+}
+
+.cell-input:hover {
+  border-color: #ddd;
+  background: #f2f2f2;
+}
+
+.cell-input:focus {
+  outline: none;
+  border-color: #888;
+  background: #fff;
+}
+
+.row-actions {
+  display: flex;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.row-save-button,
+.row-revert-button,
+.row-delete-button {
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.row-save-button {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.row-save-button:disabled {
+  background: #f0f0f0;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+.row-revert-button {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.row-delete-button {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.pricelist-mobile-cards {
+  display: none;
+}
+
+.pricelist-card {
+  border: 1px solid #e5e5e5;
+  border-radius: 14px;
+  background: white;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.pricelist-card-dirty {
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+
+.pricelist-card-summary {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 16px;
+  border: none;
+  background: transparent;
+  color: #111;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.pricelist-card-summary-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.pricelist-card-summary-specs {
+  font-size: 12px;
+  color: #888;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pricelist-card-summary-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.pricelist-card-chevron {
+  color: #999;
+  font-size: 14px;
+  line-height: 1;
+  transition: transform 0.15s ease;
+}
+
+.pricelist-card-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+.pricelist-card-dirty-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d97706;
+  flex-shrink: 0;
+}
+
+.pricelist-card-chip {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111;
+}
+
+.pricelist-card-price {
+  font-size: 15px;
+  white-space: nowrap;
+  color: #111;
+}
+
+.pricelist-card-body {
+  padding: 0 16px 16px;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 12px;
+}
+
+.pricelist-card-offer {
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #166534;
+}
+
+.pricelist-card-specs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pricelist-card-specs > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.pricelist-card-specs > div:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.pricelist-card-specs > div > span:first-child {
+  color: #888;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.pricelist-card-field {
+  margin-bottom: 10px;
+}
+
+.pricelist-card-field label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+
+.pricelist-card .row-actions {
+  margin-top: 6px;
+}
+
+.pricelist-card .row-save-button,
+.pricelist-card .row-revert-button,
+.pricelist-card .row-delete-button {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+}
+
+@media (max-width: 650px) {
+  .pricelist-page {
+    margin-top: 80px;
+    padding: 14px;
+  }
+
+  .pricelist-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .pricelist-header-actions {
+    flex-direction: column;
+  }
+
+  .pricelist-table-wrapper {
+    display: none;
+  }
+
+  .pricelist-mobile-cards {
+    display: block;
+  }
+}

@@ -3,6 +3,7 @@ import "../../css/CtoProduct.css";
 import Divider from "@mui/material/Divider";
 import { jsPDF } from "jspdf";
 import { SignedIn, useUser } from "@clerk/clerk-react";
+import { FiX } from "react-icons/fi";
 import PatchNotesModal from "../../functions/patchNotesModal";
 import { supabase } from "../../lib/supabase"; // adjust path if needed
 
@@ -27,20 +28,11 @@ const colorMap = {
 };
 
 function MacbookPro() {
-  const [date, setDate] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [orderNumber, setOrderNumber] = useState("");
   const [totalPrice, setTotalPrice] = useState(null);
   const [loadingPrice, setLoadingPrice] = useState(false);
   const user = useUser();
-
-  useEffect(() => {
-    setDate(new Date().toLocaleDateString("en-GB"));
-    const interval = setInterval(() => {
-      setDate(new Date().toLocaleDateString("en-GB"));
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     if (!showModal) return;
@@ -437,56 +429,46 @@ function MacbookPro() {
 
                 {showModal && (
                   <div
+                    className="cto-order-modal-overlay"
                     onPointerDown={() => {
                       setShowModal(false);
                       setOrderNumber("");
-                    }}
-                    style={{
-                      position: "fixed",
-                      inset: 0,
-                      backgroundColor: "rgba(0,0,0,0.4)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      zIndex: 2147483647,
-                      pointerEvents: "auto",
                     }}
                   >
                     <div
                       role="dialog"
                       aria-modal="true"
+                      className="cto-order-modal-box"
                       onPointerDown={(e) => e.stopPropagation()}
-                      style={{
-                        background: "white",
-                        padding: "2rem",
-                        borderRadius: "10px",
-                        width: "100%",
-                        maxWidth: "400px",
-                      }}
                     >
-                      <h2 style={{ fontWeight: 900, marginBottom: "5px" }}>
-                        Sölupöntunarnúmer:
-                      </h2>
-                      <input
-                        className="input-field"
-                        type="text"
-                        value={orderNumber}
-                        onChange={(e) => setOrderNumber(e.target.value)}
-                        placeholder="Dæmi: SBP00******"
-                        style={{ width: "100%", padding: "0.5rem" }}
-                      />
-                      <p style={{ fontSize: "12px", marginBottom: "20px" }}>
-                        Skildu reitinn eftir tómann ef pöntunarnúmer á ekki við.
-                      </p>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          gap: "1rem",
+                      <button
+                        type="button"
+                        className="cto-order-modal-close"
+                        aria-label="Loka"
+                        onClick={() => {
+                          setShowModal(false);
+                          setOrderNumber("");
                         }}
                       >
+                        <FiX size={18} />
+                      </button>
+                      <h2 className="cto-order-modal-title">Sölupöntunarnúmer</h2>
+                      <label className="cto-order-modal-label">
+                        Pöntunarnúmer
+                        <input
+                          className="cto-order-modal-input"
+                          type="text"
+                          value={orderNumber}
+                          onChange={(e) => setOrderNumber(e.target.value)}
+                          placeholder="Dæmi: SBP00******"
+                        />
+                      </label>
+                      <p className="cto-order-modal-hint">
+                        Skildu reitinn eftir tómann ef pöntunarnúmer á ekki við.
+                      </p>
+                      <div className="cto-order-modal-actions">
                         <button
-                          className="order-nr-pdf-button"
+                          className="cto-order-modal-confirm"
                           onClick={() => {
                             generatePdf(
                               `Sérpöntun - MacBook Pro ${selectedOptions.screenSize}"`,
@@ -499,7 +481,7 @@ function MacbookPro() {
                           Staðfesta
                         </button>
                         <button
-                          className="order-nr-pdf-button"
+                          className="cto-order-modal-cancel"
                           onClick={() => {
                             setShowModal(false);
                             setOrderNumber("");

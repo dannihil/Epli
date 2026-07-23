@@ -274,6 +274,181 @@
   background-color: white;
 }
 
+/* =====================================================
+   ORDER NUMBER MODAL (Búa til PDF)
+   ===================================================== */
+
+.cto-order-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 20, 20, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2147483647;
+  padding: 20px;
+  animation: ctoModalOverlayIn 0.2s ease both;
+}
+
+@keyframes ctoModalOverlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.cto-order-modal-box {
+  position: relative;
+  background: white;
+  padding: 32px 28px 28px;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  animation: ctoModalIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes ctoModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.cto-order-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: none;
+  background: #f5f5f7;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 0;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.cto-order-modal-close:hover {
+  background: #eee;
+  color: #111;
+}
+
+.cto-order-modal-close svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.cto-order-modal-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #111;
+  margin: 0 0 6px;
+}
+
+.cto-order-modal-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.cto-order-modal-input {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 12px;
+  border: 1px solid #e2e2e2;
+  background-color: #fafafa;
+  color: #111;
+  font-weight: 500;
+  font-size: 14px;
+  font-family: inherit;
+  box-sizing: border-box;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.cto-order-modal-input:focus {
+  outline: none;
+  border-color: #0071e3;
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.12);
+}
+
+.cto-order-modal-hint {
+  font-size: 12px;
+  color: #888;
+  margin: 8px 0 22px;
+  line-height: 1.5;
+}
+
+.cto-order-modal-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.cto-order-modal-confirm,
+.cto-order-modal-cancel {
+  flex: 1;
+  height: 44px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    opacity 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.cto-order-modal-confirm {
+  border: none;
+  background: #111;
+  color: white;
+}
+
+.cto-order-modal-confirm:hover {
+  opacity: 0.85;
+}
+
+.cto-order-modal-cancel {
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #555;
+}
+
+.cto-order-modal-cancel:hover {
+  border-color: #bbb;
+  color: #111;
+}
+
 @media (max-width: 900px) {
   .page-container {
     display: flex;

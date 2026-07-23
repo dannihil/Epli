@@ -1,3 +1,7 @@
+html {
+  scrollbar-gutter: stable both-edges;
+}
+
 :root {
   font-family:
     -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",

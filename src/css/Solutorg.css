@@ -68,11 +68,50 @@
   color: #fff;
 }
 
+.status-filter-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.1);
+  color: inherit;
+  margin-left: 4px;
+}
+
+.status-filter-pill.active .status-filter-count {
+  background: rgba(255, 255, 255, 0.25);
+}
+
 .product-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 18px;
   align-items: stretch;
+}
+
+.solutorg-empty-state {
+  text-align: center;
+  padding: 80px 24px;
+  background: #fafafa;
+  border-radius: 20px;
+}
+
+.solutorg-empty-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #111;
+  margin: 0 0 6px;
+}
+
+.solutorg-empty-text {
+  font-size: 14px;
+  color: #888;
+  margin: 0;
 }
 
 .product-card {
@@ -135,9 +174,9 @@
   line-height: 1.5;
 }
 
-.notes-text {
+.meta-row p.notes-text {
   max-width: 320px;
-  text-align: right;
+  text-align: left;
   word-break: break-word;
 }
 
@@ -212,6 +251,7 @@
   object-position: center;
   display: block;
   padding: 8px;
+  dynamic-range-limit: standard;
 }
 
 .image-count-overlay {
@@ -240,20 +280,46 @@
   gap: 14px;
 }
 
-.upload-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 18px;
-  border-radius: 10px;
-  background: #111;
-  color: white;
-  font-weight: 700;
-  cursor: pointer;
-  width: fit-content;
+.modal-image-strip {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  margin-bottom: 12px;
 }
 
-.upload-button input {
+.modal-image-thumb {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+  background: #f0f0f0;
+}
+
+.modal-upload-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 12px;
+  border: 1.5px dashed #ccc;
+  border-radius: 10px;
+  background: #fafafa;
+  color: #555;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 16px;
+  transition: border-color 0.2s, background 0.2s;
+  box-sizing: border-box;
+}
+
+.modal-upload-button:hover {
+  border-color: #888;
+  background: #f0f0f0;
+}
+
+.modal-upload-button input[type="file"] {
   display: none;
 }
 
@@ -261,19 +327,29 @@
 .card-actions {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .edit-button,
 .delete-button {
   border: none;
-  background: #111;
-  color: white;
   cursor: pointer;
-  font-size: 15px;
-  font-weight: 700;
-  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
   border-radius: 10px;
+}
+
+.edit-button {
+  background: #f0f0f0;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.delete-button {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fca5a5;
 }
 
 .gallery-overlay {
@@ -327,6 +403,7 @@
   background: #f5f5f5;
   touch-action: pan-y;
   user-select: none;
+  dynamic-range-limit: standard;
 }
 
 .gallery-thumbnails {
@@ -346,55 +423,31 @@
   border-radius: 10px;
   cursor: pointer;
   flex-shrink: 0;
+  dynamic-range-limit: standard;
 }
 
 .gallery-thumbnail.active {
   border-color: #111;
 }
 
-.modal-overlay,
-.image-modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9998;
-  padding: 20px;
+.confirm-modal-box {
+  max-width: 360px;
 }
 
-.modal-box {
-  background: white;
-  padding: 24px;
-  border-radius: 16px;
-  width: 100%;
-  max-width: 500px;
+.confirm-modal-text {
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 20px;
 }
 
-.modal-box input,
-.modal-box select,
-.modal-box textarea {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 12px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
+.modal-danger-button {
+  background: #dc2626;
 }
 
-.modal-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.image-modal {
-  max-width: 95vw;
-  max-height: 92vh;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  background: white;
-  border-radius: 14px;
+.modal-danger-button:hover {
+  background: #b91c1c;
 }
 
 .gallery-nav {
@@ -430,13 +483,6 @@
 
 .gallery-next {
   right: 16px;
-}
-
-.modal-error {
-  margin: -4px 0 12px;
-  color: #dc2626;
-  font-weight: 700;
-  font-size: 14px;
 }
 
 @media (max-width: 1000px) {

@@ -12,13 +12,6 @@
   justify-content: center; /* Center horizontally */
   margin: 0 auto;
 }
-.footer-container {
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 1rem;
-}
-
 .main-content-container {
   flex: 1;
   display: flex;

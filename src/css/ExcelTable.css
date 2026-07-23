@@ -58,6 +58,17 @@
   width: 100%;
   overflow-x: auto;
   margin-top: 20px;
+
+  /* CSS-only scroll shadows: fade the edge only when there's more to scroll to. */
+  background:
+    linear-gradient(to right, white 30%, rgba(255, 255, 255, 0)) left,
+    linear-gradient(to right, rgba(255, 255, 255, 0), white 70%) right,
+    linear-gradient(to right, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0)) left,
+    linear-gradient(to left, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0)) right;
+  background-repeat: no-repeat;
+  background-color: white;
+  background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
+  background-attachment: local, local, scroll, scroll;
 }
 
 /* === Table Cells and Headers === */
@@ -80,6 +91,11 @@
   border: 1px solid rgb(199, 199, 199);
   white-space: nowrap;
   overflow: hidden;
+  transition: background-color 0.12s ease;
+}
+
+.table-container-2 tbody tr:hover .sticky-cell {
+  background-color: #f5f7fa;
 }
 
 .sticky-cell-text {
@@ -90,11 +106,10 @@
 .filter-buttons-and-search-bar {
   margin-top: 40px;
   margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
   gap: 10px;
-  flex-wrap: wrap;
 }
 
 .filter-buttons {
@@ -137,6 +152,25 @@
   cursor: not-allowed;
 }
 
+.filter-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.12);
+  color: inherit;
+  margin-left: 4px;
+}
+
+.filter-button.active .filter-count {
+  background: rgba(255, 255, 255, 0.25);
+}
+
 /* === Search Bar === */
 .search-and-export {
   display: flex;
@@ -148,7 +182,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  width: 450px;
+  width: 390px;
 }
 
 .search-bar {
@@ -240,6 +274,27 @@
   color: #1a4fd8;
 }
 
+/* Blue progression — lighter (early stage) to darker (near delivery) */
+.status-stage-0 {
+  background-color: #eef2f7;
+  color: #64748b;
+}
+
+.status-stage-1 {
+  background-color: #e3ecfb;
+  color: #3159a8;
+}
+
+.status-stage-2 {
+  background-color: #cfe0fb;
+  color: #1a4fd8;
+}
+
+.status-stage-3 {
+  background-color: #b8d4fb;
+  color: #0d3aa8;
+}
+
 /* === Mobile cards (hidden on desktop) === */
 .mobile-cards {
   display: none;
@@ -255,6 +310,7 @@
   .filter-buttons-and-search-bar {
     margin-top: 12px;
     margin-bottom: 0;
+    display: flex;
     flex-direction: column;
     align-items: stretch;
     gap: 10px;

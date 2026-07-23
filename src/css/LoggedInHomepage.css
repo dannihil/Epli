@@ -1,73 +1,100 @@
 /* =====================================================
-   BASE LAYOUT
+   HERO (greeting + nav combined)
    ===================================================== */
 
-.LoggedInHomepage-container {
-  height: 200px;
-  width: 98.5vw;
+.hero-section {
+  width: 85vw;
+  margin-left: calc(-42vw + 50%);
+  margin-right: calc(-40vw + 50%);
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  color: #000;
-  background: linear-gradient(
-    0deg,
-    rgba(208, 208, 208, 1) 0%,
-    rgba(255, 255, 255, 1) 100%
-  );
-  border-radius: 0 0 15px 15px;
+  background-color: #fff;
+  background-image: radial-gradient(circle, #d4d4d4 1px, transparent 1px);
+  background-size: 28px 28px;
+  padding: 96px 24px 88px;
 }
 
-.title-box {
-  margin-top: 30px;
-}
-
-.under-title {
-  font-size: 35px;
-  font-weight: 700;
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .greeting-soft {
-  font-weight: 400;
-  color: #777;
+  font-size: 12px;
+  font-weight: 700;
+  color: #0071e3;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin: 0;
+  animation: heroFadeUp 0.5s ease both;
 }
 
 .greeting-name {
+  font-size: 48px;
   font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #111;
+  margin: 10px 0 0;
+  animation: heroFadeUp 0.6s ease 0.08s both;
 }
 
 /* =====================================================
-   BUTTONS / MAIN ACTION CARDS
+   NAV BUTTONS
    ===================================================== */
 
-.button-container {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  width: 80%;
-  margin: 50px auto;
+.nav-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 40px 60px 56px;
+  background: #f5f5f7;
+  border-radius: 24px;
 }
 
 .content-selection {
-  flex: 1;
-  max-width: 450px;
-  padding: 10px;
-  border-radius: 250px;
-  background: rgb(49, 49, 49);
-  color: #fff;
-  border: 1px solid rgb(50, 50, 50);
-  box-shadow: 0 0 4px rgb(37, 37, 37);
+  background: #fff;
+  border-radius: 20px;
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
   cursor: pointer;
-  text-align: center;
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
 }
 
+.content-selection-icon {
+  color: #111;
+  margin-bottom: 4px;
+}
+
+.content-selection h2 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 800;
+  color: #111;
+}
+
+.content-selection p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.65;
+}
+
 .content-selection:hover {
-  background: #fff;
-  color: #000;
-  transform: translateY(-6px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 /* =====================================================
@@ -75,9 +102,39 @@
    ===================================================== */
 
 .news-section {
-  max-width: 1000px;
-  margin: 60px auto;
+  max-width: 1300px;
+  margin: 48px auto;
   padding: 0 20px;
+}
+
+.news-heading {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 16px;
+  text-align: left;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -600px 0;
+  }
+  100% {
+    background-position: 600px 0;
+  }
+}
+
+.news-skeleton {
+  border-radius: 14px;
+  height: 280px;
+  background: linear-gradient(90deg, #ececec 25%, #f5f5f5 50%, #ececec 75%);
+  background-size: 600px 100%;
+  animation: shimmer 1.4s infinite linear;
+}
+
+.featured-skeleton {
+  grid-column: 1 / -1;
+  height: 420px;
 }
 
 .news-layout {
@@ -87,7 +144,7 @@
 }
 
 /* =====================================================
-   NEWS CARDS (BASE)
+   NEWS CARDS
    ===================================================== */
 
 .news-card {
@@ -110,10 +167,6 @@
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
 }
 
-/* =====================================================
-   IMAGE WRAPPER (FIXED SIZE, CLIPS IMAGE)
-   ===================================================== */
-
 .image-wrapper {
   width: 100%;
   height: 240px;
@@ -121,20 +174,14 @@
   border-radius: 12px;
 }
 
-/* Featured image height */
 .news-card.featured .image-wrapper {
   height: 360px;
 }
 
-/* Secondary image height */
 .news-card.secondary .image-wrapper {
   height: 180px;
   margin-bottom: 12px;
 }
-
-/* =====================================================
-   IMAGE (PIXELS ONLY ANIMATE)
-   ===================================================== */
 
 .image-wrapper img {
   width: 100%;
@@ -152,14 +199,6 @@
   filter: brightness(1.05);
 }
 
-.news-card.featured:hover .image-wrapper img {
-  transform: scale(1.06);
-}
-
-/* =====================================================
-   FEATURED STORY TEXT
-   ===================================================== */
-
 .news-card.featured {
   grid-column: 1 / -1;
 }
@@ -172,10 +211,6 @@
   font-size: 1rem;
   line-height: 1.6;
 }
-
-/* =====================================================
-   TEXT CONTENT
-   ===================================================== */
 
 .news-card h3 {
   margin: 12px 0 8px;
@@ -192,7 +227,7 @@
 
 .news-content p {
   display: -webkit-box;
-  -webkit-line-clamp: 5; /* Number of lines */
+  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -200,10 +235,6 @@
 .news-footer {
   margin-top: 16px;
 }
-
-/* =====================================================
-   READ MORE BUTTON
-   ===================================================== */
 
 .more-button {
   display: inline-block;
@@ -226,64 +257,36 @@
    RESPONSIVE
    ===================================================== */
 
-/* Mobile */
+@media (max-width: 900px) {
+  .nav-buttons {
+    grid-template-columns: 1fr;
+    padding: 32px 24px 40px;
+  }
+}
+
 @media (max-width: 600px) {
-  .LoggedInHomepage-container {
-    height: 15vh;
-    padding: 20px 10px;
+  .hero-section {
+    width: calc(100% + 1rem);
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+    padding: 44px 16px;
   }
 
-  .title-box {
-    font-size: 12px;
-    padding: 0 30px;
-    margin-top: -5vh;
-  }
-
-  .under-title {
-    font-size: 24px;
-  }
-
-  .button-container {
-    flex-direction: column;
-    gap: 15px;
-    max-width: 70vw;
-    margin: 30px auto;
-  }
-
-  .content-selection {
-    width: 90%;
-    font-size: 12px;
+  .greeting-name {
+    font-size: 32px;
   }
 
   .news-layout {
     grid-template-columns: 1fr;
   }
+
+  .news-section {
+    margin: 32px auto;
+  }
 }
 
-/* Tablet */
 @media (min-width: 601px) and (max-width: 1024px) {
-  .LoggedInHomepage-container {
-    height: 300px;
-    padding: 30px 20px;
-  }
-
-  .title-box {
-    padding-top: 60px;
-  }
-
-  .under-title {
-    font-size: 30px;
-  }
-
-  .content-selection {
-    width: 250px;
-    font-size: 15px;
-  }
-}
-
-/* Desktop */
-@media (min-width: 1025px) {
-  .content-selection {
-    width: 300px;
+  .greeting-name {
+    font-size: 40px;
   }
 }

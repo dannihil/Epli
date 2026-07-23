@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../../css/CtoProduct.css";
 import Divider from "@mui/material/Divider";
 import { jsPDF } from "jspdf";
@@ -6,19 +6,6 @@ import { SignedIn, useUser } from "@clerk/clerk-react";
 import PatchNotesModal from "../../functions/patchNotesModal";
 
 function MacbookProTest() {
-  const [date, setDate] = useState("");
-
-  useEffect(() => {
-    // Set date initially
-    setDate(new Date().toLocaleDateString("en-GB"));
-
-    // Optionally, update the date every second if you want real-time updates
-    const interval = setInterval(() => {
-      setDate(new Date().toLocaleDateString("en-GB"));
-    }, 1000);
-
-    return () => clearInterval(interval); // Cleanup on component unmount
-  }, []);
   const user = useUser();
   const basePrices = { 14: 339990, 16: 529990 };
 

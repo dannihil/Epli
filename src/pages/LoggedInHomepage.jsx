@@ -2,92 +2,106 @@ import React, { useState, useEffect } from "react";
 import "../css/LoggedInHomepage.css";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
+import { FiPackage, FiMonitor, FiShoppingBag } from "react-icons/fi";
 import PatchNotesModal from "../functions/patchNotesModal";
 
+const navItems = [
+  {
+    icon: <FiPackage size={30} />,
+    title: "Staða sendinga",
+    desc: "FG order",
+    route: "/stada-sendinga",
+  },
+  {
+    icon: <FiMonitor size={30} />,
+    title: "Sérpöntunarverðlisti",
+    desc: "Sjáðu verð og útfærslur fyrir sérpantanir",
+    route: "/cto",
+  },
+  {
+    icon: <FiShoppingBag size={30} />,
+    title: "Sölutorg",
+    desc: "Gagnabanki - Sölutorg",
+    route: "/solutorg",
+  },
+];
+
 function LoggedInHomepage() {
-  const { user, isSignedIn } = useUser();
+  const { user } = useUser();
   const navigate = useNavigate();
 
   const hour = new Date().getHours();
-  const greeting =
-    hour < 12 ? "Góðan daginn" : hour < 18 ? "Góðan daginn" : "Gott kvöld";
+  const greeting = hour < 18 ? "Góðan daginn" : "Gott kvöld";
 
   const [articles, setArticles] = useState([]);
+  const [loadingNews, setLoadingNews] = useState(true);
 
   useEffect(() => {
     fetch("/api/9to5mac")
-      .then((res) => {
-        console.log("status:", res.status);
-        return res.json();
-      })
-      .then((data) => {
-        console.log("articles:", data);
-        setArticles(data);
-      })
-      .catch((err) => console.error("fetch error:", err));
+      .then((res) => res.json())
+      .then((data) => setArticles(data))
+      .catch((err) => console.error("fetch error:", err))
+      .finally(() => setLoadingNews(false));
   }, []);
 
   return (
     <div>
       <PatchNotesModal />
-      <div className="LoggedInHomepage-container">
-        <div className="title-box">
-          <h1 className="greeting">
-            <span className="greeting-soft">{greeting}</span>
-            <br />
-            <span className="greeting-name">{user.fullName}</span>
-          </h1>
-        </div>
-      </div>
-      <div className="button-container">
-        <div
-          className="content-selection"
-          onClick={() => navigate("/stada-sendinga")}
-        >
-          <h2>Staða sendinga</h2>
-          <p>FG order</p>
-        </div>
 
-        <div className="content-selection" onClick={() => navigate("/cto")}>
-          <h2>Sérpöntunarverðlisti</h2>
-          <p>Sjáðu verð og útfærslur fyrir sérpantanir</p>
-        </div>
-
-        <div
-          className="content-selection"
-          onClick={() => navigate("/solutorg")}
-        >
-          <h2>Sölutorg</h2>
-          <p>Gagnabanki - Sölutorg</p>
-        </div>
+      <div className="hero-section">
+        <p className="greeting-soft">{greeting}</p>
+        <h1 className="greeting-name">{user.fullName}</h1>
       </div>
+
+      <div className="nav-buttons">
+        {navItems.map((item) => (
+          <div
+            key={item.route}
+            className="content-selection"
+            onClick={() => navigate(item.route)}
+          >
+            <div className="content-selection-icon">{item.icon}</div>
+            <h2>{item.title}</h2>
+            <p>{item.desc}</p>
+          </div>
+        ))}
+      </div>
+
       <div className="news-section">
-        <div className="news-layout">
-          {articles.map((article, index) => (
-            <a
-              key={index}
-              href={article.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`news-card ${index === 0 ? "featured" : "secondary"}`}
-            >
-              {article.image && (
-                <div className="image-wrapper">
-                  <img src={article.image} alt={article.title} />
+        <h2 className="news-heading">Fréttir</h2>
+
+        {loadingNews ? (
+          <div className="news-layout">
+            <div className="news-skeleton featured-skeleton" />
+            <div className="news-skeleton" />
+            <div className="news-skeleton" />
+          </div>
+        ) : (
+          <div className="news-layout">
+            {articles.map((article, index) => (
+              <a
+                key={index}
+                href={article.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`news-card ${index === 0 ? "featured" : "secondary"}`}
+              >
+                {article.image && (
+                  <div className="image-wrapper">
+                    <img src={article.image} alt={article.title} />
+                  </div>
+                )}
+                <div className="news-content">
+                  <h3>{article.title}</h3>
+                  <p>{article.excerpt}</p>
                 </div>
-              )}
-
-              <div className="news-content">
-                <h3>{article.title}</h3>
-                <p>{article.excerpt}</p>
-              </div>
-
-              <div className="news-footer">
-                <span className="more-button">Lesa meira</span>
-              </div>
-            </a>
-          ))}
-        </div>
+                <div className="news-footer">
+                  <span className="more-button">Lesa meira</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

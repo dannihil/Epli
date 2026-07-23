@@ -1,8 +1,13 @@
-// components/PatchNotesModal.js
 import React, { useEffect, useState } from "react";
 import "../css/patchNotesModal.css";
+import { FiCheck } from "react-icons/fi";
 
-const CURRENT_VERSION = "1.2.0"; // Update this on each new version deploy
+const CURRENT_VERSION = "2.2.0";
+
+const majorUpdates = [
+  "Öll sérpöntunarverð eru komin rétt inn miðað við nýja verðskrá á Mac flokknum, miklar hækkanir áttu sér stað og hafa sérpöntunarverðin fylgt því.",
+  "Talsverðar útlitsbreytingar á vef.",
+];
 
 const PatchNotesModal = () => {
   const [show, setShow] = useState(false);
@@ -18,37 +23,30 @@ const PatchNotesModal = () => {
   if (!show) return null;
 
   return (
-    <div
-      className="modal-overlay"
-      onClick={() => setShow(false)} // Close on clicking overlay
-    >
-      <div
-        className="modal"
-        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
-      >
-        <h2>Breytingar í útgáfu {CURRENT_VERSION}</h2>
-        <p style={{ fontWeight: "bold", marginTop: "10px" }}>
-          Major uppfærslur:
-        </p>
-        <ol className="list-items">
-          <p>
-            Sérpöntunarverð fyrir eftirfarandi tölvur eru orðin rétt miðað við
-            verðlækkun 02.12.2025:
+    <div className="patchnotes-overlay" onClick={() => setShow(false)}>
+      <div className="patchnotes-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="patchnotes-header">
+          <span className="patchnotes-version">v{CURRENT_VERSION}</span>
+          <h2 className="patchnotes-title">Hvað er nýtt?</h2>
+          <p className="patchnotes-subtitle">
+            Hér eru helstu breytingar í þessari útgáfu.
           </p>
-          <li>Mac mini</li>
-          <li>iMac</li>
-          <li>Mac Studio</li>
-          <p style={{ marginTop: 10, fontWeight: 600 }}>
-            Verið að vinna í verðum fyrir MacBook Air og MacBook Pro
-          </p>
-        </ol>
-        <p style={{ fontWeight: "bold", marginTop: "30px" }}>
-          Minor uppfærslur:
-        </p>
-        <ol className="list-items">
-          <li>Nú sést hvenær gögn voru uppfærð fyrir sendingarsíðu.</li>
-        </ol>
-        <button onClick={() => setShow(false)}>Close</button>
+        </div>
+
+        <div className="patchnotes-items">
+          {majorUpdates.map((text, i) => (
+            <div key={i} className="patchnotes-item">
+              <div className="patchnotes-check">
+                <FiCheck size={14} strokeWidth={3} />
+              </div>
+              <p>{text}</p>
+            </div>
+          ))}
+        </div>
+
+        <button className="patchnotes-close" onClick={() => setShow(false)}>
+          Loka
+        </button>
       </div>
     </div>
   );

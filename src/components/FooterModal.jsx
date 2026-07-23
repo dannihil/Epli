@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import emailjs from "emailjs-com";
+import { FiMessageSquare, FiX } from "react-icons/fi";
 import "../css/FooterModal.css";
 
 export default function FooterModal({ closeModal }) {
@@ -49,34 +50,60 @@ export default function FooterModal({ closeModal }) {
         className="footer-modal-container"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2>Senda tilkynningu um villu</h2>
+        <button
+          className="footer-modal-close"
+          onClick={closeModal}
+          aria-label="Loka"
+        >
+          <FiX size={18} />
+        </button>
+
+        <div className="footer-modal-icon">
+          <FiMessageSquare size={22} />
+        </div>
+        <h2>Senda ábendingu</h2>
+        <p className="footer-modal-subtitle">
+          Sástu villu eða dettur eitthvað í hug? Láttu okkur vita.
+        </p>
+
         <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Nafn"
-            value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            required
-          />
-          <input
-            type="email"
-            placeholder="Netfang"
-            value={formData.email}
-            onChange={(e) =>
-              setFormData({ ...formData, email: e.target.value })
-            }
-            required
-          />
-          <textarea
-            placeholder="Lýsing á villu"
-            value={formData.message}
-            onChange={(e) =>
-              setFormData({ ...formData, message: e.target.value })
-            }
-            required
-          />
+          <label className="footer-modal-label">
+            Nafn
+            <input
+              type="text"
+              placeholder="Nafn þitt"
+              value={formData.name}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
+              required
+            />
+          </label>
+          <label className="footer-modal-label">
+            Netfang
+            <input
+              type="email"
+              placeholder="netfang@epli.is"
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+              required
+            />
+          </label>
+          <label className="footer-modal-label">
+            Lýsing
+            <textarea
+              placeholder="Lýstu villunni eða hugmyndinni þinni..."
+              value={formData.message}
+              onChange={(e) =>
+                setFormData({ ...formData, message: e.target.value })
+              }
+              required
+            />
+          </label>
           <button className="footer-modal-send-button" type="submit">
-            Senda
+            Senda ábendingu
           </button>
         </form>
       </div>
