@@ -326,9 +326,7 @@ export default function PriceList() {
         <div>
           <h1>Verðlistar í verslunum</h1>
           {!isEditor && isLoaded && (
-            <p className="pricelist-subtitle">
-              Skoðunarham — aðeins stjórnendur geta breytt verði.
-            </p>
+            <p className="pricelist-subtitle">Sæki verðlista.</p>
           )}
         </div>
 

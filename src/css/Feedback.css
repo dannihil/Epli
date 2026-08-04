@@ -1,5 +1,5 @@
 /* Grey overlay behind the modal */
-.footer-modal-overlay {
+.feedback-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -11,10 +11,10 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  animation: footerModalOverlayIn 0.2s ease both;
+  animation: feedbackOverlayIn 0.2s ease both;
 }
 
-@keyframes footerModalOverlayIn {
+@keyframes feedbackOverlayIn {
   from {
     opacity: 0;
   }
@@ -24,7 +24,7 @@
 }
 
 /* Modal container */
-.footer-modal-container {
+.feedback-container {
   position: relative;
   background: white;
   padding: 36px 32px 32px;
@@ -33,10 +33,10 @@
   max-width: calc(100vw - 32px);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
   overflow: hidden;
-  animation: footerModalIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: feedbackIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-@keyframes footerModalIn {
+@keyframes feedbackIn {
   from {
     opacity: 0;
     transform: translateY(16px) scale(0.98);
@@ -47,7 +47,7 @@
   }
 }
 
-.footer-modal-close {
+.feedback-close {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -70,19 +70,19 @@
     color 0.15s ease;
 }
 
-.footer-modal-close:hover {
+.feedback-close:hover {
   background: #eee;
   color: #111;
 }
 
-.footer-modal-close svg {
+.feedback-close svg {
   width: 18px;
   height: 18px;
   flex-shrink: 0;
   pointer-events: none;
 }
 
-.footer-modal-icon {
+.feedback-icon {
   width: 44px;
   height: 44px;
   border-radius: 12px;
@@ -95,14 +95,14 @@
 }
 
 /* Modal title */
-.footer-modal-container h2 {
+.feedback-container h2 {
   margin: 0 0 6px;
   font-size: 22px;
   font-weight: 800;
   color: #111;
 }
 
-.footer-modal-subtitle {
+.feedback-subtitle {
   margin: 0 0 24px;
   font-size: 14px;
   color: #777;
@@ -110,7 +110,7 @@
 }
 
 /* Field labels */
-.footer-modal-label {
+.feedback-label {
   display: block;
   font-size: 12px;
   font-weight: 700;
@@ -121,8 +121,8 @@
 }
 
 /* Form inputs */
-.footer-modal-container input,
-.footer-modal-container textarea {
+.feedback-container input,
+.feedback-container textarea {
   display: block;
   width: 100%;
   margin-top: 6px;
@@ -142,13 +142,13 @@
     background-color 0.15s ease;
 }
 
-.footer-modal-container textarea {
+.feedback-container textarea {
   height: 100px;
   resize: none;
 }
 
-.footer-modal-container input:focus,
-.footer-modal-container textarea:focus {
+.feedback-container input:focus,
+.feedback-container textarea:focus {
   outline: none;
   border-color: #0071e3;
   background-color: white;
@@ -156,7 +156,7 @@
 }
 
 /* Submit button */
-.footer-modal-send-button {
+.feedback-send-button {
   height: 46px;
   background-color: #111;
   color: white;
@@ -176,10 +176,75 @@
   align-items: center;
 }
 
-.footer-modal-send-button:hover {
+.feedback-send-button:hover {
   opacity: 0.85;
 }
 
-.footer-modal-send-button:active {
+.feedback-send-button:active {
   transform: scale(0.98);
+}
+
+.feedback-send-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.feedback-container input:disabled,
+.feedback-container textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Error banner */
+.feedback-error {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: -4px 0 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(220, 38, 38, 0.08);
+  color: #dc2626;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.feedback-error svg {
+  flex-shrink: 0;
+}
+
+/* Success state */
+.feedback-result {
+  text-align: center;
+  padding: 8px 0 4px;
+  animation: feedbackResultIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.feedback-result .feedback-icon {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.feedback-result h2 {
+  margin-bottom: 6px;
+}
+
+.feedback-result .feedback-subtitle {
+  margin-bottom: 0;
+}
+
+@keyframes feedbackResultIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.feedback-icon-success {
+  background: rgba(22, 101, 52, 0.1);
+  color: #166534;
 }

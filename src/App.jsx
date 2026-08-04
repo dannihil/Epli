@@ -11,7 +11,7 @@ import {
 
 import NavBar from "./components/NavBar";
 import FeedbackFab from "./components/FeedbackFab";
-import FooterModal from "./components/FooterModal";
+import Feedback from "./components/Feedback";
 
 import Home from "./pages/Home";
 import FGorder from "./pages/FGorder";
@@ -23,7 +23,6 @@ import MacStudio from "./pages/cto-pages/MacStudio";
 import MacMini from "./pages/cto-pages/Macmini";
 import MacPro from "./pages/cto-pages/MacPro";
 import Imac from "./pages/cto-pages/Imac";
-import Commissions from "./pages/Commission";
 import Solutorg from "./pages/Solutorg";
 import PriceList from "./pages/PriceList";
 
@@ -131,14 +130,6 @@ function App() {
             }
           />
           <Route
-            path="/commission"
-            element={
-              <ProtectedRoute>
-                <Commissions />
-              </ProtectedRoute>
-            }
-          />
-          <Route
             path="/solutorg"
             element={
               <ProtectedRoute>
@@ -160,8 +151,8 @@ function App() {
       {/* Persistent feedback access */}
       <FeedbackFab onFeedbackClick={() => setModalOpen(true)} />
 
-      {/* Footer Modal */}
-      {modalOpen && <FooterModal closeModal={() => setModalOpen(false)} />}
+      {/* Feedback modal */}
+      {modalOpen && <Feedback closeModal={() => setModalOpen(false)} />}
 
       <Analytics />
     </Router>

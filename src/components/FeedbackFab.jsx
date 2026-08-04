@@ -46,7 +46,7 @@ export default function FeedbackFab({ onFeedbackClick }) {
             }}
           >
             <FiExternalLink size={16} />
-            Fara á vef Epli.is
+            Fara á vef epli.is
           </button>
         </div>
       )}
