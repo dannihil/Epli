@@ -17,8 +17,13 @@ const displayMap = {
   "Nano-texture display": "nano_texture",
 };
 const colorMap = {
-  Blue: "blue", Purple: "purple", Pink: "pink", Orange: "orange",
-  Yellow: "yellow", Green: "green", Silver: "silver",
+  Blue: "blue",
+  Purple: "purple",
+  Pink: "pink",
+  Orange: "orange",
+  Yellow: "yellow",
+  Green: "green",
+  Silver: "silver",
 };
 
 function Imac() {
@@ -54,7 +59,10 @@ function Imac() {
   useEffect(() => {
     const { processor, storage, memory, display, color } = selectedOptions;
     const chip = chipMap[processor];
-    if (!chip) { setBasePrice(null); return; }
+    if (!chip) {
+      setBasePrice(null);
+      return;
+    }
     setLoadingPrice(true);
     supabase
       .from("configuration")
@@ -72,13 +80,19 @@ function Imac() {
       });
   }, [selectedOptions]);
 
-  const mouseTrackpadMod = selectedOptions.mouseTrackpad === "Magic Trackpad" ? 10000 : 0;
-  const keyboardMod = selectedOptions.keyboard === "Magic Keyboard with Touch ID and Numeric Keypad" ? 10000 : 0;
-  const totalPrice = basePrice !== null ? basePrice + mouseTrackpadMod + keyboardMod : null;
+  const mouseTrackpadMod =
+    selectedOptions.mouseTrackpad === "Magic Trackpad" ? 10000 : 0;
+  const keyboardMod =
+    selectedOptions.keyboard ===
+    "Magic Keyboard with Touch ID and Numeric Keypad"
+      ? 10000
+      : 0;
+  const totalPrice =
+    basePrice !== null ? basePrice + mouseTrackpadMod + keyboardMod : null;
 
   const formatPriceISK = (price) => {
     const formattedPrice = price.toLocaleString("is-IS");
-    return formattedPrice.replace(/,/g, ".") + "kr";
+    return formattedPrice.replace(/,/g, ".") + " kr";
   };
 
   const handleSelection = (category, option) => {
@@ -130,7 +144,8 @@ function Imac() {
       Green: "../assets/imac_green.png",
       Silver: "../assets/imac_silver.png",
     };
-    const imageSrc = colorImageMap[selectedOptions.color] || "../assets/imac_blue.png";
+    const imageSrc =
+      colorImageMap[selectedOptions.color] || "../assets/imac_blue.png";
 
     const [base64Image, logoBase64] = await Promise.all([
       getBase64Image(imageSrc),
@@ -159,7 +174,7 @@ function Imac() {
     // ── Meta ─────────────────────────────────────────
     const metaFields = [
       ["DAGSETNING", formattedDate],
-      ["SÖLUMAÐUR", user.user.firstName],
+      ["SÖLUMAÐUR", user.user.fullName],
       ...(orderNumber ? [["PÖNTUNARNÚMER", orderNumber.toUpperCase()]] : []),
     ];
     const colW = (W - m * 2) / metaFields.length;
@@ -208,7 +223,10 @@ function Imac() {
       ["Vinnsluminni", `${selectedOptions.memory} Unified`],
       ["Skjár", selectedOptions.display],
       ["Mús/Trackpad", selectedOptions.mouseTrackpad],
-      ["Lyklaborð", selectedOptions.keyboard.replace(" and Numeric Keypad", " + Num")],
+      [
+        "Lyklaborð",
+        selectedOptions.keyboard.replace(" and Numeric Keypad", " + Num"),
+      ],
     ];
     const rowH = 9;
     specs.forEach(([label, value], i) => {
@@ -239,14 +257,20 @@ function Imac() {
     y += 7;
     doc.setFontSize(17);
     doc.setTextColor(20, 20, 20);
-    doc.text(totalPrice !== null ? formatPriceISK(totalPrice) : "Verð ekki tiltækt", W - m - 1, y, { align: "right" });
+    doc.text(
+      totalPrice !== null ? formatPriceISK(totalPrice) : "Verð ekki tiltækt",
+      W - m - 1,
+      y,
+      { align: "right" },
+    );
 
     // ── Section divider ───────────────────────────────
+    y += 8;
     doc.setDrawColor(220, 220, 220);
-    doc.line(m, 150, W - m, 150);
+    doc.line(m, y, W - m, y);
 
     // ── Terms ─────────────────────────────────────────
-    let tY = 159;
+    let tY = y + 9;
     doc.setFont("helvetica", "bold");
     doc.setFontSize(8);
     doc.setTextColor(80, 80, 80);
@@ -255,7 +279,7 @@ function Imac() {
 
     const email = user.user.emailAddresses[0]?.emailAddress || "";
     const terms = [
-      "Afgreiðslutími sérpanta getur verið allt að 4-6 vikur frá degi pöntunar.",
+      "Afgreiðslutími sérpanta getur verið allt að 8-12 vikur frá degi pöntunar. (með fyrirvara um tafir.)",
       "Gerð er krafa um að lágmarki 30% fyrirframgreiðslu við pöntun.",
       "Ekki er hægt að hætta við sérpöntun sé varan komin í framleiðsluferli.",
       `Spurningar: hafðu samband í netfangið ${email}`,
@@ -289,11 +313,15 @@ function Imac() {
     doc.setFont("helvetica", "normal");
     doc.setFontSize(8);
     doc.setTextColor(140, 140, 140);
-    doc.text("Laugavegur 182  ·  Smáralind  ·  epli.is", W / 2, footerY + 12, { align: "center" });
+    doc.text("Laugavegur 182  ·  Smáralind  ·  epli.is", W / 2, footerY + 12, {
+      align: "center",
+    });
 
     // ── Save ──────────────────────────────────────────
     if (orderNumber) {
-      doc.save(`${title.replace(/"/g, "").trim()} - ${orderNumber.toUpperCase()}.pdf`);
+      doc.save(
+        `${title.replace(/"/g, "").trim()} - ${orderNumber.toUpperCase()}.pdf`,
+      );
     } else {
       doc.save(`${title.replace(/"/g, "").trim()}.pdf`);
     }
@@ -316,21 +344,61 @@ function Imac() {
         <div className="page-container">
           <div className="product-image-container">
             {selectedOptions.color === "Blue" ? (
-              <img src="../assets/imac_blue.png" alt="iMac" className="product-image" draggable={false} />
+              <img
+                src="../assets/imac_blue.png"
+                alt="iMac"
+                className="product-image"
+                draggable={false}
+              />
             ) : selectedOptions.color === "Purple" ? (
-              <img src="../assets/imac_purple.png" alt="iMac" className="product-image" draggable={false} />
+              <img
+                src="../assets/imac_purple.png"
+                alt="iMac"
+                className="product-image"
+                draggable={false}
+              />
             ) : selectedOptions.color === "Pink" ? (
-              <img src="../assets/imac_pink.png" alt="iMac" className="product-image" draggable={false} />
+              <img
+                src="../assets/imac_pink.png"
+                alt="iMac"
+                className="product-image"
+                draggable={false}
+              />
             ) : selectedOptions.color === "Orange" ? (
-              <img src="../assets/imac_orange.png" alt="iMac" className="product-image" draggable={false} />
+              <img
+                src="../assets/imac_orange.png"
+                alt="iMac"
+                className="product-image"
+                draggable={false}
+              />
             ) : selectedOptions.color === "Yellow" ? (
-              <img src="../assets/imac_yellow.png" alt="iMac" className="product-image" draggable={false} />
+              <img
+                src="../assets/imac_yellow.png"
+                alt="iMac"
+                className="product-image"
+                draggable={false}
+              />
             ) : selectedOptions.color === "Green" ? (
-              <img src="../assets/imac_green.png" alt="iMac" className="product-image" draggable={false} />
+              <img
+                src="../assets/imac_green.png"
+                alt="iMac"
+                className="product-image"
+                draggable={false}
+              />
             ) : selectedOptions.color === "Silver" ? (
-              <img src="../assets/imac_silver.png" alt="iMac" className="product-image" draggable={false} />
+              <img
+                src="../assets/imac_silver.png"
+                alt="iMac"
+                className="product-image"
+                draggable={false}
+              />
             ) : (
-              <img src="../assets/imac_blue.png" alt="iMac" className="product-image" draggable={false} />
+              <img
+                src="../assets/imac_blue.png"
+                alt="iMac"
+                className="product-image"
+                draggable={false}
+              />
             )}
           </div>
 
@@ -339,15 +407,25 @@ function Imac() {
               <h1 className="cto-title">iMac</h1>
               <div className="cto-price-row">
                 <p className="cto-price">
-                  {loadingPrice ? "..." : totalPrice !== null ? formatPriceISK(totalPrice) : "Verð ekki tiltækt"}
+                  {loadingPrice
+                    ? "..."
+                    : totalPrice !== null
+                      ? formatPriceISK(totalPrice)
+                      : "Verð ekki tiltækt"}
                 </p>
-                <button onClick={() => setShowModal(true)} className="pdf-button">
+                <button
+                  onClick={() => setShowModal(true)}
+                  className="pdf-button"
+                >
                   Búa til PDF
                 </button>
                 {showModal && (
                   <div
                     className="cto-order-modal-overlay"
-                    onPointerDown={() => { setShowModal(false); setOrderNumber(""); }}
+                    onPointerDown={() => {
+                      setShowModal(false);
+                      setOrderNumber("");
+                    }}
                   >
                     <div
                       role="dialog"
@@ -359,11 +437,16 @@ function Imac() {
                         type="button"
                         className="cto-order-modal-close"
                         aria-label="Loka"
-                        onClick={() => { setShowModal(false); setOrderNumber(""); }}
+                        onClick={() => {
+                          setShowModal(false);
+                          setOrderNumber("");
+                        }}
                       >
                         <FiX size={18} />
                       </button>
-                      <h2 className="cto-order-modal-title">Sölupöntunarnúmer</h2>
+                      <h2 className="cto-order-modal-title">
+                        Sölupöntunarnúmer
+                      </h2>
                       <label className="cto-order-modal-label">
                         Pöntunarnúmer
                         <input
@@ -390,7 +473,10 @@ function Imac() {
                         </button>
                         <button
                           className="cto-order-modal-cancel"
-                          onClick={() => { setShowModal(false); setOrderNumber(""); }}
+                          onClick={() => {
+                            setShowModal(false);
+                            setOrderNumber("");
+                          }}
                         >
                           Hætta við
                         </button>
@@ -399,24 +485,46 @@ function Imac() {
                   </div>
                 )}
               </div>
-              <Divider style={{ margin: "10px 0px 10px 0px" }} />
+              <Divider style={{ margin: "20px 0px 10px 0px" }} />
             </div>
 
             <p className="spec-title">Örgjörvi</p>
             <div className="spec-selection-buttons">
               <div
                 className={`filter-button-processor ${selectedOptions.processor === "M4 chip with 8-core CPU, 8-core GPU" ? "active" : ""}`}
-                onClick={() => handleSelection("processor", "M4 chip with 8-core CPU, 8-core GPU")}
+                onClick={() =>
+                  handleSelection(
+                    "processor",
+                    "M4 chip with 8-core CPU, 8-core GPU",
+                  )
+                }
               >
-                <img src="../assets/m4.svg" alt="M4 logo" className="button-processor-logo" />
-                <p className="filter-button-processor-text">8-core CPU 8-core GPU</p>
+                <img
+                  src="../assets/m4.svg"
+                  alt="M4 logo"
+                  className="button-processor-logo"
+                />
+                <p className="filter-button-processor-text">
+                  8-core CPU 8-core GPU
+                </p>
               </div>
               <div
                 className={`filter-button-processor ${selectedOptions.processor === "M4 chip with 10-core CPU, 10-core GPU" ? "active" : ""}`}
-                onClick={() => handleSelection("processor", "M4 chip with 10-core CPU, 10-core GPU")}
+                onClick={() =>
+                  handleSelection(
+                    "processor",
+                    "M4 chip with 10-core CPU, 10-core GPU",
+                  )
+                }
               >
-                <img src="../assets/m4.svg" alt="M4 logo" className="button-processor-logo" />
-                <p className="filter-button-processor-text">10-core CPU 10-core GPU</p>
+                <img
+                  src="../assets/m4.svg"
+                  alt="M4 logo"
+                  className="button-processor-logo"
+                />
+                <p className="filter-button-processor-text">
+                  10-core CPU 10-core GPU
+                </p>
               </div>
             </div>
 
@@ -425,17 +533,25 @@ function Imac() {
               {[
                 { label: "256GB", value: "256GB", available: true },
                 { label: "512GB", value: "512GB", available: true },
-                { label: "1TB",   value: "1TB",   available: true },
-                { label: "2TB",   value: "2TB",   available: selectedOptions.processor === "M4 chip with 10-core CPU, 10-core GPU" },
-              ].filter((o) => o.available).map(({ label, value }) => (
-                <button
-                  key={value}
-                  className={`filter-button-selection ${selectedOptions.storage === value ? "active" : ""}`}
-                  onClick={() => handleSelection("storage", value)}
-                >
-                  {label}
-                </button>
-              ))}
+                { label: "1TB", value: "1TB", available: true },
+                {
+                  label: "2TB",
+                  value: "2TB",
+                  available:
+                    selectedOptions.processor ===
+                    "M4 chip with 10-core CPU, 10-core GPU",
+                },
+              ]
+                .filter((o) => o.available)
+                .map(({ label, value }) => (
+                  <button
+                    key={value}
+                    className={`filter-button-selection ${selectedOptions.storage === value ? "active" : ""}`}
+                    onClick={() => handleSelection("storage", value)}
+                  >
+                    {label}
+                  </button>
+                ))}
             </div>
 
             <p className="spec-title">Vinnsluminni</p>
@@ -443,16 +559,24 @@ function Imac() {
               {[
                 { label: "16GB", value: "16GB", available: true },
                 { label: "24GB", value: "24GB", available: true },
-                { label: "32GB", value: "32GB", available: selectedOptions.processor === "M4 chip with 10-core CPU, 10-core GPU" },
-              ].filter((o) => o.available).map(({ label, value }) => (
-                <button
-                  key={value}
-                  className={`filter-button-selection ${selectedOptions.memory === value ? "active" : ""}`}
-                  onClick={() => handleSelection("memory", value)}
-                >
-                  {label}
-                </button>
-              ))}
+                {
+                  label: "32GB",
+                  value: "32GB",
+                  available:
+                    selectedOptions.processor ===
+                    "M4 chip with 10-core CPU, 10-core GPU",
+                },
+              ]
+                .filter((o) => o.available)
+                .map(({ label, value }) => (
+                  <button
+                    key={value}
+                    className={`filter-button-selection ${selectedOptions.memory === value ? "active" : ""}`}
+                    onClick={() => handleSelection("memory", value)}
+                  >
+                    {label}
+                  </button>
+                ))}
             </div>
 
             <p className="spec-title">Litur</p>
@@ -463,7 +587,10 @@ function Imac() {
                   className={`color-swatch-button ${selectedOptions.color === value ? "active" : ""}`}
                   onClick={() => handleSelection("color", value)}
                 >
-                  <span className="color-dot" style={{ backgroundColor: swatch }} />
+                  <span
+                    className="color-dot"
+                    style={{ backgroundColor: swatch }}
+                  />
                   {label}
                 </button>
               ))}
@@ -472,17 +599,29 @@ function Imac() {
             <p className="spec-title">Skjár</p>
             <div className="spec-selection-buttons">
               {[
-                { label: "Standard display",     value: "Standard display",     available: true },
-                { label: "Nano-texture display", value: "Nano-texture display", available: selectedOptions.processor === "M4 chip with 10-core CPU, 10-core GPU" },
-              ].filter((o) => o.available).map(({ label, value }) => (
-                <button
-                  key={value}
-                  className={`filter-button-selection ${selectedOptions.display === value ? "active" : ""}`}
-                  onClick={() => handleSelection("display", value)}
-                >
-                  {label}
-                </button>
-              ))}
+                {
+                  label: "Standard display",
+                  value: "Standard display",
+                  available: true,
+                },
+                {
+                  label: "Nano-texture display",
+                  value: "Nano-texture display",
+                  available:
+                    selectedOptions.processor ===
+                    "M4 chip with 10-core CPU, 10-core GPU",
+                },
+              ]
+                .filter((o) => o.available)
+                .map(({ label, value }) => (
+                  <button
+                    key={value}
+                    className={`filter-button-selection ${selectedOptions.display === value ? "active" : ""}`}
+                    onClick={() => handleSelection("display", value)}
+                  >
+                    {label}
+                  </button>
+                ))}
             </div>
 
             <p className="spec-title">Mús eða Trackpad</p>
@@ -502,13 +641,20 @@ function Imac() {
             <div className="spec-selection-buttons">
               <button
                 className={`filter-button-selection ${selectedOptions.keyboard === "Magic Keyboard with Touch ID" ? "active" : ""}`}
-                onClick={() => handleSelection("keyboard", "Magic Keyboard with Touch ID")}
+                onClick={() =>
+                  handleSelection("keyboard", "Magic Keyboard with Touch ID")
+                }
               >
                 Magic Keyboard with Touch ID
               </button>
               <button
                 className={`filter-button-selection ${selectedOptions.keyboard === "Magic Keyboard with Touch ID and Numeric Keypad" ? "active" : ""}`}
-                onClick={() => handleSelection("keyboard", "Magic Keyboard with Touch ID and Numeric Keypad")}
+                onClick={() =>
+                  handleSelection(
+                    "keyboard",
+                    "Magic Keyboard with Touch ID and Numeric Keypad",
+                  )
+                }
               >
                 Magic Keyboard with Touch ID and Numeric Keypad
               </button>
@@ -524,27 +670,39 @@ function Imac() {
               </div>
               <div className="spec-row">
                 <span className="spec-row-label">Örgjörvi</span>
-                <span className="spec-row-value">{selectedOptions.processor}</span>
+                <span className="spec-row-value">
+                  {selectedOptions.processor}
+                </span>
               </div>
               <div className="spec-row">
                 <span className="spec-row-label">Geymsla</span>
-                <span className="spec-row-value">{selectedOptions.storage} SSD</span>
+                <span className="spec-row-value">
+                  {selectedOptions.storage} SSD
+                </span>
               </div>
               <div className="spec-row">
                 <span className="spec-row-label">Minni</span>
-                <span className="spec-row-value">{selectedOptions.memory} Unified</span>
+                <span className="spec-row-value">
+                  {selectedOptions.memory} Unified
+                </span>
               </div>
               <div className="spec-row">
                 <span className="spec-row-label">Skjár</span>
-                <span className="spec-row-value">{selectedOptions.display}</span>
+                <span className="spec-row-value">
+                  {selectedOptions.display}
+                </span>
               </div>
               <div className="spec-row">
                 <span className="spec-row-label">Mús</span>
-                <span className="spec-row-value">{selectedOptions.mouseTrackpad}</span>
+                <span className="spec-row-value">
+                  {selectedOptions.mouseTrackpad}
+                </span>
               </div>
               <div className="spec-row">
                 <span className="spec-row-label">Lyklaborð</span>
-                <span className="spec-row-value">{selectedOptions.keyboard}</span>
+                <span className="spec-row-value">
+                  {selectedOptions.keyboard}
+                </span>
               </div>
             </div>
           </div>

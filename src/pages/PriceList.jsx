@@ -415,7 +415,15 @@ export default function PriceList() {
                           <td className="pricelist-price-cell">
                             {formatISK(row.price)}
                           </td>
-                          <td>{formatISK(row.offer_price)}</td>
+                          <td
+                            className={
+                              row.offer_price != null
+                                ? "pricelist-offer-cell"
+                                : ""
+                            }
+                          >
+                            {formatISK(row.offer_price)}
+                          </td>
                           <td>{row.display_order}</td>
                         </tr>
                       );
@@ -504,7 +512,7 @@ export default function PriceList() {
                         </td>
                         <td>
                           <input
-                            className="cell-input"
+                            className={`cell-input ${row.offer_price !== "" && row.offer_price != null ? "cell-input-offer" : ""}`}
                             type="number"
                             value={row.offer_price ?? ""}
                             onChange={(e) =>
@@ -586,9 +594,20 @@ export default function PriceList() {
                           </span>
                         </div>
                         <div className="pricelist-card-summary-right">
-                          <span className="pricelist-card-price pricelist-price-cell">
-                            {formatISK(row.price)}
-                          </span>
+                          {row.offer_price != null ? (
+                            <span className="pricelist-card-price-block">
+                              <span className="pricelist-card-price-original">
+                                {formatISK(row.price)}
+                              </span>
+                              <span className="pricelist-card-price pricelist-price-cell pricelist-card-price-offer">
+                                {formatISK(row.offer_price)}
+                              </span>
+                            </span>
+                          ) : (
+                            <span className="pricelist-card-price pricelist-price-cell">
+                              {formatISK(row.price)}
+                            </span>
+                          )}
                           <span
                             className={`pricelist-card-chevron ${expanded ? "is-open" : ""}`}
                             aria-hidden="true"
@@ -600,11 +619,6 @@ export default function PriceList() {
 
                       {expanded && (
                         <div className="pricelist-card-body">
-                          {row.offer_price != null && (
-                            <div className="pricelist-card-offer">
-                              Tilboð: {formatISK(row.offer_price)}
-                            </div>
-                          )}
                           <div className="pricelist-card-specs">
                             <div>
                               <span>Skjástærð</span>
@@ -655,9 +669,20 @@ export default function PriceList() {
                         </span>
                       </div>
                       <div className="pricelist-card-summary-right">
-                        <span className="pricelist-card-price pricelist-price-cell">
-                          {formatISK(row.price)}
-                        </span>
+                        {row.offer_price != null && row.offer_price !== "" ? (
+                          <span className="pricelist-card-price-block">
+                            <span className="pricelist-card-price-original">
+                              {formatISK(row.price)}
+                            </span>
+                            <span className="pricelist-card-price pricelist-price-cell pricelist-card-price-offer">
+                              {formatISK(row.offer_price)}
+                            </span>
+                          </span>
+                        ) : (
+                          <span className="pricelist-card-price pricelist-price-cell">
+                            {formatISK(row.price)}
+                          </span>
+                        )}
                         {dirty && (
                           <span
                             className="pricelist-card-dirty-dot"
@@ -762,7 +787,7 @@ export default function PriceList() {
                         <div className="pricelist-card-field">
                           <label>Tilboðsverð</label>
                           <input
-                            className="cell-input"
+                            className={`cell-input ${row.offer_price !== "" && row.offer_price != null ? "cell-input-offer" : ""}`}
                             type="number"
                             value={row.offer_price ?? ""}
                             onChange={(e) =>

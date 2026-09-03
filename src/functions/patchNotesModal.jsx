@@ -1,24 +1,39 @@
 import React, { useEffect, useState } from "react";
+import { useUser } from "@clerk/clerk-react";
 import "../css/patchNotesModal.css";
 import { FiCheck } from "react-icons/fi";
 
-const CURRENT_VERSION = "2.2.0";
+const CURRENT_VERSION = "2.2.1";
 
 const majorUpdates = [
-  "Öll sérpöntunarverð eru komin rétt inn miðað við nýja verðskrá á Mac flokknum, miklar hækkanir áttu sér stað og hafa sérpöntunarverðin fylgt því.",
-  "Talsverðar útlitsbreytingar á vef.",
+  "Sérpöntunarverð fyrir Mac mini (2026) og Mac Studio (2026) eru komin inn.",
 ];
 
 const PatchNotesModal = () => {
+  const { user, isLoaded } = useUser();
   const [show, setShow] = useState(false);
 
+  // Tracked on the Clerk user (not localStorage) so this is scoped to the
+  // person and the version, not the browser — a cleared/incognito browser
+  // or a shared in-store iPad shouldn't make this reappear on every sign in.
+  const lastSeenVersion = user?.unsafeMetadata?.lastSeenPatchVersion;
+
   useEffect(() => {
-    const lastSeenVersion = localStorage.getItem("app_version");
-    if (lastSeenVersion !== CURRENT_VERSION) {
-      setShow(true);
-      localStorage.setItem("app_version", CURRENT_VERSION);
-    }
-  }, []);
+    if (!isLoaded || !user) return;
+    if (lastSeenVersion === CURRENT_VERSION) return;
+
+    setShow(true);
+    user
+      .update({
+        unsafeMetadata: {
+          ...user.unsafeMetadata,
+          lastSeenPatchVersion: CURRENT_VERSION,
+        },
+      })
+      .catch((err) => {
+        console.error("Ekki tókst að vista útgáfu patch notes.", err);
+      });
+  }, [isLoaded, user, lastSeenVersion]);
 
   if (!show) return null;
 

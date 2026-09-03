@@ -44,7 +44,10 @@ function MacStudio() {
   useEffect(() => {
     const { processor, storage, memory } = selectedOptions;
     const chip = chipMap[processor];
-    if (!chip) { setBasePrice(null); return; }
+    if (!chip) {
+      setBasePrice(null);
+      return;
+    }
     setLoadingPrice(true);
     supabase
       .from("configuration")
@@ -64,22 +67,30 @@ function MacStudio() {
 
   const formatPriceISK = (price) => {
     const formattedPrice = price.toLocaleString("is-IS");
-    return formattedPrice.replace(/,/g, ".") + "kr";
+    return formattedPrice.replace(/,/g, ".") + " kr";
   };
 
   const handleSelection = (category, option) => {
     setSelectedOptions((prev) => {
       let newSelection = { ...prev, [category]: option };
-      if (category === "processor" && option === "M4 Max chip with 14-core CPU, 32-core GPU") {
+      if (
+        category === "processor" &&
+        option === "M4 Max chip with 14-core CPU, 32-core GPU"
+      ) {
         newSelection.storage = "512GB";
         newSelection.memory = "36GB";
       }
-      if (category === "processor" && option === "M4 Max chip with 16-core CPU, 40-core GPU") {
+      if (
+        category === "processor" &&
+        option === "M4 Max chip with 16-core CPU, 40-core GPU"
+      ) {
         newSelection.memory = "48GB";
       }
       if (
-        (category === "processor" && option === "M3 Ultra chip with 28-core CPU, 60-core GPU") ||
-        (category === "processor" && option === "M3 Ultra chip with 32-core CPU, 80-core GPU")
+        (category === "processor" &&
+          option === "M3 Ultra chip with 28-core CPU, 60-core GPU") ||
+        (category === "processor" &&
+          option === "M3 Ultra chip with 32-core CPU, 80-core GPU")
       ) {
         newSelection.storage = "1TB";
         newSelection.memory = "96GB";
@@ -139,7 +150,7 @@ function MacStudio() {
     // ── Meta ─────────────────────────────────────────
     const metaFields = [
       ["DAGSETNING", formattedDate],
-      ["SÖLUMAÐUR", user.user.firstName],
+      ["SÖLUMAÐUR", user.user.fullName],
       ...(orderNumber ? [["PÖNTUNARNÚMER", orderNumber.toUpperCase()]] : []),
     ];
     const colW = (W - m * 2) / metaFields.length;
@@ -215,7 +226,12 @@ function MacStudio() {
     y += 7;
     doc.setFontSize(17);
     doc.setTextColor(20, 20, 20);
-    doc.text(totalPrice !== null ? formatPriceISK(totalPrice) : "Verð ekki tiltækt", W - m - 1, y, { align: "right" });
+    doc.text(
+      totalPrice !== null ? formatPriceISK(totalPrice) : "Verð ekki tiltækt",
+      W - m - 1,
+      y,
+      { align: "right" },
+    );
 
     // ── Section divider ───────────────────────────────
     doc.setDrawColor(220, 220, 220);
@@ -231,7 +247,7 @@ function MacStudio() {
 
     const email = user.user.emailAddresses[0]?.emailAddress || "";
     const terms = [
-      "Afgreiðslutími sérpanta getur verið allt að 4-6 vikur frá degi pöntunar.",
+      "Afgreiðslutími sérpanta getur verið allt að 8-12 vikur frá degi pöntunar. (með fyrirvara um tafir.)",
       "Gerð er krafa um að lágmarki 30% fyrirframgreiðslu við pöntun.",
       "Ekki er hægt að hætta við sérpöntun sé varan komin í framleiðsluferli.",
       `Spurningar: hafðu samband í netfangið ${email}`,
@@ -265,11 +281,15 @@ function MacStudio() {
     doc.setFont("helvetica", "normal");
     doc.setFontSize(8);
     doc.setTextColor(140, 140, 140);
-    doc.text("Laugavegur 182  ·  Smáralind  ·  epli.is", W / 2, footerY + 12, { align: "center" });
+    doc.text("Laugavegur 182  ·  Smáralind  ·  epli.is", W / 2, footerY + 12, {
+      align: "center",
+    });
 
     // ── Save ──────────────────────────────────────────
     if (orderNumber) {
-      doc.save(`${title.replace(/"/g, "").trim()} - ${orderNumber.toUpperCase()}.pdf`);
+      doc.save(
+        `${title.replace(/"/g, "").trim()} - ${orderNumber.toUpperCase()}.pdf`,
+      );
     } else {
       doc.save(`${title.replace(/"/g, "").trim()}.pdf`);
     }
@@ -294,15 +314,25 @@ function MacStudio() {
               <h1 className="cto-title">Mac Studio</h1>
               <div className="cto-price-row">
                 <p className="cto-price">
-                  {loadingPrice ? "..." : totalPrice !== null ? formatPriceISK(totalPrice) : "Verð ekki tiltækt"}
+                  {loadingPrice
+                    ? "..."
+                    : totalPrice !== null
+                      ? formatPriceISK(totalPrice)
+                      : "Verð ekki tiltækt"}
                 </p>
-                <button onClick={() => setShowModal(true)} className="pdf-button">
+                <button
+                  onClick={() => setShowModal(true)}
+                  className="pdf-button"
+                >
                   Búa til PDF
                 </button>
                 {showModal && (
                   <div
                     className="cto-order-modal-overlay"
-                    onPointerDown={() => { setShowModal(false); setOrderNumber(""); }}
+                    onPointerDown={() => {
+                      setShowModal(false);
+                      setOrderNumber("");
+                    }}
                   >
                     <div
                       role="dialog"
@@ -314,11 +344,16 @@ function MacStudio() {
                         type="button"
                         className="cto-order-modal-close"
                         aria-label="Loka"
-                        onClick={() => { setShowModal(false); setOrderNumber(""); }}
+                        onClick={() => {
+                          setShowModal(false);
+                          setOrderNumber("");
+                        }}
                       >
                         <FiX size={18} />
                       </button>
-                      <h2 className="cto-order-modal-title">Sölupöntunarnúmer</h2>
+                      <h2 className="cto-order-modal-title">
+                        Sölupöntunarnúmer
+                      </h2>
                       <label className="cto-order-modal-label">
                         Pöntunarnúmer
                         <input
@@ -345,7 +380,10 @@ function MacStudio() {
                         </button>
                         <button
                           className="cto-order-modal-cancel"
-                          onClick={() => { setShowModal(false); setOrderNumber(""); }}
+                          onClick={() => {
+                            setShowModal(false);
+                            setOrderNumber("");
+                          }}
                         >
                           Hætta við
                         </button>
@@ -360,17 +398,37 @@ function MacStudio() {
             <p className="spec-title">Örgjörvi</p>
             <div className="spec-selection-buttons">
               {[
-                { label: "14-core CPU 32-core GPU", value: "M4 Max chip with 14-core CPU, 32-core GPU", logo: "../assets/m4max.svg" },
-                { label: "16-core CPU 40-core GPU", value: "M4 Max chip with 16-core CPU, 40-core GPU", logo: "../assets/m4max.svg" },
-                { label: "28-core CPU 60-core GPU", value: "M3 Ultra chip with 28-core CPU, 60-core GPU", logo: "../assets/m3ultra.svg" },
-                { label: "32-core CPU 80-core GPU", value: "M3 Ultra chip with 32-core CPU, 80-core GPU", logo: "../assets/m3ultra.svg" },
+                {
+                  label: "14-core CPU 32-core GPU",
+                  value: "M4 Max chip with 14-core CPU, 32-core GPU",
+                  logo: "../assets/m4max.svg",
+                },
+                {
+                  label: "16-core CPU 40-core GPU",
+                  value: "M4 Max chip with 16-core CPU, 40-core GPU",
+                  logo: "../assets/m4max.svg",
+                },
+                {
+                  label: "28-core CPU 60-core GPU",
+                  value: "M3 Ultra chip with 28-core CPU, 60-core GPU",
+                  logo: "../assets/m3ultra.svg",
+                },
+                {
+                  label: "32-core CPU 80-core GPU",
+                  value: "M3 Ultra chip with 32-core CPU, 80-core GPU",
+                  logo: "../assets/m3ultra.svg",
+                },
               ].map(({ label, value, logo }) => (
                 <div
                   key={value}
                   className={`filter-button-processor ${selectedOptions.processor === value ? "active" : ""}`}
                   onClick={() => handleSelection("processor", value)}
                 >
-                  <img src={logo} alt="chip logo" className="button-processor-logo" />
+                  <img
+                    src={logo}
+                    alt="chip logo"
+                    className="button-processor-logo"
+                  />
                   <p className="filter-button-processor-text">{label}</p>
                 </div>
               ))}
@@ -379,39 +437,82 @@ function MacStudio() {
             <p className="spec-title">Geymsla</p>
             <div className="spec-selection-buttons">
               {[
-                { label: "512GB", value: "512GB", available: ["M4 Max chip with 14-core CPU, 32-core GPU", "M4 Max chip with 16-core CPU, 40-core GPU"].includes(selectedOptions.processor) },
-                { label: "1TB",   value: "1TB",   available: true },
-                { label: "2TB",   value: "2TB",   available: true },
-                { label: "4TB",   value: "4TB",   available: true },
-                { label: "8TB",   value: "8TB",   available: true },
-                { label: "16TB",  value: "16TB",  available: ["M3 Ultra chip with 28-core CPU, 60-core GPU", "M3 Ultra chip with 32-core CPU, 80-core GPU"].includes(selectedOptions.processor) },
-              ].filter((o) => o.available).map(({ label, value }) => (
-                <button
-                  key={value}
-                  className={`filter-button-selection ${selectedOptions.storage === value ? "active" : ""}`}
-                  onClick={() => handleSelection("storage", value)}
-                >
-                  {label}
-                </button>
-              ))}
+                {
+                  label: "512GB",
+                  value: "512GB",
+                  available: [
+                    "M4 Max chip with 14-core CPU, 32-core GPU",
+                    "M4 Max chip with 16-core CPU, 40-core GPU",
+                  ].includes(selectedOptions.processor),
+                },
+                { label: "1TB", value: "1TB", available: true },
+                { label: "2TB", value: "2TB", available: true },
+                { label: "4TB", value: "4TB", available: true },
+                { label: "8TB", value: "8TB", available: true },
+                {
+                  label: "16TB",
+                  value: "16TB",
+                  available: [
+                    "M3 Ultra chip with 28-core CPU, 60-core GPU",
+                    "M3 Ultra chip with 32-core CPU, 80-core GPU",
+                  ].includes(selectedOptions.processor),
+                },
+              ]
+                .filter((o) => o.available)
+                .map(({ label, value }) => (
+                  <button
+                    key={value}
+                    className={`filter-button-selection ${selectedOptions.storage === value ? "active" : ""}`}
+                    onClick={() => handleSelection("storage", value)}
+                  >
+                    {label}
+                  </button>
+                ))}
             </div>
 
             <p className="spec-title">Vinnsluminni</p>
             <div className="spec-selection-buttons">
               {[
-                { label: "36GB", value: "36GB", available: selectedOptions.processor === "M4 Max chip with 14-core CPU, 32-core GPU" },
-                { label: "48GB", value: "48GB", available: selectedOptions.processor === "M4 Max chip with 16-core CPU, 40-core GPU" },
-                { label: "64GB", value: "64GB", available: selectedOptions.processor === "M4 Max chip with 16-core CPU, 40-core GPU" },
-                { label: "96GB", value: "96GB", available: ["M3 Ultra chip with 28-core CPU, 60-core GPU", "M3 Ultra chip with 32-core CPU, 80-core GPU"].includes(selectedOptions.processor) },
-              ].filter((o) => o.available).map(({ label, value }) => (
-                <button
-                  key={value}
-                  className={`filter-button-selection ${selectedOptions.memory === value ? "active" : ""}`}
-                  onClick={() => handleSelection("memory", value)}
-                >
-                  {label}
-                </button>
-              ))}
+                {
+                  label: "36GB",
+                  value: "36GB",
+                  available:
+                    selectedOptions.processor ===
+                    "M4 Max chip with 14-core CPU, 32-core GPU",
+                },
+                {
+                  label: "48GB",
+                  value: "48GB",
+                  available:
+                    selectedOptions.processor ===
+                    "M4 Max chip with 16-core CPU, 40-core GPU",
+                },
+                {
+                  label: "64GB",
+                  value: "64GB",
+                  available:
+                    selectedOptions.processor ===
+                    "M4 Max chip with 16-core CPU, 40-core GPU",
+                },
+                {
+                  label: "96GB",
+                  value: "96GB",
+                  available: [
+                    "M3 Ultra chip with 28-core CPU, 60-core GPU",
+                    "M3 Ultra chip with 32-core CPU, 80-core GPU",
+                  ].includes(selectedOptions.processor),
+                },
+              ]
+                .filter((o) => o.available)
+                .map(({ label, value }) => (
+                  <button
+                    key={value}
+                    className={`filter-button-selection ${selectedOptions.memory === value ? "active" : ""}`}
+                    onClick={() => handleSelection("memory", value)}
+                  >
+                    {label}
+                  </button>
+                ))}
             </div>
           </div>
 
@@ -420,30 +521,45 @@ function MacStudio() {
             <div className="spec-list">
               <div className="spec-row">
                 <span className="spec-row-label">Örgjörvi</span>
-                <span className="spec-row-value">{selectedOptions.processor}</span>
+                <span className="spec-row-value">
+                  {selectedOptions.processor}
+                </span>
               </div>
               <div className="spec-row">
                 <span className="spec-row-label">Geymsla</span>
-                <span className="spec-row-value">{selectedOptions.storage} SSD</span>
+                <span className="spec-row-value">
+                  {selectedOptions.storage} SSD
+                </span>
               </div>
               <div className="spec-row">
                 <span className="spec-row-label">Minni</span>
-                <span className="spec-row-value">{selectedOptions.memory} Unified</span>
+                <span className="spec-row-value">
+                  {selectedOptions.memory} Unified
+                </span>
               </div>
             </div>
-            <p className="spec-list-title" style={{ marginTop: "20px" }}>Tengimöguleikar</p>
+            <p className="spec-list-title" style={{ marginTop: "20px" }}>
+              Tengimöguleikar
+            </p>
             <div className="spec-list">
               <div className="spec-row">
                 <span className="spec-row-label">Front</span>
-                <span className="spec-row-value">Two USB-C ports, one SDXC card slot</span>
+                <span className="spec-row-value">
+                  Two USB-C ports, one SDXC card slot
+                </span>
               </div>
               <div className="spec-row">
                 <span className="spec-row-label">Back</span>
-                <span className="spec-row-value">Four Thunderbolt 5 ports, two USB-A ports, HDMI port, 10Gb Ethernet, headphone jack</span>
+                <span className="spec-row-value">
+                  Four Thunderbolt 5 ports, two USB-A ports, HDMI port, 10Gb
+                  Ethernet, headphone jack
+                </span>
               </div>
               <div className="spec-row">
                 <span className="spec-row-label">Displays</span>
-                <span className="spec-row-value">Support for up to five displays</span>
+                <span className="spec-row-value">
+                  Support for up to five displays
+                </span>
               </div>
             </div>
           </div>

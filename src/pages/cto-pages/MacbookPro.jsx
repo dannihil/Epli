@@ -87,7 +87,7 @@ function MacbookPro() {
 
   const formatPriceISK = (price) => {
     const formattedPrice = price.toLocaleString("is-IS");
-    return formattedPrice.replace(/,/g, ".") + "kr";
+    return formattedPrice.replace(/,/g, ".") + " kr";
   };
 
   const handleSelection = (category, option) => {
@@ -105,9 +105,13 @@ function MacbookPro() {
         newSelection.memory = "24GB";
       }
       // When staying on 14" and switching to m5pro_18_20, reset storage to 2TB (1TB not available on 14")
-      if (category === "screenSize" && option === "14" &&
-        newSelection.processor === "M5 Pro chip with 18-core CPU, 20-core GPU" &&
-        newSelection.storage === "1TB") {
+      if (
+        category === "screenSize" &&
+        option === "14" &&
+        newSelection.processor ===
+          "M5 Pro chip with 18-core CPU, 20-core GPU" &&
+        newSelection.storage === "1TB"
+      ) {
         newSelection.storage = "2TB";
       }
       if (
@@ -224,7 +228,7 @@ function MacbookPro() {
     // ── Meta ─────────────────────────────────────────
     const metaFields = [
       ["DAGSETNING", formattedDate],
-      ["SÖLUMAÐUR", user.user.firstName],
+      ["SÖLUMAÐUR", user.user.fullName],
       ...(orderNumber ? [["PÖNTUNARNÚMER", orderNumber.toUpperCase()]] : []),
     ];
     const colW = (W - m * 2) / metaFields.length;
@@ -320,7 +324,7 @@ function MacbookPro() {
 
     const email = user.user.emailAddresses[0]?.emailAddress || "";
     const terms = [
-      "Afgreiðslutími sérpanta getur verið allt að 4-6 vikur frá degi pöntunar.",
+      "Afgreiðslutími sérpanta getur verið allt að 8-12 vikur frá degi pöntunar. (með fyrirvara um tafir.)",
       "Gerð er krafa um að lágmarki 30% fyrirframgreiðslu við pöntun.",
       "Ekki er hægt að hætta við sérpöntun sé varan komin í framleiðsluferli.",
       `Spurningar: hafðu samband í netfangið ${email}`,
@@ -452,7 +456,9 @@ function MacbookPro() {
                       >
                         <FiX size={18} />
                       </button>
-                      <h2 className="cto-order-modal-title">Sölupöntunarnúmer</h2>
+                      <h2 className="cto-order-modal-title">
+                        Sölupöntunarnúmer
+                      </h2>
                       <label className="cto-order-modal-label">
                         Pöntunarnúmer
                         <input
@@ -572,9 +578,15 @@ function MacbookPro() {
                   label: "1TB",
                   value: "1TB",
                   available:
-                    selectedOptions.processor !== "M5 Max chip with 18-core CPU, 32-core GPU" &&
-                    selectedOptions.processor !== "M5 Max chip with 18-core CPU, 40-core GPU" &&
-                    !(selectedOptions.processor === "M5 Pro chip with 18-core CPU, 20-core GPU" && selectedOptions.screenSize === "14"),
+                    selectedOptions.processor !==
+                      "M5 Max chip with 18-core CPU, 32-core GPU" &&
+                    selectedOptions.processor !==
+                      "M5 Max chip with 18-core CPU, 40-core GPU" &&
+                    !(
+                      selectedOptions.processor ===
+                        "M5 Pro chip with 18-core CPU, 20-core GPU" &&
+                      selectedOptions.screenSize === "14"
+                    ),
                 },
                 { label: "2TB", value: "2TB", available: true },
                 { label: "4TB", value: "4TB", available: true },
@@ -586,15 +598,17 @@ function MacbookPro() {
                     "M5 Max chip with 18-core CPU, 40-core GPU",
                   ].includes(selectedOptions.processor),
                 },
-              ].filter((o) => o.available).map(({ label, value }) => (
-                <button
-                  key={value}
-                  className={`filter-button-selection ${selectedOptions.storage === value ? "active" : ""}`}
-                  onClick={() => handleSelection("storage", value)}
-                >
-                  {label}
-                </button>
-              ))}
+              ]
+                .filter((o) => o.available)
+                .map(({ label, value }) => (
+                  <button
+                    key={value}
+                    className={`filter-button-selection ${selectedOptions.storage === value ? "active" : ""}`}
+                    onClick={() => handleSelection("storage", value)}
+                  >
+                    {label}
+                  </button>
+                ))}
             </div>
 
             {/* Memory */}
@@ -604,7 +618,9 @@ function MacbookPro() {
                 {
                   label: "16GB",
                   value: "16GB",
-                  available: selectedOptions.processor === "M5 chip with 10-core CPU, 10-core GPU",
+                  available:
+                    selectedOptions.processor ===
+                    "M5 chip with 10-core CPU, 10-core GPU",
                 },
                 {
                   label: "24GB",
@@ -618,12 +634,16 @@ function MacbookPro() {
                 {
                   label: "32GB",
                   value: "32GB",
-                  available: selectedOptions.processor === "M5 chip with 10-core CPU, 10-core GPU",
+                  available:
+                    selectedOptions.processor ===
+                    "M5 chip with 10-core CPU, 10-core GPU",
                 },
                 {
                   label: "36GB",
                   value: "36GB",
-                  available: selectedOptions.processor === "M5 Max chip with 18-core CPU, 32-core GPU",
+                  available:
+                    selectedOptions.processor ===
+                    "M5 Max chip with 18-core CPU, 32-core GPU",
                 },
                 {
                   label: "48GB",
@@ -645,17 +665,21 @@ function MacbookPro() {
                 {
                   label: "128GB",
                   value: "128GB",
-                  available: selectedOptions.processor === "M5 Max chip with 18-core CPU, 40-core GPU",
+                  available:
+                    selectedOptions.processor ===
+                    "M5 Max chip with 18-core CPU, 40-core GPU",
                 },
-              ].filter((o) => o.available).map(({ label, value }) => (
-                <button
-                  key={value}
-                  className={`filter-button-selection ${selectedOptions.memory === value ? "active" : ""}`}
-                  onClick={() => handleSelection("memory", value)}
-                >
-                  {label}
-                </button>
-              ))}
+              ]
+                .filter((o) => o.available)
+                .map(({ label, value }) => (
+                  <button
+                    key={value}
+                    className={`filter-button-selection ${selectedOptions.memory === value ? "active" : ""}`}
+                    onClick={() => handleSelection("memory", value)}
+                  >
+                    {label}
+                  </button>
+                ))}
             </div>
 
             {/* Color */}

@@ -44,7 +44,10 @@ function MacMini() {
   useEffect(() => {
     const { processor, storage, memory } = selectedOptions;
     const chip = chipMap[processor];
-    if (!chip) { setBasePrice(null); return; }
+    if (!chip) {
+      setBasePrice(null);
+      return;
+    }
     setLoadingPrice(true);
     supabase
       .from("configuration")
@@ -60,24 +63,30 @@ function MacMini() {
       });
   }, [selectedOptions]);
 
-  const ethernetMod = selectedOptions.ethernet === "10 Gigabit Ethernet" ? 20000 : 0;
+  const ethernetMod =
+    selectedOptions.ethernet === "10 Gigabit Ethernet" ? 20000 : 0;
   const totalPrice = basePrice !== null ? basePrice + ethernetMod : null;
 
   const formatPriceISK = (price) => {
     const formattedPrice = price.toLocaleString("is-IS");
-    return formattedPrice.replace(/,/g, ".") + "kr";
+    return formattedPrice.replace(/,/g, ".") + " kr";
   };
 
   const handleSelection = (category, option) => {
     setSelectedOptions((prev) => {
       let newSelection = { ...prev, [category]: option };
-      if (category === "processor" && option === "M4 chip with 10-core CPU, 10-core GPU") {
+      if (
+        category === "processor" &&
+        option === "M4 chip with 10-core CPU, 10-core GPU"
+      ) {
         newSelection.storage = "512GB";
         newSelection.memory = "16GB";
       }
       if (
-        (category === "processor" && option === "M4 Pro chip with 12-core CPU, 16-core GPU") ||
-        (category === "processor" && option === "M4 Pro chip with 14-core CPU, 20-core GPU")
+        (category === "processor" &&
+          option === "M4 Pro chip with 12-core CPU, 16-core GPU") ||
+        (category === "processor" &&
+          option === "M4 Pro chip with 14-core CPU, 20-core GPU")
       ) {
         newSelection.storage = "512GB";
         newSelection.memory = "24GB";
@@ -137,7 +146,7 @@ function MacMini() {
     // ── Meta ─────────────────────────────────────────
     const metaFields = [
       ["DAGSETNING", formattedDate],
-      ["SÖLUMAÐUR", user.user.firstName],
+      ["SÖLUMAÐUR", user.user.fullName],
       ...(orderNumber ? [["PÖNTUNARNÚMER", orderNumber.toUpperCase()]] : []),
     ];
     const colW = (W - m * 2) / metaFields.length;
@@ -214,7 +223,12 @@ function MacMini() {
     y += 7;
     doc.setFontSize(17);
     doc.setTextColor(20, 20, 20);
-    doc.text(totalPrice !== null ? formatPriceISK(totalPrice) : "Verð ekki tiltækt", W - m - 1, y, { align: "right" });
+    doc.text(
+      totalPrice !== null ? formatPriceISK(totalPrice) : "Verð ekki tiltækt",
+      W - m - 1,
+      y,
+      { align: "right" },
+    );
 
     // ── Section divider ───────────────────────────────
     doc.setDrawColor(220, 220, 220);
@@ -230,7 +244,7 @@ function MacMini() {
 
     const email = user.user.emailAddresses[0]?.emailAddress || "";
     const terms = [
-      "Afgreiðslutími sérpanta getur verið allt að 4-6 vikur frá degi pöntunar.",
+      "Afgreiðslutími sérpanta getur verið allt að 8-12 vikur frá degi pöntunar. (með fyrirvara um tafir.)",
       "Gerð er krafa um að lágmarki 30% fyrirframgreiðslu við pöntun.",
       "Ekki er hægt að hætta við sérpöntun sé varan komin í framleiðsluferli.",
       `Spurningar: hafðu samband í netfangið ${email}`,
@@ -264,11 +278,15 @@ function MacMini() {
     doc.setFont("helvetica", "normal");
     doc.setFontSize(8);
     doc.setTextColor(140, 140, 140);
-    doc.text("Laugavegur 182  ·  Smáralind  ·  epli.is", W / 2, footerY + 12, { align: "center" });
+    doc.text("Laugavegur 182  ·  Smáralind  ·  epli.is", W / 2, footerY + 12, {
+      align: "center",
+    });
 
     // ── Save ──────────────────────────────────────────
     if (orderNumber) {
-      doc.save(`${title.replace(/"/g, "").trim()} - ${orderNumber.toUpperCase()}.pdf`);
+      doc.save(
+        `${title.replace(/"/g, "").trim()} - ${orderNumber.toUpperCase()}.pdf`,
+      );
     } else {
       doc.save(`${title.replace(/"/g, "").trim()}.pdf`);
     }
@@ -293,15 +311,25 @@ function MacMini() {
               <h1 className="cto-title">Mac mini</h1>
               <div className="cto-price-row">
                 <p className="cto-price">
-                  {loadingPrice ? "..." : totalPrice !== null ? formatPriceISK(totalPrice) : "Verð ekki tiltækt"}
+                  {loadingPrice
+                    ? "..."
+                    : totalPrice !== null
+                      ? formatPriceISK(totalPrice)
+                      : "Verð ekki tiltækt"}
                 </p>
-                <button onClick={() => setShowModal(true)} className="pdf-button">
+                <button
+                  onClick={() => setShowModal(true)}
+                  className="pdf-button"
+                >
                   Búa til PDF
                 </button>
                 {showModal && (
                   <div
                     className="cto-order-modal-overlay"
-                    onPointerDown={() => { setShowModal(false); setOrderNumber(""); }}
+                    onPointerDown={() => {
+                      setShowModal(false);
+                      setOrderNumber("");
+                    }}
                   >
                     <div
                       role="dialog"
@@ -313,11 +341,16 @@ function MacMini() {
                         type="button"
                         className="cto-order-modal-close"
                         aria-label="Loka"
-                        onClick={() => { setShowModal(false); setOrderNumber(""); }}
+                        onClick={() => {
+                          setShowModal(false);
+                          setOrderNumber("");
+                        }}
                       >
                         <FiX size={18} />
                       </button>
-                      <h2 className="cto-order-modal-title">Sölupöntunarnúmer</h2>
+                      <h2 className="cto-order-modal-title">
+                        Sölupöntunarnúmer
+                      </h2>
                       <label className="cto-order-modal-label">
                         Pöntunarnúmer
                         <input
@@ -344,7 +377,10 @@ function MacMini() {
                         </button>
                         <button
                           className="cto-order-modal-cancel"
-                          onClick={() => { setShowModal(false); setOrderNumber(""); }}
+                          onClick={() => {
+                            setShowModal(false);
+                            setOrderNumber("");
+                          }}
                         >
                           Hætta við
                         </button>
@@ -360,24 +396,57 @@ function MacMini() {
             <div className="spec-selection-buttons">
               <div
                 className={`filter-button-processor ${selectedOptions.processor === "M4 chip with 10-core CPU, 10-core GPU" ? "active" : ""}`}
-                onClick={() => handleSelection("processor", "M4 chip with 10-core CPU, 10-core GPU")}
+                onClick={() =>
+                  handleSelection(
+                    "processor",
+                    "M4 chip with 10-core CPU, 10-core GPU",
+                  )
+                }
               >
-                <img src="../assets/m4.svg" alt="M4 logo" className="button-processor-logo" />
-                <p className="filter-button-processor-text">10-core CPU 10-core GPU</p>
+                <img
+                  src="../assets/m4.svg"
+                  alt="M4 logo"
+                  className="button-processor-logo"
+                />
+                <p className="filter-button-processor-text">
+                  10-core CPU 10-core GPU
+                </p>
               </div>
               <div
                 className={`filter-button-processor ${selectedOptions.processor === "M4 Pro chip with 12-core CPU, 16-core GPU" ? "active" : ""}`}
-                onClick={() => handleSelection("processor", "M4 Pro chip with 12-core CPU, 16-core GPU")}
+                onClick={() =>
+                  handleSelection(
+                    "processor",
+                    "M4 Pro chip with 12-core CPU, 16-core GPU",
+                  )
+                }
               >
-                <img src="../assets/m4pro.svg" alt="M4 Pro logo" className="button-processor-logo" />
-                <p className="filter-button-processor-text">12-core CPU 16-core GPU</p>
+                <img
+                  src="../assets/m4pro.svg"
+                  alt="M4 Pro logo"
+                  className="button-processor-logo"
+                />
+                <p className="filter-button-processor-text">
+                  12-core CPU 16-core GPU
+                </p>
               </div>
               <div
                 className={`filter-button-processor ${selectedOptions.processor === "M4 Pro chip with 14-core CPU, 20-core GPU" ? "active" : ""}`}
-                onClick={() => handleSelection("processor", "M4 Pro chip with 14-core CPU, 20-core GPU")}
+                onClick={() =>
+                  handleSelection(
+                    "processor",
+                    "M4 Pro chip with 14-core CPU, 20-core GPU",
+                  )
+                }
               >
-                <img src="../assets/m4pro.svg" alt="M4 Pro logo" className="button-processor-logo" />
-                <p className="filter-button-processor-text">14-core CPU 20-core GPU</p>
+                <img
+                  src="../assets/m4pro.svg"
+                  alt="M4 Pro logo"
+                  className="button-processor-logo"
+                />
+                <p className="filter-button-processor-text">
+                  14-core CPU 20-core GPU
+                </p>
               </div>
             </div>
 
@@ -385,36 +454,64 @@ function MacMini() {
             <div className="spec-selection-buttons">
               {[
                 { label: "512GB", value: "512GB", available: true },
-                { label: "1TB",   value: "1TB",   available: true },
-                { label: "2TB",   value: "2TB",   available: true },
-                { label: "4TB",   value: "4TB",   available: selectedOptions.processor !== "M4 chip with 10-core CPU, 10-core GPU" },
-                { label: "8TB",   value: "8TB",   available: selectedOptions.processor !== "M4 chip with 10-core CPU, 10-core GPU" },
-              ].filter((o) => o.available).map(({ label, value }) => (
-                <button
-                  key={value}
-                  className={`filter-button-selection ${selectedOptions.storage === value ? "active" : ""}`}
-                  onClick={() => handleSelection("storage", value)}
-                >
-                  {label}
-                </button>
-              ))}
+                { label: "1TB", value: "1TB", available: true },
+                { label: "2TB", value: "2TB", available: true },
+                {
+                  label: "4TB",
+                  value: "4TB",
+                  available:
+                    selectedOptions.processor !==
+                    "M4 chip with 10-core CPU, 10-core GPU",
+                },
+                {
+                  label: "8TB",
+                  value: "8TB",
+                  available:
+                    selectedOptions.processor !==
+                    "M4 chip with 10-core CPU, 10-core GPU",
+                },
+              ]
+                .filter((o) => o.available)
+                .map(({ label, value }) => (
+                  <button
+                    key={value}
+                    className={`filter-button-selection ${selectedOptions.storage === value ? "active" : ""}`}
+                    onClick={() => handleSelection("storage", value)}
+                  >
+                    {label}
+                  </button>
+                ))}
             </div>
 
             <p className="spec-title">Vinnsluminni</p>
             <div className="spec-selection-buttons">
               {[
-                { label: "16GB", value: "16GB", available: selectedOptions.processor === "M4 chip with 10-core CPU, 10-core GPU" },
+                {
+                  label: "16GB",
+                  value: "16GB",
+                  available:
+                    selectedOptions.processor ===
+                    "M4 chip with 10-core CPU, 10-core GPU",
+                },
                 { label: "24GB", value: "24GB", available: true },
-                { label: "48GB", value: "48GB", available: selectedOptions.processor !== "M4 chip with 10-core CPU, 10-core GPU" },
-              ].filter((o) => o.available).map(({ label, value }) => (
-                <button
-                  key={value}
-                  className={`filter-button-selection ${selectedOptions.memory === value ? "active" : ""}`}
-                  onClick={() => handleSelection("memory", value)}
-                >
-                  {label}
-                </button>
-              ))}
+                {
+                  label: "48GB",
+                  value: "48GB",
+                  available:
+                    selectedOptions.processor !==
+                    "M4 chip with 10-core CPU, 10-core GPU",
+                },
+              ]
+                .filter((o) => o.available)
+                .map(({ label, value }) => (
+                  <button
+                    key={value}
+                    className={`filter-button-selection ${selectedOptions.memory === value ? "active" : ""}`}
+                    onClick={() => handleSelection("memory", value)}
+                  >
+                    {label}
+                  </button>
+                ))}
             </div>
 
             <p className="spec-title">Ethernet</p>
@@ -436,51 +533,72 @@ function MacMini() {
             <div className="spec-list">
               <div className="spec-row">
                 <span className="spec-row-label">Örgjörvi</span>
-                <span className="spec-row-value">{selectedOptions.processor}</span>
+                <span className="spec-row-value">
+                  {selectedOptions.processor}
+                </span>
               </div>
               <div className="spec-row">
                 <span className="spec-row-label">Geymsla</span>
-                <span className="spec-row-value">{selectedOptions.storage} SSD</span>
+                <span className="spec-row-value">
+                  {selectedOptions.storage} SSD
+                </span>
               </div>
               <div className="spec-row">
                 <span className="spec-row-label">Minni</span>
-                <span className="spec-row-value">{selectedOptions.memory} Unified</span>
+                <span className="spec-row-value">
+                  {selectedOptions.memory} Unified
+                </span>
               </div>
               <div className="spec-row">
                 <span className="spec-row-label">Ethernet</span>
-                <span className="spec-row-value">{selectedOptions.ethernet}</span>
+                <span className="spec-row-value">
+                  {selectedOptions.ethernet}
+                </span>
               </div>
             </div>
-            <p className="spec-list-title" style={{ marginTop: "20px" }}>Tengimöguleikar</p>
+            <p className="spec-list-title" style={{ marginTop: "20px" }}>
+              Tengimöguleikar
+            </p>
             <div className="spec-list">
               <div className="spec-row">
                 <span className="spec-row-label">Front</span>
-                <span className="spec-row-value">Two USB-C ports with support for USB 3 (up to 10Gb/s)</span>
+                <span className="spec-row-value">
+                  Two USB-C ports with support for USB 3 (up to 10Gb/s)
+                </span>
               </div>
               <div className="spec-row">
                 <span className="spec-row-label">Audio</span>
                 <span className="spec-row-value">3.5 mm headphone jack</span>
               </div>
-              {selectedOptions.processor === "M4 chip with 10-core CPU, 10-core GPU" ? (
+              {selectedOptions.processor ===
+              "M4 chip with 10-core CPU, 10-core GPU" ? (
                 <>
                   <div className="spec-row">
                     <span className="spec-row-label">Back</span>
-                    <span className="spec-row-value">Gigabit Ethernet port (configurable to 10Gb), HDMI port</span>
+                    <span className="spec-row-value">
+                      Gigabit Ethernet port (configurable to 10Gb), HDMI port
+                    </span>
                   </div>
                   <div className="spec-row">
                     <span className="spec-row-label">Thunderbolt</span>
-                    <span className="spec-row-value">Three Thunderbolt 4 ports (up to 40Gb/s)</span>
+                    <span className="spec-row-value">
+                      Three Thunderbolt 4 ports (up to 40Gb/s)
+                    </span>
                   </div>
                 </>
               ) : (
                 <>
                   <div className="spec-row">
                     <span className="spec-row-label">Back</span>
-                    <span className="spec-row-value">Gigabit Ethernet port (configurable to 10Gb), HDMI port</span>
+                    <span className="spec-row-value">
+                      Gigabit Ethernet port (configurable to 10Gb), HDMI port
+                    </span>
                   </div>
                   <div className="spec-row">
                     <span className="spec-row-label">Thunderbolt</span>
-                    <span className="spec-row-value">Three Thunderbolt 5 ports (up to 120Gb/s)</span>
+                    <span className="spec-row-value">
+                      Three Thunderbolt 5 ports (up to 120Gb/s)
+                    </span>
                   </div>
                 </>
               )}

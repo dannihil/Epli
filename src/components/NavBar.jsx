@@ -20,7 +20,7 @@ import {
 } from "@clerk/clerk-react";
 
 function NavBar() {
-  const logo = "/assets/thumbnail_Epli_logo_invert.png";
+  const logo = "/assets/epli_portal_logo_light.png";
   const navigate = useNavigate();
   const location = useLocation();
   const { user, isLoaded: userLoaded } = useUser();

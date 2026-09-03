@@ -82,6 +82,7 @@ export const descriptionOverride = {
   Z1E4: 'iMac 24" M4 8/8-Core 16GB/256GB Green',
   Z1E5: 'iMac 24" M4 8/8-Core 16GB/256GB Blue',
   Z1E6: 'iMac 24" M4 8/8-Core 16GB/256GB Pink',
+  Z1E7: 'iMac 24" M4 8/8-Core 16GB/256GB Purple',
   Z1EH: 'iMac 24" M4 10/10-Core 16GB/256GB Silver',
   Z1EJ: 'iMac 24" M4 10/10-Core 16GB/512GB Silver',
   Z1EM: 'iMac 24" M4 10/10-Core 16GB/256GB Green',
@@ -439,6 +440,7 @@ export const descriptionOverride = {
   "MXNA3NF/A": "iPad mini 256GB - Space Gray",
   "MXNC3NF/A": "iPad mini 256GB - Blue",
   "MXPN3NF/A": "iPad mini 5G 128GB - Space Gray",
+  "MXPT3NF/A": "iPad mini 5G 256GB - Space Gray",
 
   "MC7Q4QA/A":
     "Watch S10 46mm LTE Natural Titanium - Natural Milanese Loop S/M",
@@ -824,6 +826,19 @@ export const descriptionOverride = {
   "MQGH2ZM/A": "Apple USB-C to Lightning Cable 2m EOL",
   "MQTP3ZM/A": "Beats Studio Pro Wireless Headphones - Black",
   "MQTR3ZM/A": "Beats Studio Pro Wireless Headphones - Sandstone",
+  "MUVW3ZM/A": "Beats Solo Buds True Wireless Earbuds - Matte Black",
+  "MUVX3ZM/A": "Beats Solo Buds True Wireless Earbuds - Arctic Purple",
+  "MUVY3ZM/A": "Beats Solo Buds True Wireless Earbuds - Storm Gray",
+  "MUW03ZM/A": "Beats Solo Buds True Wireless Earbuds - Transparent Red",
+  "MQLJ3ZM/A": "Beats Studio Buds+ Noise Cancelling Earbuds - Ivory",
+  "ME2J4ZM/A":
+    "Powerbeats Fit Noise-Cancelling Workout Earbuds Ultimate Secure Fit Jet Black",
+  "ME2K4ZM/A":
+    "Powerbeats Fit Noise-Cancelling Workout Earbuds Ultimate Secure Fit Gravel Grey",
+  "ME2L4ZM/A":
+    "Powerbeats Fit Noise-Cancelling Workout Earbuds Ultimate Secure Fit Power Pink",
+  "ME2M4ZM/A":
+    "Powerbeats Fit Noise-Cancelling Workout Earbuds Ultimate Secure Fit Spark Orange",
   "MT0H3ZM/A": "Apple Watch Magnetic Fast Charger USB-C 1 m",
   "MT123ZM/A": "iPhone 15 Plus Silicone Case with MagSafe - Storm",
   "MT133ZM/A": "iPhone 15 Plus Silicone Case with MagSafe - Clay",
@@ -855,6 +870,7 @@ export const descriptionOverride = {
   "MUWA3ZM/A": "Apple Pencil (USB-C)",
   "MW2G3ZM/A": "Apple 30W USB-C Power Adapter",
   "MW2K3ZM/A": "Apple 35W Dual USB-C Power Adapter",
+  "MGTU4ZM/A": "Apple 40W-60W Dynamic USB-C Power Adapter",
   "MW2L3ZM/A": "Apple 96W USB-C Power Adapter",
   "MW2M3ZM/A": "Apple 140W USB-C Power Adapter",
   "MW2N3Z/A": "Power Adapter Extension Cable 1.8m",
@@ -868,7 +884,7 @@ export const descriptionOverride = {
   "MW4Y3ZM/A": "iPhone 14 Plus Silicone Case with MagSafe - Midnight (new)",
   "MW5F3ZM/A": "Apple TV Remote",
   "MW5J3ZM/A": "Apple Thunderbolt 4 (USB-C) Pro Cable 1.8m",
-  "MDW94ZM/A": "Apple Thunderbolt 5 (USB‑C) Pro Cable (1m)",
+  "MDW94ZM/A": "Apple Thunderbolt 5 (USB-C) Pro Cable (1m)",
   "MW5L3ZM/A": "Apple USB-C to USB Adapter",
   "MW5M3ZM/A": "Apple USB-C Digital AV Multiport Adapter",
   "MW5Q3ZM/A": "iPhone 14 Clear Case with MagSafe",
@@ -1099,6 +1115,7 @@ export const descriptionOverride = {
   "MGEX4ZM/A": "iPhone 17 Silicone Case with MagSafe - Light Moss",
   "MGF04ZM/A": "iPhone 17 Silicone Case with MagSafe - Purple Fog",
   "MGF14ZM/A": "iPhone 17 Silicone Case with MagSafe - Black",
+  "MHVT4ZM/A": "iPhone 17 Silicone Case with MagSafe - Electric Lavender",
   "MGF24ZM/A": "iPhone 17 Clear Case with MagSafe",
   "MGF34ZM/A": "iPhone 17 Pro TechWoven Case with MagSafe - Black",
   "MGF44ZM/A": "iPhone 17 Pro TechWoven Case with MagSafe - Blue",
@@ -1285,6 +1302,8 @@ export const descriptionOverride = {
   "MHWN4ZM/A": "AirPods Max 2 - Orange",
   "MHWP4ZM/A": "AirPods Max 2 - Purple",
 
+  "MFE94ZM/A": "AirTag 2 (1 pack)",
+  "MFEA4ZM/A": "AirTag 2 (4 pack)",
   // Add more overrides as needed
 };
 

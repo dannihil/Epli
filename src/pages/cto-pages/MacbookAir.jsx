@@ -69,7 +69,7 @@ function MacbookAir() {
   }, [selectedOptions]);
 
   const formatPriceISK = (price) => {
-    return price.toLocaleString("is-IS").replace(/,/g, ".") + "kr";
+    return price.toLocaleString("is-IS").replace(/,/g, ".") + " kr";
   };
 
   const handleSelection = (category, option) => {
@@ -85,7 +85,10 @@ function MacbookAir() {
         newSelection.storage = "512GB";
         newSelection.memory = "16GB";
       }
-      if (category === "processor" && option === "M5 chip with 10-core CPU, 8-core GPU") {
+      if (
+        category === "processor" &&
+        option === "M5 chip with 10-core CPU, 8-core GPU"
+      ) {
         newSelection.storage = "512GB";
         newSelection.memory = "16GB";
       }
@@ -127,7 +130,9 @@ function MacbookAir() {
       "13-Starlight": "../assets/mba_m3_sl.png",
       "13-Midnight": "../assets/mba_m3_mid.png",
     };
-    const imageSrc = imgMap[`${selectedOptions.screenSize}-${selectedOptions.color}`] || "../assets/mba_m4_sk-bl.png";
+    const imageSrc =
+      imgMap[`${selectedOptions.screenSize}-${selectedOptions.color}`] ||
+      "../assets/mba_m4_sk-bl.png";
 
     const [base64Image, logoBase64] = await Promise.all([
       getBase64Image(imageSrc),
@@ -146,13 +151,15 @@ function MacbookAir() {
     doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
     doc.setTextColor(130, 130, 130);
-    doc.text(`MacBook Air ${selectedOptions.screenSize}"`, W - m, 22, { align: "right" });
+    doc.text(`MacBook Air ${selectedOptions.screenSize}"`, W - m, 22, {
+      align: "right",
+    });
     doc.setDrawColor(210, 210, 210);
     doc.line(m, 30, W - m, 30);
 
     const metaFields = [
       ["DAGSETNING", formattedDate],
-      ["SÖLUMAÐUR", user.user.firstName],
+      ["SÖLUMAÐUR", user.user.fullName],
       ...(orderNumber ? [["PÖNTUNARNÚMER", orderNumber.toUpperCase()]] : []),
     ];
     const colW = (W - m * 2) / metaFields.length;
@@ -170,7 +177,10 @@ function MacbookAir() {
     doc.setDrawColor(230, 230, 230);
     doc.line(m, 51, W - m, 51);
 
-    const imgX = m, imgY = 62, imgW = 82, imgH = 68;
+    const imgX = m,
+      imgY = 62,
+      imgW = 82,
+      imgH = 68;
     doc.setFillColor(245, 245, 247);
     doc.roundedRect(imgX, imgY, imgW, imgH, 5, 5, "F");
     doc.addImage(base64Image, "PNG", imgX + 3, imgY + 3, imgW - 6, imgH - 6);
@@ -236,7 +246,7 @@ function MacbookAir() {
     tY += 7;
     const email = user.user.emailAddresses[0]?.emailAddress || "";
     const terms = [
-      "Afgreiðslutími sérpanta getur verið allt að 4-6 vikur frá degi pöntunar.",
+      "Afgreiðslutími sérpanta getur verið allt að 8-12 vikur frá degi pöntunar. (með fyrirvara um tafir.)",
       "Gerð er krafa um að lágmarki 30% fyrirframgreiðslu við pöntun.",
       "Ekki er hægt að hætta við sérpöntun sé varan komin í framleiðsluferli.",
       `Spurningar: hafðu samband í netfangið ${email}`,
@@ -267,10 +277,14 @@ function MacbookAir() {
     doc.setFont("helvetica", "normal");
     doc.setFontSize(8);
     doc.setTextColor(140, 140, 140);
-    doc.text("Laugavegur 182  ·  Smáralind  ·  epli.is", W / 2, footerY + 12, { align: "center" });
+    doc.text("Laugavegur 182  ·  Smáralind  ·  epli.is", W / 2, footerY + 12, {
+      align: "center",
+    });
 
     if (orderNumber) {
-      doc.save(`${title.replace(/"/g, "").trim()} - ${orderNumber.toUpperCase()}.pdf`);
+      doc.save(
+        `${title.replace(/"/g, "").trim()} - ${orderNumber.toUpperCase()}.pdf`,
+      );
     } else {
       doc.save(`${title.replace(/"/g, "").trim()}.pdf`);
     }
@@ -284,28 +298,70 @@ function MacbookAir() {
           <div className="product-image-container">
             {selectedOptions.screenSize === "13" ? (
               selectedOptions.color === "Sky Blue" ? (
-                <img src="../assets/mba_m4_sk-bl.png" alt="MacBook Air" className="product-image" draggable={false} />
+                <img
+                  src="../assets/mba_m4_sk-bl.png"
+                  alt="MacBook Air"
+                  className="product-image"
+                  draggable={false}
+                />
               ) : selectedOptions.color === "Silver" ? (
-                <img src="../assets/mba_m3_sil.png" alt="MacBook Air" className="product-image" draggable={false} />
+                <img
+                  src="../assets/mba_m3_sil.png"
+                  alt="MacBook Air"
+                  className="product-image"
+                  draggable={false}
+                />
               ) : selectedOptions.color === "Starlight" ? (
-                <img src="../assets/mba_m3_sl.png" alt="MacBook Air" className="product-image" draggable={false} />
+                <img
+                  src="../assets/mba_m3_sl.png"
+                  alt="MacBook Air"
+                  className="product-image"
+                  draggable={false}
+                />
               ) : (
-                <img src="../assets/mba_m3_mid.png" alt="MacBook Air" className="product-image" draggable={false} />
+                <img
+                  src="../assets/mba_m3_mid.png"
+                  alt="MacBook Air"
+                  className="product-image"
+                  draggable={false}
+                />
               )
             ) : selectedOptions.color === "Sky Blue" ? (
-              <img src="../assets/mba_15_m4_sk-bl.png" alt="MacBook Air" className="product-image" draggable={false} />
+              <img
+                src="../assets/mba_15_m4_sk-bl.png"
+                alt="MacBook Air"
+                className="product-image"
+                draggable={false}
+              />
             ) : selectedOptions.color === "Silver" ? (
-              <img src="../assets/mba_15_m3_sil.png" alt="MacBook Air" className="product-image" draggable={false} />
+              <img
+                src="../assets/mba_15_m3_sil.png"
+                alt="MacBook Air"
+                className="product-image"
+                draggable={false}
+              />
             ) : selectedOptions.color === "Starlight" ? (
-              <img src="../assets/mba_15_m3_stl.png" alt="MacBook Air" className="product-image" draggable={false} />
+              <img
+                src="../assets/mba_15_m3_stl.png"
+                alt="MacBook Air"
+                className="product-image"
+                draggable={false}
+              />
             ) : (
-              <img src="../assets/mba_15_m3_mid.png" alt="MacBook Air" className="product-image" draggable={false} />
+              <img
+                src="../assets/mba_15_m3_mid.png"
+                alt="MacBook Air"
+                className="product-image"
+                draggable={false}
+              />
             )}
           </div>
 
           <div className="cto-spec-selection">
             <div className="cto-sticky-header">
-              <h1 className="cto-title">MacBook Air {selectedOptions.screenSize}"</h1>
+              <h1 className="cto-title">
+                MacBook Air {selectedOptions.screenSize}"
+              </h1>
               <div className="cto-price-row">
                 {loadingPrice ? (
                   <p className="cto-price">...</p>
@@ -314,13 +370,19 @@ function MacbookAir() {
                 ) : (
                   <p className="cto-price">Verð ekki tiltækt</p>
                 )}
-                <button onClick={() => setShowModal(true)} className="pdf-button">
+                <button
+                  onClick={() => setShowModal(true)}
+                  className="pdf-button"
+                >
                   Búa til PDF
                 </button>
                 {showModal && (
                   <div
                     className="cto-order-modal-overlay"
-                    onPointerDown={() => { setShowModal(false); setOrderNumber(""); }}
+                    onPointerDown={() => {
+                      setShowModal(false);
+                      setOrderNumber("");
+                    }}
                   >
                     <div
                       role="dialog"
@@ -332,11 +394,16 @@ function MacbookAir() {
                         type="button"
                         className="cto-order-modal-close"
                         aria-label="Loka"
-                        onClick={() => { setShowModal(false); setOrderNumber(""); }}
+                        onClick={() => {
+                          setShowModal(false);
+                          setOrderNumber("");
+                        }}
                       >
                         <FiX size={18} />
                       </button>
-                      <h2 className="cto-order-modal-title">Sölupöntunarnúmer</h2>
+                      <h2 className="cto-order-modal-title">
+                        Sölupöntunarnúmer
+                      </h2>
                       <label className="cto-order-modal-label">
                         Pöntunarnúmer
                         <input
@@ -354,7 +421,10 @@ function MacbookAir() {
                         <button
                           className="cto-order-modal-confirm"
                           onClick={() => {
-                            generatePdf(`Sérpöntun - MacBook Air ${selectedOptions.screenSize}"`, orderNumber);
+                            generatePdf(
+                              `Sérpöntun - MacBook Air ${selectedOptions.screenSize}"`,
+                              orderNumber,
+                            );
                             setShowModal(false);
                             setOrderNumber("");
                           }}
@@ -363,7 +433,10 @@ function MacbookAir() {
                         </button>
                         <button
                           className="cto-order-modal-cancel"
-                          onClick={() => { setShowModal(false); setOrderNumber(""); }}
+                          onClick={() => {
+                            setShowModal(false);
+                            setOrderNumber("");
+                          }}
                         >
                           Hætta við
                         </button>
@@ -392,23 +465,51 @@ function MacbookAir() {
             <div className="spec-selection-buttons">
               <div
                 className={`filter-button-processor ${selectedOptions.processor === "M5 chip with 10-core CPU, 8-core GPU" ? "active" : ""} ${
-                  ["1TB", "2TB", "4TB"].includes(selectedOptions.storage) || selectedOptions.memory !== "16GB" || selectedOptions.screenSize === "15" ? "disabled" : ""
+                  ["1TB", "2TB", "4TB"].includes(selectedOptions.storage) ||
+                  selectedOptions.memory !== "16GB" ||
+                  selectedOptions.screenSize === "15"
+                    ? "disabled"
+                    : ""
                 }`}
                 onClick={() => {
-                  if (selectedOptions.screenSize !== "15" && !["1TB", "2TB", "4TB"].includes(selectedOptions.storage) && selectedOptions.memory === "16GB") {
-                    handleSelection("processor", "M5 chip with 10-core CPU, 8-core GPU");
+                  if (
+                    selectedOptions.screenSize !== "15" &&
+                    !["1TB", "2TB", "4TB"].includes(selectedOptions.storage) &&
+                    selectedOptions.memory === "16GB"
+                  ) {
+                    handleSelection(
+                      "processor",
+                      "M5 chip with 10-core CPU, 8-core GPU",
+                    );
                   }
                 }}
               >
-                <img src="../assets/m5.svg" alt="M5 logo" className="button-processor-logo" />
-                <p className="filter-button-processor-text">10-core CPU 8-core GPU</p>
+                <img
+                  src="../assets/m5.svg"
+                  alt="M5 logo"
+                  className="button-processor-logo"
+                />
+                <p className="filter-button-processor-text">
+                  10-core CPU 8-core GPU
+                </p>
               </div>
               <div
                 className={`filter-button-processor ${selectedOptions.processor === "M5 chip with 10-core CPU, 10-core GPU" ? "active" : ""}`}
-                onClick={() => handleSelection("processor", "M5 chip with 10-core CPU, 10-core GPU")}
+                onClick={() =>
+                  handleSelection(
+                    "processor",
+                    "M5 chip with 10-core CPU, 10-core GPU",
+                  )
+                }
               >
-                <img src="../assets/m5.svg" alt="M5 logo" className="button-processor-logo" />
-                <p className="filter-button-processor-text">10-core CPU 10-core GPU</p>
+                <img
+                  src="../assets/m5.svg"
+                  alt="M5 logo"
+                  className="button-processor-logo"
+                />
+                <p className="filter-button-processor-text">
+                  10-core CPU 10-core GPU
+                </p>
               </div>
             </div>
 
@@ -416,35 +517,69 @@ function MacbookAir() {
             <div className="spec-selection-buttons">
               {[
                 { label: "512GB", value: "512GB", available: true },
-                { label: "1TB",   value: "1TB",   available: selectedOptions.processor === "M5 chip with 10-core CPU, 10-core GPU" },
-                { label: "2TB",   value: "2TB",   available: selectedOptions.processor === "M5 chip with 10-core CPU, 10-core GPU" },
-                { label: "4TB",   value: "4TB",   available: selectedOptions.processor === "M5 chip with 10-core CPU, 10-core GPU" },
-              ].filter((o) => o.available).map(({ label, value }) => (
-                <button
-                  key={value}
-                  className={`filter-button-selection ${selectedOptions.storage === value ? "active" : ""}`}
-                  onClick={() => handleSelection("storage", value)}
-                >
-                  {label}
-                </button>
-              ))}
+                {
+                  label: "1TB",
+                  value: "1TB",
+                  available:
+                    selectedOptions.processor ===
+                    "M5 chip with 10-core CPU, 10-core GPU",
+                },
+                {
+                  label: "2TB",
+                  value: "2TB",
+                  available:
+                    selectedOptions.processor ===
+                    "M5 chip with 10-core CPU, 10-core GPU",
+                },
+                {
+                  label: "4TB",
+                  value: "4TB",
+                  available:
+                    selectedOptions.processor ===
+                    "M5 chip with 10-core CPU, 10-core GPU",
+                },
+              ]
+                .filter((o) => o.available)
+                .map(({ label, value }) => (
+                  <button
+                    key={value}
+                    className={`filter-button-selection ${selectedOptions.storage === value ? "active" : ""}`}
+                    onClick={() => handleSelection("storage", value)}
+                  >
+                    {label}
+                  </button>
+                ))}
             </div>
 
             <p className="spec-title">Vinnsluminni</p>
             <div className="spec-selection-buttons">
               {[
                 { label: "16GB", value: "16GB", available: true },
-                { label: "24GB", value: "24GB", available: selectedOptions.processor === "M5 chip with 10-core CPU, 10-core GPU" },
-                { label: "32GB", value: "32GB", available: selectedOptions.processor === "M5 chip with 10-core CPU, 10-core GPU" },
-              ].filter((o) => o.available).map(({ label, value }) => (
-                <button
-                  key={value}
-                  className={`filter-button-selection ${selectedOptions.memory === value ? "active" : ""}`}
-                  onClick={() => handleSelection("memory", value)}
-                >
-                  {label}
-                </button>
-              ))}
+                {
+                  label: "24GB",
+                  value: "24GB",
+                  available:
+                    selectedOptions.processor ===
+                    "M5 chip with 10-core CPU, 10-core GPU",
+                },
+                {
+                  label: "32GB",
+                  value: "32GB",
+                  available:
+                    selectedOptions.processor ===
+                    "M5 chip with 10-core CPU, 10-core GPU",
+                },
+              ]
+                .filter((o) => o.available)
+                .map(({ label, value }) => (
+                  <button
+                    key={value}
+                    className={`filter-button-selection ${selectedOptions.memory === value ? "active" : ""}`}
+                    onClick={() => handleSelection("memory", value)}
+                  >
+                    {label}
+                  </button>
+                ))}
             </div>
 
             <p className="spec-title">Litur</p>
@@ -460,7 +595,10 @@ function MacbookAir() {
                   className={`color-swatch-button ${selectedOptions.color === value ? "active" : ""}`}
                   onClick={() => handleSelection("color", value)}
                 >
-                  <span className="color-dot" style={{ backgroundColor: swatch }} />
+                  <span
+                    className="color-dot"
+                    style={{ backgroundColor: swatch }}
+                  />
                   {label}
                 </button>
               ))}
@@ -472,19 +610,27 @@ function MacbookAir() {
             <div className="spec-list">
               <div className="spec-row">
                 <span className="spec-row-label">Skjár</span>
-                <span className="spec-row-value">{selectedOptions.screenSize === "13" ? '13"' : '15"'} Retina</span>
+                <span className="spec-row-value">
+                  {selectedOptions.screenSize === "13" ? '13"' : '15"'} Retina
+                </span>
               </div>
               <div className="spec-row">
                 <span className="spec-row-label">Örgjörvi</span>
-                <span className="spec-row-value">{selectedOptions.processor}</span>
+                <span className="spec-row-value">
+                  {selectedOptions.processor}
+                </span>
               </div>
               <div className="spec-row">
                 <span className="spec-row-label">Geymsla</span>
-                <span className="spec-row-value">{selectedOptions.storage} SSD</span>
+                <span className="spec-row-value">
+                  {selectedOptions.storage} SSD
+                </span>
               </div>
               <div className="spec-row">
                 <span className="spec-row-label">Minni</span>
-                <span className="spec-row-value">{selectedOptions.memory} Unified</span>
+                <span className="spec-row-value">
+                  {selectedOptions.memory} Unified
+                </span>
               </div>
               <div className="spec-row">
                 <span className="spec-row-label">Litur</span>
