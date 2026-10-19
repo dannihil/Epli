@@ -27,6 +27,7 @@ import MacPro from "./pages/cto-pages/MacPro";
 import Imac from "./pages/cto-pages/Imac";
 import Solutorg from "./pages/Solutorg";
 import PriceList from "./pages/PriceList";
+import Soluthoknun from "./pages/Soluthoknun";
 
 function ProtectedRoute({ children }) {
   const { isSignedIn, isLoaded } = useAuth();
@@ -152,6 +153,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Solutorg />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/soluthoknun"
+            element={
+              <ProtectedRoute>
+                <Soluthoknun />
               </ProtectedRoute>
             }
           />

@@ -15,6 +15,7 @@ const EMPTY_DRAFT = {
   ram: "",
   price: "",
   offer_price: "",
+  offer_ends_on: "",
   display_order: "0",
 };
 
@@ -27,6 +28,35 @@ function toNumberOrNull(value) {
 function formatISK(value) {
   if (value === null || value === undefined || value === "") return "—";
   return Number(value).toLocaleString("is-IS").replace(/,/g, ".") + " kr";
+}
+
+// "YYYY-MM-DD" í staðartíma
+function todayKey() {
+  const d = new Date();
+  const pad = (n) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
+
+function hasOffer(row) {
+  return row.offer_price !== "" && row.offer_price != null;
+}
+
+// Tilboð gildir út lokadaginn; ekkert lokadagsetning = gildir þar til það er fjarlægt
+function isOfferExpired(row) {
+  return Boolean(row.offer_ends_on) && row.offer_ends_on < todayKey();
+}
+
+function isOfferActive(row) {
+  return hasOffer(row) && !isOfferExpired(row);
+}
+
+// "2026-10-31" -> "31. okt."
+function formatOfferEnd(dateStr) {
+  const [y, m, d] = dateStr.split("-").map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString("is-IS", {
+    day: "numeric",
+    month: "short",
+  });
 }
 
 const SLUG_WORD_OVERRIDES = {
@@ -111,12 +141,43 @@ export default function PriceList() {
       return;
     }
 
-    const loaded = data || [];
+    const loaded = await clearExpiredOffers(data || []);
     originalRowsRef.current = Object.fromEntries(
       loaded.map((row) => [row.id, row]),
     );
     setRows(loaded);
     setLoading(false);
+  }
+
+  // Tæmir tilboðsverð og lokadag á línum þar sem tilboðið er útrunnið.
+  // Ef uppfærsla mistekst eru línurnar óbreyttar og tilboðið er samt falið í birtingu.
+  async function clearExpiredOffers(loaded) {
+    const expiredIds = loaded
+      .filter((row) => hasOffer(row) && isOfferExpired(row))
+      .map((row) => row.id);
+    if (expiredIds.length === 0) return loaded;
+
+    const { data: cleared, error } = await supabase
+      .from("pricing")
+      .update({
+        offer_price: null,
+        offer_ends_on: null,
+        updated_at: new Date().toISOString(),
+      })
+      .in("id", expiredIds)
+      .select("id");
+
+    if (error) {
+      console.error("Failed to clear expired offers:", error);
+      return loaded;
+    }
+
+    const clearedIds = new Set((cleared || []).map((row) => row.id));
+    return loaded.map((row) =>
+      clearedIds.has(row.id)
+        ? { ...row, offer_price: null, offer_ends_on: null }
+        : row,
+    );
   }
 
   function toggleRowExpanded(id) {
@@ -166,6 +227,7 @@ export default function PriceList() {
         ram: row.ram.trim(),
         price: toNumberOrNull(row.price),
         offer_price: toNumberOrNull(row.offer_price),
+        offer_ends_on: hasOffer(row) ? row.offer_ends_on || null : null,
         display_order: toNumberOrNull(row.display_order) ?? 0,
         updated_at: new Date().toISOString(),
       })
@@ -256,6 +318,7 @@ export default function PriceList() {
         ram,
         price,
         offer_price: toNumberOrNull(addDraft.offer_price),
+        offer_ends_on: hasOffer(addDraft) ? addDraft.offer_ends_on || null : null,
         display_order: toNumberOrNull(addDraft.display_order) ?? 0,
       })
       .select()
@@ -392,6 +455,7 @@ export default function PriceList() {
                     <th>Vinnsluminni</th>
                     <th className="pricelist-price-cell">Verð</th>
                     <th>Tilboðsverð</th>
+                    {isEditor && <th>Tilboð gildir til</th>}
                     <th>Birtingaröð</th>
                     {isEditor && <th>Aðgerðir</th>}
                   </tr>
@@ -417,12 +481,21 @@ export default function PriceList() {
                           </td>
                           <td
                             className={
-                              row.offer_price != null
-                                ? "pricelist-offer-cell"
-                                : ""
+                              isOfferActive(row) ? "pricelist-offer-cell" : ""
                             }
                           >
-                            {formatISK(row.offer_price)}
+                            {isOfferActive(row) ? (
+                              <>
+                                {formatISK(row.offer_price)}
+                                {row.offer_ends_on && (
+                                  <span className="pricelist-offer-end">
+                                    til {formatOfferEnd(row.offer_ends_on)}
+                                  </span>
+                                )}
+                              </>
+                            ) : (
+                              "—"
+                            )}
                           </td>
                           <td>{row.display_order}</td>
                         </tr>
@@ -523,6 +596,25 @@ export default function PriceList() {
                         </td>
                         <td>
                           <input
+                            className={`cell-input cell-input-date ${hasOffer(row) && isOfferExpired(row) ? "cell-input-expired" : ""}`}
+                            type="date"
+                            value={row.offer_ends_on ?? ""}
+                            onChange={(e) =>
+                              updateField(row.id, "offer_ends_on", e.target.value)
+                            }
+                            disabled={!hasOffer(row)}
+                            title={
+                              hasOffer(row)
+                                ? "Skilja eftir autt ef tilboðið hefur engan lokadag"
+                                : "Settu fyrst tilboðsverð"
+                            }
+                          />
+                          {hasOffer(row) && isOfferExpired(row) && (
+                            <span className="pricelist-offer-expired">Útrunnið</span>
+                          )}
+                        </td>
+                        <td>
+                          <input
                             className="cell-input cell-input-narrow"
                             type="number"
                             value={row.display_order}
@@ -594,7 +686,7 @@ export default function PriceList() {
                           </span>
                         </div>
                         <div className="pricelist-card-summary-right">
-                          {row.offer_price != null ? (
+                          {isOfferActive(row) ? (
                             <span className="pricelist-card-price-block">
                               <span className="pricelist-card-price-original">
                                 {formatISK(row.price)}
@@ -602,6 +694,11 @@ export default function PriceList() {
                               <span className="pricelist-card-price pricelist-price-cell pricelist-card-price-offer">
                                 {formatISK(row.offer_price)}
                               </span>
+                              {row.offer_ends_on && (
+                                <span className="pricelist-offer-end">
+                                  til {formatOfferEnd(row.offer_ends_on)}
+                                </span>
+                              )}
                             </span>
                           ) : (
                             <span className="pricelist-card-price pricelist-price-cell">
@@ -669,7 +766,7 @@ export default function PriceList() {
                         </span>
                       </div>
                       <div className="pricelist-card-summary-right">
-                        {row.offer_price != null && row.offer_price !== "" ? (
+                        {isOfferActive(row) ? (
                           <span className="pricelist-card-price-block">
                             <span className="pricelist-card-price-original">
                               {formatISK(row.price)}
@@ -796,6 +893,24 @@ export default function PriceList() {
                             placeholder="No offer"
                           />
                         </div>
+                        {hasOffer(row) && (
+                          <div className="pricelist-card-field">
+                            <label>
+                              Tilboð gildir til
+                              {isOfferExpired(row) && (
+                                <span className="pricelist-offer-expired">Útrunnið</span>
+                              )}
+                            </label>
+                            <input
+                              className={`cell-input ${isOfferExpired(row) ? "cell-input-expired" : ""}`}
+                              type="date"
+                              value={row.offer_ends_on ?? ""}
+                              onChange={(e) =>
+                                updateField(row.id, "offer_ends_on", e.target.value)
+                              }
+                            />
+                          </div>
+                        )}
                         <div className="pricelist-card-field">
                           <label>Birtingaröð</label>
                           <input
@@ -961,6 +1076,20 @@ export default function PriceList() {
                 }))
               }
               placeholder="Skilja eftir autt ef ekkert tilboð"
+            />
+
+            <label className="modal-field-label">Tilboð gildir til</label>
+            <input
+              className="modal-input"
+              type="date"
+              value={addDraft.offer_ends_on}
+              onChange={(e) =>
+                setAddDraft((prev) => ({
+                  ...prev,
+                  offer_ends_on: e.target.value,
+                }))
+              }
+              disabled={addDraft.offer_price === ""}
             />
 
             <label className="modal-field-label">

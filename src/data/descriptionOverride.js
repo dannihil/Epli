@@ -77,6 +77,12 @@ export const descriptionOverride = {
   "MCX44ZE/A": "Mac mini M4 Pro 12-Core CPU/16-Core GPU/24GB/512GB",
   "MCYT4ZE/A": "Mac mini M4 10-Core CPU/10-Core GPU/24GB/512GB",
 
+  "MHL64ZE/A": "Mac Studio M5 Max 18-Core CPU/32-Core GPU 36GB/512GB",
+  "MHQK4ZE/A": "Mac mini M6 12-Core CPU/12-Core GPU 16GB/256GB",
+  "MHQL4ZE/A": "Mac mini M6 12-Core CPU/12-Core GPU 16GB/512GB",
+  "MHQM4ZE/A": "Mac mini M6 12-Core CPU/12-Core GPU 24GB/512GB",
+  "MHQN4ZE/A": "Mac mini M5 Pro 15-Core CPU/16-Core GPU 24GB/512GB",
+
   "MD3H4ZE/A": 'iMac 24" M4 10/10-Core 16GB/256GB Silver, Nano-Texture Glass',
   Z1E2: 'iMac 24" M4 8/8-Core 16GB/256GB Silver',
   Z1E4: 'iMac 24" M4 8/8-Core 16GB/256GB Green',
@@ -1304,6 +1310,438 @@ export const descriptionOverride = {
 
   "MFE94ZM/A": "AirTag 2 (1 pack)",
   "MFEA4ZM/A": "AirTag 2 (4 pack)",
+
+  "MJRP4QN/A": "iPhone 18 Pro 256GB Black",
+  "MJRQ4QN/A": "iPhone 18 Pro 256GB Silver",
+  "MJRR4QN/A": "iPhone 18 Pro 256GB Burgundy",
+  "MJRT4QN/A": "iPhone 18 Pro 256GB Glacier",
+  "MJRU4QN/A": "iPhone 18 Pro 512GB Black",
+  "MJRV4QN/A": "iPhone 18 Pro 512GB Silver",
+  "MJRW4QN/A": "iPhone 18 Pro 512GB Burgundy",
+  "MJRX4QN/A": "iPhone 18 Pro 512GB Glacier",
+  "MJRY4QN/A": "iPhone 18 Pro 1TB Black",
+  "MJT04QN/A": "iPhone 18 Pro 1TB Silver",
+  "MJT14QN/A": "iPhone 18 Pro 1TB Burgundy",
+  "MJT24QN/A": "iPhone 18 Pro 1TB Glacier",
+  "MJT34QN/A": "iPhone 18 Pro 2TB Black",
+  "MJT44QN/A": "iPhone 18 Pro 2TB Silver",
+  "MJT54QN/A": "iPhone 18 Pro 2TB Burgundy",
+  "MJT64QN/A": "iPhone 18 Pro 2TB Glacier",
+  "MJXN4QN/A": "iPhone 18 Pro Max 256GB Black",
+  "MJXP4QN/A": "iPhone 18 Pro Max 256GB Silver",
+  "MJXQ4QN/A": "iPhone 18 Pro Max 256GB Burgundy",
+  "MJXR4QN/A": "iPhone 18 Pro Max 256GB Glacier",
+  "MJXT4QN/A": "iPhone 18 Pro Max 512GB Black",
+  "MJXU4QN/A": "iPhone 18 Pro Max 512GB Silver",
+  "MJXV4QN/A": "iPhone 18 Pro Max 512GB Burgundy",
+  "MJXW4QN/A": "iPhone 18 Pro Max 512GB Glacier",
+  "MJXX4QN/A": "iPhone 18 Pro Max 1TB Black",
+  "MJXY4QN/A": "iPhone 18 Pro Max 1TB Silver",
+  "MJY04QN/A": "iPhone 18 Pro Max 1TB Burgundy",
+  "MJY14QN/A": "iPhone 18 Pro Max 1TB Glacier",
+  "MJY24QN/A": "iPhone 18 Pro Max 2TB Black",
+  "MJY34QN/A": "iPhone 18 Pro Max 2TB Silver",
+  "MJY44QN/A": "iPhone 18 Pro Max 2TB Burgundy",
+  "MJY54QN/A": "iPhone 18 Pro Max 2TB Glacier",
+
+  "MJA84DH/A":
+    "Apple Watch Ultra 4 LTE 49mm Natural Titanium - Natural Titanium Milanese Loop - Small",
+  "MJA94DH/A":
+    "Apple Watch Ultra 4 LTE 49mm Natural Titanium - Natural Titanium Milanese Loop - Medium",
+  "MJAA4DH/A":
+    "Apple Watch Ultra 4 LTE 49mm Natural Titanium - Natural Titanium Milanese Loop - Large",
+  "MJAD4DH/A":
+    "Apple Watch Ultra 4 LTE 49mm Natural Titanium - Translucent Grey Ocean Band",
+  "MJAE4DH/A":
+    "Apple Watch Ultra 4 LTE 49mm Natural Titanium - Desert Alpine Loop - Small",
+  "MJAF4DH/A":
+    "Apple Watch Ultra 4 LTE 49mm Natural Titanium - Desert Alpine Loop - Medium",
+  "MJAG4DH/A":
+    "Apple Watch Ultra 4 LTE 49mm Natural Titanium - Desert Alpine Loop - Large",
+  "MJAJ4DH/A":
+    "Apple Watch Ultra 4 LTE 49mm Natural Titanium - Sand Trail Loop - S/M",
+  "MJAQ4DH/A":
+    "Apple Watch Ultra 4 LTE 49mm Natural Titanium - Sand Trail Loop - M/L",
+  "MJAU4DH/A":
+    "Apple Watch Ultra 4 LTE 49mm Black Titanium - Black Titanium Milanese Loop - Small",
+  "MJAV4DH/A":
+    "Apple Watch Ultra 4 LTE 49mm Black Titanium - Black Titanium Milanese Loop - Medium",
+  "MJAX4DH/A":
+    "Apple Watch Ultra 4 LTE 49mm Black Titanium - Black Titanium Milanese Loop - Large",
+  "MJAY4DH/A":
+    "Apple Watch Ultra 4 LTE 49mm Black Titanium - Translucent Black Ocean Band",
+  "MJC04DH/A":
+    "Apple Watch Ultra 4 LTE 49mm Black Titanium - Burgundy Alpine Loop - Small",
+  "MJC14DH/A":
+    "Apple Watch Ultra 4 LTE 49mm Black Titanium - Burgundy Alpine Loop - Medium",
+  "MJC24DH/A":
+    "Apple Watch Ultra 4 LTE 49mm Black Titanium - Burgundy Alpine Loop - Large",
+  "MJC34DH/A":
+    "Apple Watch Ultra 4 LTE 49mm Black Titanium - Burgundy Trail Loop - S/M",
+  "MJC44DH/A":
+    "Apple Watch Ultra 4 LTE 49mm Black Titanium - Burgundy Trail Loop - M/L",
+
+  "MJE74QN/A":
+    "Apple Watch Series 12 42mm Space Grey Aluminium - Navy Blue Sport Band - S/M",
+  "MJE94QN/A":
+    "Apple Watch Series 12 42mm Space Grey Aluminium - Navy Blue Sport Band - M/L",
+  "MJEA4QN/A":
+    "Apple Watch Series 12 42mm Black Aluminium - Black Sport Band - S/M",
+  "MJEC4QN/A":
+    "Apple Watch Series 12 42mm Black Aluminium - Black Sport Band - M/L",
+  "MJED4QN/A":
+    "Apple Watch Series 12 42mm Light Gold Aluminium - Sand Sport Band - S/M",
+  "MJEE4QN/A":
+    "Apple Watch Series 12 42mm Light Gold Aluminium - Sand Sport Band - M/L",
+  "MJEF4QN/A":
+    "Apple Watch Series 12 42mm Dark Bronze Aluminium - Olive Sport Band - S/M",
+  "MJEG4QN/A":
+    "Apple Watch Series 12 42mm Dark Bronze Aluminium - Olive Sport Band - M/L",
+  "MJEH4QN/A":
+    "Apple Watch Series 12 46mm Space Grey Aluminium - Navy Blue Sport Band - S/M",
+  "MJEJ4QN/A":
+    "Apple Watch Series 12 46mm Space Grey Aluminium - Navy Blue Sport Band - M/L",
+  "MJEK4QN/A":
+    "Apple Watch Series 12 46mm Black Aluminium - Black Sport Band - S/M",
+  "MJEL4QN/A":
+    "Apple Watch Series 12 46mm Black Aluminium - Black Sport Band - M/L",
+  "MJEN4QN/A":
+    "Apple Watch Series 12 46mm Light Gold Aluminium - Sand Sport Band - S/M",
+  "MJEP4QN/A":
+    "Apple Watch Series 12 46mm Light Gold Aluminium - Sand Sport Band - M/L",
+  "MJEQ4QN/A":
+    "Apple Watch Series 12 46mm Dark Bronze Aluminium - Olive Sport Band - S/M",
+  "MJEU4QN/A":
+    "Apple Watch Series 12 46mm Dark Bronze Aluminium - Olive Sport Band - M/L",
+  "MJFX4QN/A":
+    "Apple Watch Series 12 LTE 42mm Space Grey Aluminium - Navy Blue Sport Band - S/M",
+  "MJFY4QN/A":
+    "Apple Watch Series 12 LTE 42mm Space Grey Aluminium - Navy Blue Sport Band - M/L",
+  "MJG04QN/A":
+    "Apple Watch Series 12 LTE 42mm Black Aluminium - Black Sport Band - S/M",
+  "MJG14QN/A":
+    "Apple Watch Series 12 LTE 42mm Black Aluminium - Black Sport Band - M/L",
+  "MJG24QN/A":
+    "Apple Watch Series 12 LTE 42mm Light Gold Aluminium - Sand Sport Band - S/M",
+  "MJG34QN/A":
+    "Apple Watch Series 12 LTE 42mm Light Gold Aluminium - Sand Sport Band - M/L",
+  "MJG44QN/A":
+    "Apple Watch Series 12 LTE 42mm Dark Bronze Aluminium - Olive Sport Band - S/M",
+  "MJG54QN/A":
+    "Apple Watch Series 12 LTE 42mm Dark Bronze Aluminium - Olive Sport Band - M/L",
+  "MJG64QN/A":
+    "Apple Watch Series 12 LTE 46mm Space Grey Aluminium - Navy Blue Sport Band - S/M",
+  "MJG74QN/A":
+    "Apple Watch Series 12 LTE 46mm Space Grey Aluminium - Navy Blue Sport Band - M/L",
+  "MJG84QN/A":
+    "Apple Watch Series 12 LTE 46mm Black Aluminium - Black Sport Band - S/M",
+  "MJG94QN/A":
+    "Apple Watch Series 12 LTE 42mm Black Aluminium - Black Sport Band - M/L",
+  "MJGA4QN/A":
+    "Apple Watch Series 12 LTE 46mm Light Gold Aluminium - Sand Sport Band - S/M",
+  "MJGC4QN/A":
+    "Apple Watch Series 12 LTE 46mm Light Gold Aluminium - Sand Sport Band - M/L",
+  "MJGD4QN/A":
+    "Apple Watch Series 12 LTE 46mm Dark Bronze Aluminium - Olive Sport Band - S/M",
+  "MJGE4QN/A":
+    "Apple Watch Series 12 LTE 46mm Dark Bronze Aluminium - Olive Sport Band - M/L",
+  "MJGF4QN/A":
+    "Apple Watch Series 12 LTE 42mm Natural Titanium - Navy Blue Sport Band - S/M",
+  "MJGG4QN/A":
+    "Apple Watch Series 12 LTE 42mm Natural Titanium - Navy Blue Sport Band - M/L",
+  "MJGH4QN/A":
+    "Apple Watch Series 12 LTE 42mm Natural Titanium - Natural Milanese Loop",
+  "MJGJ4QN/A":
+    "Apple Watch Series 12 LTE 42mm Radiant Gold Titanium - Burgundy Sport Band - S/M",
+  "MJGK4QN/A":
+    "Apple Watch Series 12 LTE 42mm Radiant Gold Titanium - Burgundy Sport Band - M/L",
+  "MJGL4QN/A":
+    "Apple Watch Series 12 LTE 42mm Radiant Gold Titanium - Radiant Gold Milanese Loop",
+  "MJGM4QN/A":
+    "Apple Watch Series 12 LTE 46mm Natural Titanium - Navy Blue Sport Band - S/M",
+  "MJGN4QN/A":
+    "Apple Watch Series 12 LTE 46mm Natural Titanium - Navy Blue Sport Band - M/L",
+  "MJGP4QN/A":
+    "Apple Watch Series 12 LTE 46mm Natural Titanium - Natural Milanese Loop - S/M",
+  "MJGQ4QN/A":
+    "Apple Watch Series 12 LTE 46mm Natural Titanium - Natural Milanese Loop - M/L",
+  "MJGR4QN/A":
+    "Apple Watch Series 12 LTE 46mm Radiant Gold Titanium - Burgundy Sport Band - S/M",
+  "MJGT4QN/A":
+    "Apple Watch Series 12 LTE 46mm Radiant Gold Titanium - Burgundy Sport Band - M/L",
+  "MJGU4QN/A":
+    "Apple Watch Series 12 LTE 46mm Radiant Gold Titanium - Radiant Gold Milanese Loop - S/M",
+  "MJGV4QN/A":
+    "Apple Watch Series 12 LTE 46mm Radiant Gold Titanium - Radiant Gold Milanese Loop - M/L",
+  "MJGW4QN/A":
+    "Apple Watch Series 12 LTE 42mm Pearl White Ceramic - Sand Sport Band - S/M",
+  "MJGX4QN/A":
+    "Apple Watch Series 12 LTE 42mm Pearl White Ceramic - Sand Sport Band - M/L",
+  "MJGY4QN/A":
+    "Apple Watch Series 12 LTE 42mm Night Blue Ceramic - Navy Blue Sport Band - S/M",
+  "MJH04QN/A":
+    "Apple Watch Series 12 LTE 42mm Night Blue Ceramic - Navy Blue Sport Band - M/L",
+  "MJH14QN/A":
+    "Apple Watch Series 12 LTE 46mm Pearl White Ceramic - Sand Sport Band - S/M",
+  "MJH24QN/A":
+    "Apple Watch Series 12 LTE 46mm Pearl White Ceramic - Sand Sport Band - M/L",
+  "MJH34QN/A":
+    "Apple Watch Series 12 LTE 46mm Night Blue Ceramic - Navy Blue Sport Band - S/M",
+  "MJH44QN/A":
+    "Apple Watch Series 12 LTE 46mm Night Blue Ceramic - Navy Blue Sport Band - M/L",
+  "MKD74QN/A":
+    "Apple Watch Series 12 46mm Dark Bronze Aluminium - Dark Bronze Milanese Loop - S/M",
+  "MKD84QN/A":
+    "Apple Watch Series 12 46mm Dark Bronze Aluminium - Dark Bronze Milanese Loop - M/L",
+  "MKDC4QN/A":
+    "Apple Watch Series 12 42mm Dark Bronze Aluminium - Dark Bronze Milanese Loop",
+  "MKDF4QN/A":
+    "Apple Watch Series 12 LTE 46mm Dark Bronze Aluminium - Dark Bronze Milanese Loop - S/M",
+  "MKDG4QN/A":
+    "Apple Watch Series 12 LTE 46mm Dark Bronze Aluminium - Dark Bronze Milanese Loop - M/L",
+  "MKDK4QN/A":
+    "Apple Watch Series 12 LTE 42mm Dark Bronze Aluminium - Dark Bronze Milanese Loop",
+
+  "MK8T4ZM/A": "iPhone 18 Pro Silicone Case with MagSafe - Magenta",
+  "MK8U4ZM/A": "iPhone 18 Pro Silicone Case with MagSafe - Burgundy",
+  "MK8V4ZM/A": "iPhone 18 Pro Silicone Case with MagSafe - Olive",
+  "MK8W4ZM/A": "iPhone 18 Pro Silicone Case with MagSafe - Crisp Blue",
+  "MK8X4ZM/A": "iPhone 18 Pro Silicone Case with MagSafe - Navy Blue",
+  "MK8Y4ZM/A": "iPhone 18 Pro Silicone Case with MagSafe - Black",
+  "MK904ZM/A": "iPhone 18 Pro Max Silicone Case with MagSafe - Magenta",
+  "MK914ZM/A": "iPhone 18 Pro Max Silicone Case with MagSafe - Burgundy",
+  "MK924ZM/A": "iPhone 18 Pro Max Silicone Case with MagSafe - Olive",
+  "MK934ZM/A": "iPhone 18 Pro Max Silicone Case with MagSafe - Crisp Blue",
+  "MK944ZM/A": "iPhone 18 Pro Max Silicone Case with MagSafe - Navy Blue",
+  "MK954ZM/A": "iPhone 18 Pro Max Silicone Case with MagSafe - Black",
+  "MKD14ZM/A": "iPhone 18 Pro TechWoven Case with MagSafe - Burgundy",
+  "MKD24ZM/A": "iPhone 18 Pro TechWoven Case with MagSafe - Mulberry",
+  "MKD34ZM/A": "iPhone 18 Pro TechWoven Case with MagSafe - Olive",
+  "MKD44ZM/A": "iPhone 18 Pro TechWoven Case with MagSafe - Taupe",
+  "MKD54ZM/A": "iPhone 18 Pro TechWoven Case with MagSafe - Chambray Blue",
+  "MKD64ZM/A": "iPhone 18 Pro TechWoven Case with MagSafe - Black",
+  "MKDM4ZM/A": "iPhone 18 Pro Max TechWoven Case with MagSafe - Burgundy",
+  "MKDN4ZM/A": "iPhone 18 Pro Max TechWoven Case with MagSafe - Mulberry",
+  "MKDP4ZM/A": "iPhone 18 Pro Max TechWoven Case with MagSafe - Olive",
+  "MKDQ4ZM/A": "iPhone 18 Pro Max TechWoven Case with MagSafe - Taupe",
+  "MKDR4ZM/A": "iPhone 18 Pro Max TechWoven Case with MagSafe - Chambray Blue",
+  "MKDT4ZM/A": "iPhone 18 Pro Max TechWoven Case with MagSafe - Black",
+  "MKDU4ZM/A": "iPhone 18 Pro Clear Case with MagSafe",
+  "MKDV4ZM/A": "iPhone 18 Pro Max Clear Case with MagSafe",
+
+  "MKFT4ZM/A": "AirPods 5 með þráðlausu hleðsluhulstri",
+  "MKFW4ZM/A": "AirPods 5",
+
+  "MK964ZM/A": "Crossbody Strap - Magenta",
+  "MK974ZM/A": "Crossbody Strap - Burgundy",
+  "MK984ZM/A": "Crossbody Strap - Crisp Blue",
+  "MK994ZM/A": "Crossbody Strap - Olive",
+  "MK9A4ZM/A": "Crossbody Strap - Navy Blue",
+  "MK9C4ZM/A": "Crossbody Strap - Sand",
+  "MK9D4ZM/A": "Crossbody Strap - Black",
+  "MK9E4ZM/A": "Crossbody Strap - Taupe",
+  "MK9G4ZM/A": "iPhone FineWoven Wallet with MagSafe - Magenta",
+  "MK9H4ZM/A": "iPhone FineWoven Wallet with MagSafe - Burgundy",
+  "MK9J4ZM/A": "iPhone FineWoven Wallet with MagSafe - Wildflower Blue",
+  "MK9K4ZM/A": "iPhone FineWoven Wallet with MagSafe - Dark Olive",
+  "MK9L4ZM/A": "iPhone FineWoven Wallet with MagSafe - Black",
+  "MKF64ZM/A": "Wrist Strap - Magenta",
+  "MKF74ZM/A": "Wrist Strap - Burgundy",
+  "MKF84ZM/A": "Wrist Strap - Crisp Blue",
+  "MKF94ZM/A": "Wrist Strap - Olive",
+  "MKFA4ZM/A": "Wrist Strap - Black",
+  "MKFC4ZM/A": "Wrist Strap - Taupe",
+  "MJNF4ZM/A": "Apple 40mm Dark Bronze Milanese Loop",
+  "MJNG4ZM/A": "Apple 40mm Radiant Gold Milanese Loop",
+  "MJNH4ZM/A": "Apple 40mm Natural Milanese Loop",
+  "MJNJ4ZM/A": "Apple 42mm Dark Bronze Milanese Loop",
+  "MJNK4ZM/A": "Apple 42mm Radiant Gold Milanese Loop",
+  "MJNL4ZM/A": "Apple 42mm Natural Milanese Loop",
+  "MJNM4ZM/A": "Apple 46mm Dark Bronze Milanese Loop - S/M",
+  "MJNN4ZM/A": "Apple 46mm Dark Bronze Milanese Loop - M/L",
+  "MJNP4ZM/A": "Apple 46mm Radiant Gold Milanese Loop - S/M",
+  "MJNQ4ZM/A": "Apple 46mm Radiant Gold Milanese Loop - M/L",
+  "MJNR4ZM/A": "Apple 46mm Natural Milanese Loop - S/M",
+  "MJNT4ZM/A": "Apple 46mm Natural Milanese Loop - M/L",
+  "MJNW4ZM/A": "Apple 42mm Radiant Gold Link Bracelet",
+  "MJNX4ZM/A": "Apple 42mm Natural Link Bracelet",
+  "MJNY4ZM/A": "Apple 46mm Radiant Gold Link Bracelet",
+  "MJQ04ZM/A": "Apple 46mm Radiant Gold Link Bracelet Kit",
+  "MJQ14ZM/A": "Apple 46mm Natural Link Bracelet",
+  "MJQ24ZM/A": "Apple 46mm Natural Link Bracelet Kit",
+  "MJU94ZM/A": "Apple 40mm Burgundy Sport Band - S/M",
+  "MJUA4ZM/A": "Apple 40mm Burgundy Sport Band - M/L",
+  "MJUC4ZM/A": "Apple 40mm Sand Sport Band - S/M",
+  "MJUE4ZM/A": "Apple 40mm Sand Sport Band - M/L",
+  "MJUF4ZM/A": "Apple 40mm Magenta Sport Band - S/M",
+  "MJUG4ZM/A": "Apple 40mm Magenta Sport Band - M/L",
+  "MJUH4ZM/A": "Apple 40mm Navy Blue Sport Band - S/M",
+  "MJUK4ZM/A": "Apple 40mm Navy Blue Sport Band - M/L",
+  "MJUL4ZM/A": "Apple 40mm Black Sport Band - S/M",
+  "MJUN4ZM/A": "Apple 40mm Black Sport Band - M/L",
+  "MJUP4ZM/A": "Apple 40mm Olive Sport Band - S/M",
+  "MJUQ4ZM/A": "Apple 40mm Olive Sport Band - M/L",
+  "MJUT4ZM/A": "Apple 40mm Pale Succulent Sport Band - S/M",
+  "MJUU4ZM/A": "Apple 40mm Pale Succulent Sport Band - M/L",
+  "MJUV4ZM/A": "Apple 40mm Wildflower Blue Sport Band - S/M",
+  "MJUW4ZM/A": "Apple 40mm Wildflower Blue Sport Band - M/L",
+  "MJUX4ZM/A": "Apple 42mm Burgundy Sport Band - S/M",
+  "MJUY4ZM/A": "Apple 42mm Burgundy Sport Band - M/L",
+  "MJV04ZM/A": "Apple 42mm Sand Sport Band - S/M",
+  "MJV14ZM/A": "Apple 42mm Sand Sport Band - M/L",
+  "MJV34ZM/A": "Apple 42mm Magenta Sport Band - S/M",
+  "MJV44ZM/A": "Apple 42mm Magenta Sport Band - M/L",
+  "MJV54ZM/A": "Apple 42mm Navy Blue Sport Band - S/M",
+  "MJV64ZM/A": "Apple 42mm Navy Blue Sport Band - M/L",
+  "MJV74ZM/A": "Apple 42mm Black Sport Band - S/M",
+  "MJV84ZM/A": "Apple 42mm Black Sport Band - M/L",
+  "MJV94ZM/A": "Apple 42mm Olive Sport Band - S/M",
+  "MJVA4ZM/A": "Apple 42mm Olive Sport Band - M/L",
+  "MJVC4ZM/A": "Apple 42mm Pale Succulent Sport Band - S/M",
+  "MJVE4ZM/A": "Apple 42mm Pale Succulent Sport Band - M/L",
+  "MJVF4ZM/A": "Apple 42mm Wildflower Blue Sport Band - S/M",
+  "MJVG4ZM/A": "Apple 42mm Wildflower Blue Sport Band - M/L",
+  "MJVH4ZM/A": "Apple 46mm Burgundy Sport Band - S/M",
+  "MJVK4ZM/A": "Apple 46mm Burgundy Sport Band - M/L",
+  "MJVL4ZM/A": "Apple 46mm Sand Sport Band - S/M",
+  "MJVN4ZM/A": "Apple 46mm Sand Sport Band - M/L",
+  "MJVP4ZM/A": "Apple 46mm Magenta Sport Band - S/M",
+  "MJVQ4ZM/A": "Apple 46mm Magenta Sport Band - M/L",
+  "MJVT4ZM/A": "Apple 46mm Navy Blue Sport Band - S/M",
+  "MJVU4ZM/A": "Apple 46mm Navy Blue Sport Band - M/L",
+  "MJVV4ZM/A": "Apple 46mm Black Sport Band - S/M",
+  "MJVW4ZM/A": "Apple 46mm Black Sport Band - M/L",
+  "MJVX4ZM/A": "Apple 46mm Olive Sport Band - S/M",
+  "MJVY4ZM/A": "Apple 46mm Olive Sport Band - M/L",
+  "MJW04ZM/A": "Apple 46mm Pale Succulent Sport Band - S/M",
+  "MJW14ZM/A": "Apple 46mm Pale Succulent Sport Band - M/L",
+  "MJW24ZM/A": "Apple 46mm Wildflower Blue Sport Band - S/M",
+  "MJW34ZM/A": "Apple 46mm Wildflower Blue Sport Band - M/L",
+  "MK0A4ZM/A": "Apple 49mm Natural Titanium Milanese Loop - Small",
+  "MK0D4ZM/A": "Apple 49mm Natural Titanium Milanese Loop - Medium",
+  "MK0E4ZM/A": "Apple 49mm Natural Titanium Milanese Loop - Large",
+  "MK0F4ZM/A": "Apple 49mm Black Titanium Milanese Loop - Small",
+  "MK0G4ZM/A": "Apple 49mm Black Titanium Milanese Loop - Medium",
+  "MK0Q4ZM/A": "Apple 49mm Black Titanium Milanese Loop - Large",
+  "MK1A4ZM/A": "Apple 46mm Black Sport Band - XL",
+  "MK794ZM/A":
+    "Apple 49mm Dark Olive Alpine Loop - Small - Natural Titanium Finish",
+  "MK7A4ZM/A":
+    "Apple 49mm Dark Olive Alpine Loop - Medium - Natural Titanium Finish",
+  "MK7C4ZM/A":
+    "Apple 49mm Dark Olive Alpine Loop - Large - Natural Titanium Finish",
+  "MK7D4ZM/A":
+    "Apple 49mm Burgundy Alpine Loop - Small - Natural Titanium Finish",
+  "MK7E4ZM/A":
+    "Apple 49mm Burgundy Alpine Loop - Medium - Natural Titanium Finish",
+  "MK7F4ZM/A":
+    "Apple 49mm Burgundy Alpine Loop - Large - Natural Titanium Finish",
+  "MK7G4ZM/A":
+    "Apple 49mm Desert Alpine Loop - Small - Natural Titanium Finish",
+  "MK7H4ZM/A":
+    "Apple 49mm Desert Alpine Loop - Medium - Natural Titanium Finish",
+  "MK7J4ZM/A":
+    "Apple 49mm Desert Alpine Loop - Large - Natural Titanium Finish",
+  "MK7K4ZM/A":
+    "Apple 49mm Translucent Grey Ocean Band - Natural Titanium Finish",
+  "MK7L4ZM/A":
+    "Apple 49mm Translucent Grey Ocean Band Extension - Natural Titanium Finish",
+  "MK7M4ZM/A":
+    "Apple 49mm Translucent Kelp Ocean Band - Natural Titanium Finish",
+  "MK7N4ZM/A":
+    "Apple 49mm Translucent Kelp Ocean Band Extension - Natural Titanium Finish",
+  "MK7P4ZM/A":
+    "Apple 49mm Translucent Black Ocean Band - Natural Titanium Finish",
+  "MK7Q4ZM/A":
+    "Apple 49mm Translucent Black Ocean Band Extension - Natural Titanium Finish",
+  "MK7R4ZM/A": "Apple 40mm Burgundy Plaid Sport Loop",
+  "MK7T4ZM/A": "Apple 40mm Light Umber Plaid Sport Loop",
+  "MK7U4ZM/A": "Apple 40mm Limestone Sport Loop",
+  "MK7V4ZM/A": "Apple 40mm Magenta Sport Loop",
+  "MK7W4ZM/A": "Apple 40mm Olive Sport Loop",
+  "MK7X4ZM/A": "Apple 40mm Chambray Blue Sport Loop",
+  "MK7Y4ZM/A": "Apple 40mm Burgundy Sport Loop",
+  "MK804ZM/A": "Apple 42mm Burgundy Plaid Sport Loop",
+  "MK814ZM/A": "Apple 42mm Light Umber Plaid Sport Loop",
+  "MK824ZM/A": "Apple 42mm Limestone Sport Loop",
+  "MK834ZM/A": "Apple 42mm Magenta Sport Loop",
+  "MK844ZM/A": "Apple 42mm Olive Sport Loop",
+  "MK854ZM/A": "Apple 42mm Chambray Blue Sport Loop",
+  "MK864ZM/A": "Apple 42mm Burgundy Sport Loop",
+  "MK874ZM/A": "Apple 46mm Burgundy Plaid Sport Loop",
+  "MK894ZM/A": "Apple 46mm Light Umber Plaid Sport Loop",
+  "MK8A4ZM/A": "Apple 46mm Limestone Sport Loop",
+  "MK8C4ZM/A": "Apple 46mm Magenta Sport Loop",
+  "MK8D4ZM/A": "Apple 46mm Olive Sport Loop",
+  "MK8E4ZM/A": "Apple 46mm Chambray Blue Sport Loop",
+  "MK8F4ZM/A": "Apple 46mm Burgundy Sport Loop",
+  "MK8G4ZM/A": "Apple 49mm Burgundy Trail Loop - S/M - Natural Titanium Finish",
+  "MK8H4ZM/A": "Apple 49mm Burgundy Trail Loop - M/L - Natural Titanium Finish",
+  "MK8J4ZM/A":
+    "Apple 49mm Dark Umber Trail Loop - S/M - Natural Titanium Finish",
+  "MK8K4ZM/A":
+    "Apple 49mm Dark Umber Trail Loop - M/L - Natural Titanium Finish",
+  "MK8M4ZM/A": "Apple 49mm Sand Trail Loop - S/M - Natural Titanium Finish",
+  "MK8N4ZM/A": "Apple 49mm Sand Trail Loop - M/L - Natural Titanium Finish",
+  "MKA74ZM/A": "Apple 49mm Burgundy Trail Loop - S/M - Black Titanium Finish",
+  "MKA94ZM/A": "Apple 49mm Burgundy Trail Loop - M/L - Black Titanium Finish",
+  "MKAA4ZM/A": "Apple 49mm Dark Umber Trail Loop - S/M - Black Titanium Finish",
+  "MKAE4ZM/A": "Apple 49mm Dark Umber Trail Loop - M/L - Black Titanium Finish",
+  "MKAH4ZM/A": "Apple 49mm Sand Trail Loop - S/M - Black Titanium Finish",
+  "MKAJ4ZM/A": "Apple 49mm Sand Trail Loop - M/L - Black Titanium Finish",
+  "MKAQ4ZM/A": "Apple 49mm Translucent Grey Ocean Band - Black Titanium Finish",
+  "MKAU4ZM/A":
+    "Apple 49mm Translucent Grey Ocean Band Extension - Black Titanium Finish",
+  "MKAV4ZM/A": "Apple 49mm Translucent Kelp Ocean Band - Black Titanium Finish",
+  "MKAX4ZM/A":
+    "Apple 49mm Translucent Kelp Ocean Band Extension - Black Titanium Finish",
+  "MKAY4ZM/A":
+    "Apple 49mm Translucent Black Ocean Band - Black Titanium Finish",
+  "MKD04ZM/A":
+    "Apple 49mm Translucent Black Ocean Band Extension - Black Titanium Finish",
+  "MKDW4ZM/A":
+    "Apple 49mm Dark Olive Alpine Loop - Small - Black Titanium Finish",
+  "MKDX4ZM/A":
+    "Apple 49mm Dark Olive Alpine Loop - Medium - Black Titanium Finish",
+  "MKDY4ZM/A":
+    "Apple 49mm Dark Olive Alpine Loop - Large - Black Titanium Finish",
+  "MKF04ZM/A":
+    "Apple 49mm Burgundy Alpine Loop - Small - Black Titanium Finish",
+  "MKF14ZM/A":
+    "Apple 49mm Burgundy Alpine Loop - Medium - Black Titanium Finish",
+  "MKF24ZM/A":
+    "Apple 49mm Burgundy Alpine Loop - Large - Black Titanium Finish",
+  "MKF34ZM/A": "Apple 49mm Desert Alpine Loop - Small - Black Titanium Finish",
+  "MKF44ZM/A": "Apple 49mm Desert Alpine Loop - Medium - Black Titanium Finish",
+  "MKF54ZM/A": "Apple 49mm Desert Alpine Loop - Large - Black Titanium Finish",
+  "MKRC4ZM/A": "Apple 42mm Burgundy Magnetic Link - S/M",
+  "MKRD4ZM/A": "Apple 42mm Burgundy Magnetic Link - M/L",
+  "MKRE4ZM/A": "Apple 42mm Wildflower Blue Magnetic Link - S/M",
+  "MKRF4ZM/A": "Apple 42mm Wildflower Blue Magnetic Link - M/L",
+  "MKRG4ZM/A": "Apple 42mm Camel Magnetic Link - S/M",
+  "MKRH4ZM/A": "Apple 42mm Camel Magnetic Link - M/L",
+  "MKRJ4ZM/A": "Apple 42mm Midnight Magnetic Link - S/M",
+  "MKRK4ZM/A": "Apple 42mm Midnight Magnetic Link - M/L",
+  "MKRM4ZM/A": "Apple 46mm Burgundy Magnetic Link - S/M",
+  "MKRP4ZM/A": "Apple 46mm Burgundy Magnetic Link - M/L",
+  "MKRQ4ZM/A": "Apple 46mm Wildflower Blue Magnetic Link - S/M",
+  "MKRR4ZM/A": "Apple 46mm Wildflower Blue Magnetic Link - M/L",
+  "MKRT4ZM/A": "Apple 46mm Camel Magnetic Link - S/M",
+  "MKRW4ZM/A": "Apple 46mm Camel Magnetic Link - M/L",
+  "MKRX4ZM/A": "Apple 46mm Midnight Magnetic Link - S/M",
+  "MKRY4ZM/A": "Apple 46mm Midnight Magnetic Link - M/L",
+  "ML3C4ZM/A": "Apple 42mm Navy Blue Modern Buckle - Small",
+  "ML3E4ZM/A": "Apple 42mm Navy Blue Modern Buckle - Medium",
+  "ML3G4ZM/A": "Apple 42mm Navy Blue Modern Buckle - Large",
+  "ML3K4ZM/A": "Apple 42mm Mulberry Modern Buckle - Small",
+  "ML3L4ZM/A": "Apple 42mm Mulberry Modern Buckle - Medium",
+  "ML3N4ZM/A": "Apple 42mm Mulberry Modern Buckle - Large",
+  "ML3Q4ZM/A": "Apple 42mm Camel Modern Buckle - Small",
+  "ML3U4ZM/A": "Apple 42mm Camel Modern Buckle - Medium",
+  "ML3V4ZM/A": "Apple 42mm Camel Modern Buckle - L",
+  "ML3W4ZM/A": "Apple 42mm Sage Modern Buckle - Small",
+  "ML3X4ZM/A": "Apple 42mm Sage Modern Buckle - Medium",
+  "ML3Y4ZM/A": "Apple 42mm Sage Modern Buckle - Large",
   // Add more overrides as needed
 };
 
@@ -1322,4 +1760,6 @@ export const descriptionOverrideFromIdentifier = {
   Z1H2001E5: 'MacBook Air 15" M4 10/10-Core 24GB 1TB - Midnight',
   Z1H2001ED: 'MacBook Air 15" M4 10/10-Core 32GB 1TB - Midnight',
   Z1JV000ZS: "Mac mini M4 Pro 14-Core CPU/20-Core GPU/24GB/1TB",
+
+  Z1MM0022K: 'MacBook Pro 14" M5 Pro 18/20-core 48GB/2TB Space Black',
 };

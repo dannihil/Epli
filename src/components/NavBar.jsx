@@ -7,6 +7,7 @@ import {
   FaLaptop,
   FaDollarSign,
   FaTags,
+  FaCoins,
   FaBars,
   FaXmark,
 } from "react-icons/fa6";
@@ -99,6 +100,13 @@ function NavBar() {
                   <FaDollarSign size={iconSize} />
                   <span>Sölutorg</span>
                 </li>
+                <li
+                  className={`nav-link-button ${location.pathname.startsWith("/soluthoknun") ? "active" : ""}`}
+                  onClick={() => navTo("/soluthoknun")}
+                >
+                  <FaCoins size={iconSize} />
+                  <span>Söluþóknun</span>
+                </li>
                 {canEditPricing && (
                   <li
                     className={`nav-link-button ${location.pathname.startsWith("/verdlistar") ? "active" : ""}`}
@@ -176,6 +184,13 @@ function NavBar() {
               >
                 <FaDollarSign size={20} />
                 <span>Sölutorg</span>
+              </li>
+              <li
+                className={`mobile-menu-item ${location.pathname.startsWith("/soluthoknun") ? "mobile-menu-item-active" : ""}`}
+                onClick={() => navTo("/soluthoknun")}
+              >
+                <FaCoins size={20} />
+                <span>Söluþóknun</span>
               </li>
               {canEditPricing && (
                 <li

@@ -3,10 +3,10 @@ import { useUser } from "@clerk/clerk-react";
 import "../css/patchNotesModal.css";
 import { FiCheck } from "react-icons/fi";
 
-const CURRENT_VERSION = "2.2.1";
+const CURRENT_VERSION = "2.3.0";
 
 const majorUpdates = [
-  "Sérpöntunarverð fyrir Mac mini (2026) og Mac Studio (2026) eru komin inn.",
+  "Útskýringar og reiknivél fyrir nýtt bónuskerfi komið í loftið.",
 ];
 
 const PatchNotesModal = () => {

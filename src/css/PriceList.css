@@ -175,6 +175,40 @@ th.pricelist-price-cell {
   background: #fff;
 }
 
+.pricelist-offer-end {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  color: #888;
+  white-space: nowrap;
+}
+
+.cell-input-date {
+  min-width: 130px;
+}
+
+.cell-input-date:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.cell-input-expired {
+  border-color: #d70015;
+  color: #d70015;
+}
+
+.pricelist-offer-expired {
+  display: inline-block;
+  margin-left: 6px;
+  margin-top: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #d70015;
+  background: #fde8ea;
+  padding: 1px 6px;
+  border-radius: 6px;
+}
+
 .cell-input-offer {
   border-color: #fecaca;
   background: #fef2f2;

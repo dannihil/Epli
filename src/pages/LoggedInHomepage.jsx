@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../css/LoggedInHomepage.css";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
-import { FiPackage, FiMonitor, FiShoppingBag } from "react-icons/fi";
+import { FiPackage, FiMonitor, FiShoppingBag, FiPercent } from "react-icons/fi";
 import PatchNotesModal from "../functions/patchNotesModal";
 
 const navItems = [
@@ -23,6 +23,12 @@ const navItems = [
     title: "Sölutorg",
     desc: "Gagnabanki - Sölutorg",
     route: "/solutorg",
+  },
+  {
+    icon: <FiPercent size={30} />,
+    title: "Söluþóknun",
+    desc: "Reglur og reiknivél fyrir söluþóknun",
+    route: "/soluthoknun",
   },
 ];
 
