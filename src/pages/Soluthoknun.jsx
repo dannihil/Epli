@@ -270,7 +270,7 @@ function Soluthoknun() {
             <span className="sc-op">+</span>
             <span className="sc-chip">Hulstur</span>
             <span className="sc-op">+</span>
-            <span className="sc-chip">Skjáfilma</span>
+            <span className="sc-chip">PanzerGlass</span>
             <span className="sc-op">=</span>
             <span className="sc-example-total">
               {formatISK(2 * COMMISSION_PER_ACCESSORY)}
@@ -281,8 +281,10 @@ function Soluthoknun() {
         <p className="sc-note">
           <FiInfo size={16} />
           <span>
-            Pantanir sem afgreiddar eru frá vefverslun eða öðrum sölumönnum
-            reiknast ekki inn með söluþóknun.
+            <strong>
+              Aðeins færslur sem þú afgreiðir telja til þinnar söluþóknunar.
+            </strong>{" "}
+            Pantanir úr vefverslun og færslur annarra sölumanna telja ekki með.
           </span>
         </p>
       </section>
@@ -371,7 +373,7 @@ function Soluthoknun() {
                 {syncState === "saving" && "Vistar…"}
                 {syncState === "error" && "Tókst ekki að vista. Reyndu aftur."}
                 {(syncState === "idle" || syncState === "saved") &&
-                  "Vistað á aðganginum þínum, sama tala í öllum tækjum."}
+                  "Selt magn vistað á aðganginum þínum."}
               </span>
             </div>
 

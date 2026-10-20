@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../css/NavBar.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   FaUser,
   FaTruck,
+  FaChevronDown,
   FaLaptop,
   FaDollarSign,
   FaTags,
@@ -27,36 +28,68 @@ function NavBar() {
   const { user, isLoaded: userLoaded } = useUser();
   const role = user?.publicMetadata?.role;
   const canEditPricing = userLoaded && (role === "admin" || role === "editor");
+  const isAdmin = userLoaded && role === "admin";
+
+  // "/stada-sendinga-upprunalegt" byrjar líka á "/stada-sendinga"
+  const onShipments =
+    location.pathname === "/stada-sendinga" ||
+    location.pathname.startsWith("/stada-sendinga/");
+  const onOriginalShipments = location.pathname.startsWith(
+    "/stada-sendinga-upprunalegt",
+  );
 
   const [windowWidth, setWindowWidth] = useState(
     document.documentElement.clientWidth
   );
   const [menuOpen, setMenuOpen] = useState(false);
+  const [shipmentsOpen, setShipmentsOpen] = useState(false);
+  const shipmentsRef = useRef(null);
+
+  // Með Verðlistar (editor/admin) eru 5 hlekkir, sem þurfa meira pláss áður
+  // en skipt er yfir í hamborgaravalmynd
+  const crowded = canEditPricing;
+  const mobileBreakpoint = crowded ? 1200 : 900;
 
   useEffect(() => {
     const handleResize = () => {
-      const width = document.documentElement.clientWidth;
-      setWindowWidth(width);
-      if (width >= 900) setMenuOpen(false);
+      setWindowWidth(document.documentElement.clientWidth);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
+    if (windowWidth >= mobileBreakpoint) setMenuOpen(false);
+  }, [windowWidth, mobileBreakpoint]);
+
+  useEffect(() => {
     const handleKey = (e) => {
-      if (e.key === "Escape") setMenuOpen(false);
+      if (e.key === "Escape") {
+        setMenuOpen(false);
+        setShipmentsOpen(false);
+      }
     };
     document.addEventListener("keydown", handleKey);
     return () => document.removeEventListener("keydown", handleKey);
   }, []);
 
-  const iconSize = windowWidth < 900 ? 20 : 28;
+  // Loka fellivalmynd þegar smellt er utan hennar
+  useEffect(() => {
+    if (!shipmentsOpen) return;
+    const handleClick = (e) => {
+      if (!shipmentsRef.current?.contains(e.target)) setShipmentsOpen(false);
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [shipmentsOpen]);
+
+  const isMobile = windowWidth < mobileBreakpoint;
+  const iconSize = isMobile ? 20 : crowded ? 22 : 28;
   const logoSize = windowWidth < 900 ? 30 : 55;
-  const isMobile = windowWidth < 900;
 
   function navTo(path) {
     setMenuOpen(false);
+    setShipmentsOpen(false);
     navigate(path);
   }
 
@@ -78,14 +111,53 @@ function NavBar() {
         <SignedIn>
           {!isMobile && (
             <div className="navbar-center">
-              <ul className="navbar-links">
-                <li
-                  className={`nav-link-button ${location.pathname.startsWith("/stada-sendinga") ? "active" : ""}`}
-                  onClick={() => navTo("/stada-sendinga")}
-                >
-                  <FaTruck size={iconSize} />
-                  <span>Staða sendinga</span>
-                </li>
+              <ul
+                className={`navbar-links ${crowded ? "navbar-links-crowded" : ""}`}
+              >
+                {isAdmin ? (
+                  <li className="nav-dropdown" ref={shipmentsRef}>
+                    <button
+                      type="button"
+                      className={`nav-link-button ${onShipments || onOriginalShipments ? "active" : ""}`}
+                      aria-haspopup="menu"
+                      aria-expanded={shipmentsOpen}
+                      onClick={() => setShipmentsOpen((o) => !o)}
+                    >
+                      <FaTruck size={iconSize} />
+                      <span>Staða sendinga</span>
+                      <FaChevronDown
+                        size={11}
+                        className={`nav-dropdown-chevron ${shipmentsOpen ? "is-open" : ""}`}
+                      />
+                    </button>
+                    {shipmentsOpen && (
+                      <ul className="nav-dropdown-menu" role="menu">
+                        <li
+                          role="menuitem"
+                          className={onShipments ? "active" : ""}
+                          onClick={() => navTo("/stada-sendinga")}
+                        >
+                          Verslanir
+                        </li>
+                        <li
+                          role="menuitem"
+                          className={onOriginalShipments ? "active" : ""}
+                          onClick={() => navTo("/stada-sendinga-upprunalegt")}
+                        >
+                          Admin
+                        </li>
+                      </ul>
+                    )}
+                  </li>
+                ) : (
+                  <li
+                    className={`nav-link-button ${onShipments ? "active" : ""}`}
+                    onClick={() => navTo("/stada-sendinga")}
+                  >
+                    <FaTruck size={iconSize} />
+                    <span>Staða sendinga</span>
+                  </li>
+                )}
                 <li
                   className={`nav-link-button ${location.pathname.startsWith("/cto") ? "active" : ""}`}
                   onClick={() => navTo("/cto")}
@@ -164,13 +236,34 @@ function NavBar() {
           />
           <div className="mobile-menu">
             <ul>
-              <li
-                className={`mobile-menu-item ${location.pathname.startsWith("/stada-sendinga") ? "mobile-menu-item-active" : ""}`}
-                onClick={() => navTo("/stada-sendinga")}
-              >
-                <FaTruck size={20} />
-                <span>Staða sendinga</span>
-              </li>
+              {isAdmin ? (
+                <>
+                  <li className="mobile-menu-item mobile-menu-group">
+                    <FaTruck size={20} />
+                    <span>Staða sendinga</span>
+                  </li>
+                  <li
+                    className={`mobile-menu-item mobile-menu-subitem ${onShipments ? "mobile-menu-item-active" : ""}`}
+                    onClick={() => navTo("/stada-sendinga")}
+                  >
+                    <span>Verslanir</span>
+                  </li>
+                  <li
+                    className={`mobile-menu-item mobile-menu-subitem ${onOriginalShipments ? "mobile-menu-item-active" : ""}`}
+                    onClick={() => navTo("/stada-sendinga-upprunalegt")}
+                  >
+                    <span>Admin</span>
+                  </li>
+                </>
+              ) : (
+                <li
+                  className={`mobile-menu-item ${onShipments ? "mobile-menu-item-active" : ""}`}
+                  onClick={() => navTo("/stada-sendinga")}
+                >
+                  <FaTruck size={20} />
+                  <span>Staða sendinga</span>
+                </li>
+              )}
               <li
                 className={`mobile-menu-item ${location.pathname.startsWith("/cto") ? "mobile-menu-item-active" : ""}`}
                 onClick={() => navTo("/cto")}

@@ -13,19 +13,19 @@ export const COMMISSION_CATEGORIES = [
     id: "iphone",
     name: "iPhone",
     accessories: [
-      "Hulstur & skjáfilmur",
+      "Hulstur & PanzerGlass",
       "Hleðslutæki",
-      "Snúrur og breytistykki",
+      "Snúrur & breytistykki",
     ],
   },
   {
     id: "ipad",
     name: "iPad",
     accessories: [
-      "Hulstur & skjáfilmur",
+      "Hulstur & PanzerGlass",
       "Hleðslutæki",
-      "Snúrur og breytistykki",
-      "Apple Pencil og Magic Keyboard",
+      "Snúrur & breytistykki",
+      "Apple Pencil & Magic Keyboard",
     ],
   },
   {
@@ -33,7 +33,7 @@ export const COMMISSION_CATEGORIES = [
     name: "Mac",
     accessories: [
       "Hleðslutæki",
-      "Snúrur og millistykki",
+      "Snúrur & breytistykki",
       "Mýs og lyklaborð",
       "Töskur / Sleeve",
     ],
@@ -41,6 +41,6 @@ export const COMMISSION_CATEGORIES = [
   {
     id: "watch",
     name: "Apple Watch",
-    accessories: ["Ólar", "Hleðslutæki og hleðslusnúrur"],
+    accessories: ["Ólar", "Hleðslutæki & hleðslusnúrur"],
   },
 ];

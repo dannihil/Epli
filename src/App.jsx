@@ -15,6 +15,7 @@ import Feedback from "./components/Feedback";
 
 import Home from "./pages/Home";
 import FGorder from "./pages/FGorder";
+import ExcelTableOriginal from "./components/ExcelTableOriginal";
 import Cto from "./pages/Cto";
 import MacbookAir from "./pages/cto-pages/MacbookAir";
 import MacbookPro from "./pages/cto-pages/MacbookPro";
@@ -46,6 +47,15 @@ function EditorRoute({ children }) {
   return children;
 }
 
+function AdminRoute({ children }) {
+  const { isSignedIn, isLoaded } = useAuth();
+  const { user, isLoaded: userLoaded } = useUser();
+  if (!isLoaded || !userLoaded) return null;
+  if (!isSignedIn) return <Navigate to="/" replace />;
+  if (user?.publicMetadata?.role !== "admin") return <Navigate to="/" replace />;
+  return children;
+}
+
 function App() {
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -66,6 +76,16 @@ function App() {
               <ProtectedRoute>
                 <FGorder />
               </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/stada-sendinga-upprunalegt"
+            element={
+              <AdminRoute>
+                <div className="fgorder-container">
+                  <ExcelTableOriginal />
+                </div>
+              </AdminRoute>
             }
           />
           <Route

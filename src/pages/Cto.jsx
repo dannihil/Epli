@@ -31,15 +31,15 @@ const categories = [
     route: "/cto/mac-mini-2026",
     productId: "aaaaaaaa-0006-0000-0000-000000000000",
     image: "../../assets/mac_mini.png",
-    alt: "Mac mini (2026)",
-    name: "Mac mini (2026)",
+    alt: "Mac mini",
+    name: "Mac mini",
   },
   {
     route: "/cto/mac-studio-2026",
     productId: "aaaaaaaa-0007-0000-0000-000000000000",
     image: "../../assets/mac_studio.png",
-    alt: "Mac Studio (2026)",
-    name: "Mac Studio (2026)",
+    alt: "Mac Studio",
+    name: "Mac Studio",
   },
 ];
 

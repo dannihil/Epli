@@ -64,8 +64,7 @@ function MacMini2026() {
       });
   }, [selectedOptions]);
 
-  const ethernetMod =
-    selectedOptions.ethernet === "10Gb Ethernet" ? 20000 : 0;
+  const ethernetMod = selectedOptions.ethernet === "10Gb Ethernet" ? 20000 : 0;
   const totalPrice = basePrice !== null ? basePrice + ethernetMod : null;
 
   const formatPriceISK = (price) => {
@@ -308,7 +307,7 @@ function MacMini2026() {
 
           <div className="cto-spec-selection">
             <div className="cto-sticky-header">
-              <h1 className="cto-title">Mac mini (2026)</h1>
+              <h1 className="cto-title">Mac mini</h1>
               <div className="cto-price-row">
                 <p className="cto-price">
                   {loadingPrice
@@ -368,10 +367,7 @@ function MacMini2026() {
                         <button
                           className="cto-order-modal-confirm"
                           onClick={() => {
-                            generatePdf(
-                              `Sérpöntun - Mac mini (2026)`,
-                              orderNumber,
-                            );
+                            generatePdf(`Sérpöntun - Mac mini`, orderNumber);
                             setShowModal(false);
                             setOrderNumber("");
                           }}

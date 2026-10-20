@@ -157,7 +157,7 @@ function MacStudio2026() {
     doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
     doc.setTextColor(130, 130, 130);
-    doc.text("Mac Studio (2026)", W - m, 22, { align: "right" });
+    doc.text("Mac Studio", W - m, 22, { align: "right" });
 
     doc.setDrawColor(210, 210, 210);
     doc.line(m, 30, W - m, 30);
@@ -326,7 +326,7 @@ function MacStudio2026() {
 
           <div className="cto-spec-selection">
             <div className="cto-sticky-header">
-              <h1 className="cto-title">Mac Studio (2026)</h1>
+              <h1 className="cto-title">Mac Studio</h1>
               <div className="cto-price-row">
                 <p className="cto-price">
                   {loadingPrice
@@ -386,10 +386,7 @@ function MacStudio2026() {
                         <button
                           className="cto-order-modal-confirm"
                           onClick={() => {
-                            generatePdf(
-                              `Sérpöntun - Mac Studio (2026)`,
-                              orderNumber,
-                            );
+                            generatePdf(`Sérpöntun - Mac Studio`, orderNumber);
                             setShowModal(false);
                             setOrderNumber("");
                           }}

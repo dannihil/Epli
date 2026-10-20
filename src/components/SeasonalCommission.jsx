@@ -18,7 +18,7 @@ const COL_NAME = "Lýsing";
 const COL_EXCLUDED = "Undanskilið";
 const COL_COMMISSION = "Föst söluþóknun";
 
-const OTHER_CATEGORY = { id: "other", name: "Annað" };
+const OTHER_CATEGORY = { id: "other", name: "Aukahlutir" };
 
 function formatISK(amount) {
   return Math.round(amount).toLocaleString("is-IS").replace(/,/g, ".") + " kr.";
@@ -305,7 +305,7 @@ function SeasonalCommission({ icons }) {
             ) : (
               "Föst upphæð fyrir hverja selda vöru á listanum á meðan átakið stendur yfir. Telur upp í 50.000kr hámarks söluþóknun."
             )}{" "}
-            Vörurnar breytast milli átaka.
+            Vörurnar geta breyst milli átaka.
             {updatedAt && (
               <span className="fp-updated">
                 {" "}

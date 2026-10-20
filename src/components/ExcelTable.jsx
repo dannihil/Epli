@@ -12,11 +12,8 @@ import {
 import "../css/ExcelTable.css";
 import { FaX } from "react-icons/fa6";
 import { FaDownload, FaUpload } from "react-icons/fa";
-import { skuMap, skuMapFromIdentifier } from "../data/skuMap";
-import {
-  descriptionOverride,
-  descriptionOverrideFromIdentifier,
-} from "../data/descriptionOverride";
+import { skuMap } from "../data/skuMap";
+import { descriptionOverride } from "../data/descriptionOverride";
 
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
@@ -25,8 +22,174 @@ import { Snackbar, Alert, CircularProgress } from "@mui/material";
 import { useUser } from "@clerk/clerk-react";
 import { supabase } from "../lib/supabase";
 
-const BUCKET = "excel-data";
-const FILE_PATH = "data.xlsx";
+// Supabase skilar mest 1000 línum í hverri fyrirspurn sjálfgefið
+const PAGE_SIZE = 1000;
+
+// Töflur fyrir nýja Excel sniðið (sjá src/data/shipments_v2_schema.sql)
+const TABLE = "shipments_v2";
+const META_TABLE = "shipments_v2_meta";
+
+// Dálkaheiti í Excel skjalinu (fyrsta lína)
+const COLS = {
+  subLob: "SUB LOB",
+  partNumber: "Vörunúmer",
+  description: "Lýsing",
+  shipmentQty: "Magn sendingar",
+  epliQty: "Epli áætlað magn",
+  estimatedDelivery: "Áætl. afhending",
+  status: "Shipping status",
+  dnNumber: "DN númer",
+  lob: "LOB",
+  poNumber: "Customer PO Number",
+};
+
+const LOB_FILTERS = [
+  "All",
+  "Mac",
+  "iPhone",
+  "iPad",
+  "Watch",
+  "AirPods",
+  "Beats",
+  "Home",
+  "Accessories",
+];
+
+// Dálkar í töflu og Excel útflutningi, í þessari röð
+const COLUMNS = [
+  { label: "Innkaupapöntun", key: "poNumber" },
+  { label: "Vörunúmer", key: "partNumber" },
+  { label: "Lýsing", key: "description" },
+  { label: "Epli áætlað magn", key: "epliQty" },
+  { label: "Staða", key: "status" },
+  { label: "Áætl. afhending", key: "estimatedDelivery" },
+];
+
+// Varaleið ef LOB dálkinn vantar eða er tómur:
+// SUB LOB (t.d. "iPad Air 11in (6th Gen)") -> síuflokkur
+function lobFromSubLob(subLob) {
+  const s = (subLob || "").toLowerCase();
+  if (/accys|accessor/.test(s)) return "Accessories";
+  if (s.startsWith("iphone")) return "iPhone";
+  if (s.startsWith("ipad")) return "iPad";
+  if (/^(imac|mac)/.test(s)) return "Mac";
+  if (/^(apple watch|watch)/.test(s)) return "Watch";
+  if (s.startsWith("airpods")) return "AirPods";
+  if (s.startsWith("beats")) return "Beats";
+  if (/^(apple tv|homepod)/.test(s)) return "Home";
+  return "Accessories";
+}
+
+// Les Excel skjalið og heldur bara dálkunum sem síðan sýnir.
+// Kastar villu ef skjalið passar ekki.
+function parseShipmentWorkbook(buffer) {
+  const workbook = XLSX.read(buffer, { type: "array" });
+  const sheet = workbook.Sheets[workbook.SheetNames[0]];
+  const rawRows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: "" });
+
+  const headerIndex = rawRows.findIndex((row) => {
+    const cells = row.map((c) => String(c).trim());
+    return cells.includes(COLS.partNumber) && cells.includes(COLS.description);
+  });
+  if (headerIndex === -1) {
+    throw new Error(
+      `Skjalið passar ekki: dálkana „${COLS.partNumber}“ og „${COLS.description}“ vantar.`,
+    );
+  }
+
+  const header = rawRows[headerIndex].map((c) => String(c).trim());
+  const cell = (row, name) => {
+    const i = header.indexOf(name);
+    return i === -1 ? "" : row[i];
+  };
+
+  const rows = rawRows
+    .slice(headerIndex + 1)
+    .filter((row) => toText(cell(row, COLS.partNumber)))
+    .map((row) => ({
+      sub_lob: toText(cell(row, COLS.subLob)),
+      part_number: toText(cell(row, COLS.partNumber)),
+      description: toText(cell(row, COLS.description)),
+      shipment_qty: toInt(cell(row, COLS.shipmentQty)),
+      epli_qty: toInt(cell(row, COLS.epliQty)),
+      estimated_delivery: toISODate(cell(row, COLS.estimatedDelivery)),
+      status: toText(cell(row, COLS.status)),
+      dn_number: toText(cell(row, COLS.dnNumber)),
+      lob: toText(cell(row, COLS.lob)),
+      po_number: toText(cell(row, COLS.poNumber)),
+    }));
+
+  if (rows.length === 0) {
+    throw new Error("Skjalið passar ekki: engar línur fundust.");
+  }
+  return rows;
+}
+
+function toText(value) {
+  if (value === undefined || value === null || value === "") return null;
+  return String(value).trim();
+}
+
+function toInt(value) {
+  if (value === "" || value === null || value === undefined) return null;
+  const n = Number(value);
+  return Number.isFinite(n) ? Math.round(n) : null;
+}
+
+// Excel raðnúmer, Date eða texti "19.10.2026" -> "YYYY-MM-DD"
+function toISODate(value) {
+  if (typeof value === "number" && value > 0) {
+    return new Date((value - 25569) * 86400000).toISOString().slice(0, 10);
+  }
+  if (value instanceof Date && !Number.isNaN(value.getTime())) {
+    return value.toISOString().slice(0, 10);
+  }
+  const match = String(value ?? "")
+    .trim()
+    .match(/^(\d{1,2})[./-](\d{1,2})[./-](\d{4})$/);
+  if (match) {
+    const [, d, m, y] = match;
+    return `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`;
+  }
+  return null;
+}
+
+// Dálkar úr töflunni -> snið sem síðan notar
+function fromDbRow(row) {
+  let estimatedDelivery = "—";
+  if (row.estimated_delivery) {
+    const [y, m, d] = row.estimated_delivery.split("-");
+    estimatedDelivery = `${d}.${m}.${y}`;
+  }
+  return {
+    subLob: row.sub_lob,
+    lob: row.lob || lobFromSubLob(row.sub_lob),
+    partNumber: row.part_number,
+    description: row.description,
+    shipmentQty: row.shipment_qty,
+    epliQty: row.epli_qty,
+    estimatedDelivery,
+    // Raðað eftir ISO dagsetningu, ekki textanum sem er birtur
+    estimatedDeliverySort: row.estimated_delivery ?? "",
+    status: row.status,
+    dnNumber: row.dn_number,
+    poNumber: row.po_number,
+  };
+}
+
+async function fetchAllShipments() {
+  const all = [];
+  for (let from = 0; ; from += PAGE_SIZE) {
+    const { data, error } = await supabase
+      .from(TABLE)
+      .select("*")
+      .order("id", { ascending: true })
+      .range(from, from + PAGE_SIZE - 1);
+    if (error) throw error;
+    all.push(...data);
+    if (data.length < PAGE_SIZE) return all;
+  }
+}
 
 // Known shipping pipeline stages, earliest to latest. Statuses not in this
 // list (or new ones Apple adds) safely fall back to "status-default".
@@ -34,6 +197,7 @@ const STATUS_STAGE_ORDER = [
   "order received",
   "in production",
   "shipment picked up",
+  "uplift",
   "origin airport terminal",
   "departed origin",
   "in transit",
@@ -93,89 +257,33 @@ const ExcelTable = () => {
     severity: "success",
   });
 
-  function parseBlob(blob, updatedAt) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const workbook = XLSX.read(e.target.result, { type: "binary" });
-      const sheetName = workbook.SheetNames[0];
-
-      // Row 4 (index 3) contains "Data Refreshed: YYYY-MM-DD HH:MM:SS GMT"
-      const rawRows = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], {
-        header: 1,
-      });
-      const dataRefreshedCell = rawRows[3]?.[0];
-      const dateMatch =
-        typeof dataRefreshedCell === "string" &&
-        dataRefreshedCell.match(/Data Refreshed:\s*(.+)/i);
-      const sheetDate = dateMatch
-        ? new Date(
-            dateMatch[1]
-              .trim()
-              .replace(" ", "T")
-              .replace(/\s*GMT\s*$/, "Z"),
-          )
-        : null;
-
-      const sheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], {
-        range: 5,
-      });
-      const processedData = sheet
-        .map((row) => {
-          const excelDate = row["Estimated Delivery Date on or before"];
-          let formattedDate = "N/A";
-          if (excelDate) {
-            const date = new Date((excelDate - 25569) * 86400000);
-            formattedDate = date.toLocaleDateString("en-GB");
-          }
-          return {
-            orderNumber: row["Customer PO Number"],
-            appleOrderNumber: row["Apple Sales Order Number"],
-            partNumber: row["Apple Part #"],
-            description: row["Apple Part Description"],
-            orderQty: row["Order Quantity"],
-            deliveredQty: row["Delivered Quantity"],
-            inTransit: row["In-Transit"],
-            remainingQty: row["Remaining Quantity"],
-            status: row["Shipping Status"],
-            productIdentifier: row["Product Configuration Identifier"],
-            estimatedDelivery: formattedDate,
-            lob: row["LOB"],
-          };
-        })
-        .filter((row) => row.inTransit > 0);
-      setData(processedData);
-      setFilteredData(processedData);
-      setFileUpdatedAt(sheetDate || (updatedAt ? new Date(updatedAt) : null));
-      const elapsed = Date.now() - (loadStartRef.current ?? 0);
-      setTimeout(() => setLoading(false), Math.max(0, 1000 - elapsed));
-    };
-    reader.readAsBinaryString(blob);
+  function finishLoading() {
+    const elapsed = Date.now() - (loadStartRef.current ?? 0);
+    setTimeout(() => setLoading(false), Math.max(0, 1000 - elapsed));
   }
 
   async function loadData() {
     loadStartRef.current = Date.now();
     setLoading(true);
     try {
-      const { data: files } = await supabase.storage
-        .from(BUCKET)
-        .list("", { search: FILE_PATH });
+      const [rows, { data: meta, error: metaError }] = await Promise.all([
+        fetchAllShipments(),
+        supabase.from(META_TABLE).select("*").maybeSingle(),
+      ]);
+      if (metaError) throw metaError;
 
-      const updatedAt = files?.[0]?.updated_at ?? null;
-
-      const { data: signedData, error: signedError } = await supabase.storage
-        .from(BUCKET)
-        .createSignedUrl(FILE_PATH, 300);
-
-      if (signedError) throw signedError;
-
-      const response = await fetch(signedData.signedUrl, { cache: "no-store" });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const blob = await response.blob();
-      parseBlob(blob, updatedAt);
+      // Línur þar sem Epli fær ekkert úr sendingunni eru ekki sýndar
+      const processedData = rows
+        .map(fromDbRow)
+        .filter((row) => row.epliQty !== 0);
+      setData(processedData);
+      setFilteredData(processedData);
+      const updatedAt = meta?.uploaded_at;
+      setFileUpdatedAt(updatedAt ? new Date(updatedAt) : null);
     } catch (err) {
-      console.error("Failed to load data from Supabase:", err);
-      const elapsed = Date.now() - (loadStartRef.current ?? 0);
-      setTimeout(() => setLoading(false), Math.max(0, 1000 - elapsed));
+      console.error("Failed to load shipments from Supabase:", err);
+    } finally {
+      finishLoading();
     }
   }
 
@@ -185,26 +293,37 @@ const ExcelTable = () => {
 
   async function handleExcelUpload(e) {
     const file = e.target.files?.[0];
+    e.target.value = "";
     if (!file) return;
 
     setUploadingExcel(true);
-    const { error } = await supabase.storage
-      .from(BUCKET)
-      .upload(FILE_PATH, file, { upsert: true });
+    try {
+      const rows = parseShipmentWorkbook(await file.arrayBuffer());
 
-    if (error) {
-      setSnackbar({ open: true, severity: "error", message: "Upload failed." });
-    } else {
+      const { error } = await supabase.rpc("replace_shipments_v2", {
+        p_rows: rows,
+      });
+      if (error) throw error;
+
+      setActiveFilter("All");
       await loadData();
       setSnackbar({
         open: true,
         severity: "success",
-        message: "Gögn uppfærð!",
+        message: `Gögn uppfærð! ${rows.length} línur.`,
       });
+    } catch (err) {
+      console.error("Upload failed:", err);
+      setSnackbar({
+        open: true,
+        severity: "error",
+        message: err.message?.startsWith("Skjalið")
+          ? err.message
+          : "Upphleðsla mistókst.",
+      });
+    } finally {
+      setUploadingExcel(false);
     }
-
-    setUploadingExcel(false);
-    e.target.value = "";
   }
 
   // Sorting function
@@ -222,32 +341,11 @@ const ExcelTable = () => {
 
   // Prepare sorted and filtered data
   const sortedData = [...filteredData]
-    .map((row) => {
-      let mappedPartNumber = skuMap[row.partNumber] || row.partNumber;
-      let mappedDescription =
-        descriptionOverride[row.partNumber] || row.description;
-
-      if (
-        row.productIdentifier &&
-        skuMapFromIdentifier[row.productIdentifier]
-      ) {
-        mappedPartNumber = skuMapFromIdentifier[row.productIdentifier];
-      }
-
-      if (
-        row.productIdentifier &&
-        descriptionOverrideFromIdentifier[row.productIdentifier]
-      ) {
-        mappedDescription =
-          descriptionOverrideFromIdentifier[row.productIdentifier];
-      }
-
-      return {
-        ...row,
-        partNumber: mappedPartNumber,
-        description: mappedDescription,
-      };
-    })
+    .map((row) => ({
+      ...row,
+      partNumber: skuMap[row.partNumber] || row.partNumber,
+      description: descriptionOverride[row.partNumber] || row.description,
+    }))
     .filter((row) =>
       Object.values(row).some((value) =>
         value?.toString().toLowerCase().includes(searchTerm.toLowerCase()),
@@ -256,8 +354,12 @@ const ExcelTable = () => {
 
   if (sortConfig.key) {
     sortedData.sort((a, b) => {
-      const aVal = a[sortConfig.key] ?? "";
-      const bVal = b[sortConfig.key] ?? "";
+      const key =
+        sortConfig.key === "estimatedDelivery"
+          ? "estimatedDeliverySort"
+          : sortConfig.key;
+      const aVal = a[key] ?? "";
+      const bVal = b[key] ?? "";
       const aStr = typeof aVal === "string" ? aVal.toLowerCase() : aVal;
       const bStr = typeof bVal === "string" ? bVal.toLowerCase() : bVal;
       if (aStr < bStr) return sortConfig.direction === "ascending" ? -1 : 1;
@@ -274,19 +376,7 @@ const ExcelTable = () => {
       const workbook = new ExcelJS.Workbook();
       const worksheet = workbook.addWorksheet("Filtered Data");
 
-      const headers = [
-        "Apple Order #",
-        "Purchase Order #",
-        "LOB",
-        "Part #",
-        "Description",
-        "Order Qty",
-        "Delivered",
-        "In Transit",
-        "Remaining",
-        "Status",
-        "Estimated Delivery",
-      ];
+      const headers = COLUMNS.map((c) => c.label);
 
       const headerRow = worksheet.addRow(headers);
 
@@ -308,19 +398,7 @@ const ExcelTable = () => {
       });
 
       sortedData.forEach((row) => {
-        worksheet.addRow([
-          row.appleOrderNumber,
-          row.orderNumber,
-          row.lob,
-          row.partNumber,
-          row.description,
-          row.orderQty,
-          row.deliveredQty,
-          row.inTransit,
-          row.remainingQty,
-          row.status,
-          row.estimatedDelivery,
-        ]);
+        worksheet.addRow(COLUMNS.map((c) => row[c.key]));
       });
 
       // ✅ ORIGINAL AUTO-COLUMN WIDTH (UNCHANGED)
@@ -394,15 +472,11 @@ const ExcelTable = () => {
       <div className="filter-buttons-and-search-bar">
         <div className="filter-buttons">
           {[
-            "All",
-            "Mac",
-            "iPhone",
-            "iPad",
-            "Watch",
-            "AirPods",
-            "Beats",
-            "Home",
-            "Accessories",
+            ...LOB_FILTERS,
+            // LOB gildi úr skjalinu sem eru ekki í föstu listanum fá líka hnapp
+            ...[...new Set(data.map((r) => r.lob))].filter(
+              (lob) => lob && !LOB_FILTERS.includes(lob),
+            ),
           ].map((lob) => {
             const count =
               lob === "All"
@@ -508,38 +582,22 @@ const ExcelTable = () => {
               <span className="mobile-card-apple-order">{row.description}</span>
             </div>
             <div className="mobile-card-meta">
-              <span className="mobile-card-label">Part</span>
+              <span className="mobile-card-label">Vörunr.</span>
               <span className="mobile-card-value">{row.partNumber}</span>
             </div>
             <div className="mobile-card-meta">
-              <span className="mobile-card-label">Apple</span>
-              <span className="mobile-card-value">{row.appleOrderNumber}</span>
-            </div>
-            <div className="mobile-card-meta">
               <span className="mobile-card-label">PO</span>
-              <span className="mobile-card-value">{row.orderNumber}</span>
+              <span className="mobile-card-value">{row.poNumber}</span>
             </div>
             <div className="mobile-card-stats">
-              <div className="mobile-stat">
-                <span>{row.orderQty}</span>
-                <label>Ordered</label>
-              </div>
-              <div className="mobile-stat">
-                <span>{row.deliveredQty}</span>
-                <label>Delivered</label>
-              </div>
               <div className="mobile-stat mobile-stat-highlight">
-                <span>{row.inTransit}</span>
-                <label>In Transit</label>
-              </div>
-              <div className="mobile-stat">
-                <span>{row.remainingQty}</span>
-                <label>Remaining</label>
+                <span>{row.epliQty}</span>
+                <label>Epli áætlað</label>
               </div>
             </div>
-            {row.estimatedDelivery && row.estimatedDelivery !== "N/A" && (
+            {row.estimatedDelivery && row.estimatedDelivery !== "—" && (
               <div className="mobile-card-delivery">
-                Est. Delivery: <strong>{row.estimatedDelivery}</strong>
+                Áætl. afhending: <strong>{row.estimatedDelivery}</strong>
               </div>
             )}
             <span className={`status-pill ${getStatusClass(row.status)}`}>
@@ -557,18 +615,7 @@ const ExcelTable = () => {
           <Table>
             <TableHead>
               <TableRow>
-                {[
-                  { label: "Apple Order #", key: "appleOrderNumber" },
-                  { label: "Purchase Order #", key: "orderNumber" },
-                  { label: "Part #", key: "partNumber" },
-                  { label: "Description", key: "description" },
-                  { label: "Order Qty", key: "orderQty" },
-                  { label: "Delivered", key: "deliveredQty" },
-                  { label: "In Transit", key: "inTransit" },
-                  { label: "Remaining", key: "remainingQty" },
-                  { label: "Status", key: "status" },
-                  { label: "Estimated Delivery", key: "estimatedDelivery" },
-                ].map(({ label, key }) => (
+                {COLUMNS.map(({ label, key }) => (
                   <TableCell
                     key={key}
                     className="sticky-header"
@@ -590,38 +637,19 @@ const ExcelTable = () => {
             <TableBody>
               {sortedData.map((row, index) => (
                 <TableRow key={index}>
-                  <TableCell className="sticky-cell">
-                    <p className="sticky-cell-text">{row.appleOrderNumber}</p>
-                  </TableCell>
-                  <TableCell className="sticky-cell">
-                    <p className="sticky-cell-text">{row.orderNumber}</p>
-                  </TableCell>
-                  <TableCell className="sticky-cell">
-                    <p className="sticky-cell-text">{row.partNumber}</p>
-                  </TableCell>
-                  <TableCell className="sticky-cell">
-                    <p className="sticky-cell-text">{row.description}</p>
-                  </TableCell>
-                  <TableCell className="sticky-cell">
-                    <p className="sticky-cell-text">{row.orderQty}</p>
-                  </TableCell>
-                  <TableCell className="sticky-cell">
-                    <p className="sticky-cell-text">{row.deliveredQty}</p>
-                  </TableCell>
-                  <TableCell className="sticky-cell">
-                    <p className="sticky-cell-text">{row.inTransit}</p>
-                  </TableCell>
-                  <TableCell className="sticky-cell">
-                    <p className="sticky-cell-text">{row.remainingQty}</p>
-                  </TableCell>
-                  <TableCell className="sticky-cell">
-                    <span className={`status-pill ${getStatusClass(row.status)}`}>
-                      {row.status}
-                    </span>
-                  </TableCell>
-                  <TableCell className="sticky-cell">
-                    <p className="sticky-cell-text">{row.estimatedDelivery}</p>
-                  </TableCell>
+                  {COLUMNS.map(({ key }) => (
+                    <TableCell key={key} className="sticky-cell">
+                      {key === "status" ? (
+                        <span
+                          className={`status-pill ${getStatusClass(row.status)}`}
+                        >
+                          {row.status}
+                        </span>
+                      ) : (
+                        <p className="sticky-cell-text">{row[key]}</p>
+                      )}
+                    </TableCell>
+                  ))}
                 </TableRow>
               ))}
             </TableBody>
