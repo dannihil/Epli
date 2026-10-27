@@ -5,6 +5,7 @@ import {
   FaUser,
   FaTruck,
   FaChevronDown,
+  FaCheck,
   FaLaptop,
   FaDollarSign,
   FaTags,
@@ -138,6 +139,9 @@ function NavBar() {
                           onClick={() => navTo("/stada-sendinga")}
                         >
                           Verslanir
+                          {onShipments && (
+                            <FaCheck size={12} className="nav-dropdown-check" />
+                          )}
                         </li>
                         <li
                           role="menuitem"
@@ -145,6 +149,9 @@ function NavBar() {
                           onClick={() => navTo("/stada-sendinga-upprunalegt")}
                         >
                           Admin
+                          {onOriginalShipments && (
+                            <FaCheck size={12} className="nav-dropdown-check" />
+                          )}
                         </li>
                       </ul>
                     )}

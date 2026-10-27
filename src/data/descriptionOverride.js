@@ -1742,6 +1742,27 @@ export const descriptionOverride = {
   "ML3W4ZM/A": "Apple 42mm Sage Modern Buckle - Small",
   "ML3X4ZM/A": "Apple 42mm Sage Modern Buckle - Medium",
   "ML3Y4ZM/A": "Apple 42mm Sage Modern Buckle - Large",
+
+  "MK2D4QN/A": "iPhone Duo 256GB Star White",
+  "MK2E4QN/A": "iPhone Duo 256GB Night Sky",
+  "MK2F4QN/A": "iPhone Duo 512GB Star White",
+  "MK2G4QN/A": "iPhone Duo 512GB Night Sky",
+  "MK2H4QN/A": "iPhone Duo 1TB Star White",
+  "MK2J4QN/A": "iPhone Duo 1TB Night Sky",
+  "MK2K4QN/A": "iPhone Duo 2TB Star White",
+  "MK2L4QN/A": "iPhone Duo 2TB Night Sky",
+  "MKR64ZM/A": "iPhone Duo Folio with Kickstand - Taupe",
+  "MKR74ZM/A": "iPhone Duo Folio with Kickstand - Navy Blue",
+  "MKR84ZM/A": "iPhone Duo Case - Navy Blue",
+  "MKR94ZM/A": "iPhone Duo Case - Sand",
+
+  "MJE14ZM/A": "Beats 360 - Black",
+  "MJE34ZM/A": "Beats 360 - Cloud",
+  "MJE44ZM/A": "Beats 360 - Sky",
+  "MJE64ZM/A": "Beats 360 - Pink",
+
+  Z1U4: "Mac Studio M5 Max 18-Core CPU/32-Core GPU 36GB/512GB",
+  Z1U5: "Mac Studio M5 Ultra 30-Core CPU/64-Core GPU 96GB/1TB",
   // Add more overrides as needed
 };
 
@@ -1762,4 +1783,9 @@ export const descriptionOverrideFromIdentifier = {
   Z1JV000ZS: "Mac mini M4 Pro 14-Core CPU/20-Core GPU/24GB/1TB",
 
   Z1MM0022K: 'MacBook Pro 14" M5 Pro 18/20-core 48GB/2TB Space Black',
+
+  Z1U4000G2: "Mac Studio M5 Max 18-Core CPU/40-Core GPU 64GB/1TB",
+  Z1U4000FU: "Mac Studio M5 Max 18-Core CPU/40-Core GPU 128GB/2TB",
+  Z1ML000AS:
+    'MacBook Pro 14" M5 Pro 15/16-core 24GB/1TB Space Black - US Keyboard',
 };

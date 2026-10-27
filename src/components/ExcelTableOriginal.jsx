@@ -426,7 +426,7 @@ const ExcelTableOriginal = () => {
   };
 
   return (
-    <div className="excel-table-root">
+    <div className="excel-table-root excel-table-compact">
       <PatchNotesModal />
       {fileUpdatedAt
         ? (() => {

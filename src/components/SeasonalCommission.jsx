@@ -4,7 +4,10 @@ import { useUser } from "@clerk/clerk-react";
 import { Snackbar, Alert, CircularProgress } from "@mui/material";
 import { FiSearch, FiChevronDown, FiUpload, FiTrash2 } from "react-icons/fi";
 import { supabase } from "../lib/supabase";
-import { COMMISSION_CATEGORIES } from "../data/commission";
+import {
+  COMMISSION_CATEGORIES,
+  MONTHLY_COMMISSION_CAP,
+} from "../data/commission";
 
 const BUCKET = "excel-data";
 const FILE_PATH = "seasonal-commission.xlsx";
@@ -227,6 +230,22 @@ function SeasonalCommission({ icons }) {
     }))
     .filter((g) => g.products.length > 0);
 
+  // Skipta flokkum í tvo sjálfstæða dálka eftir heildarfjölda vara, svo
+  // dálkarnir verði álíka langir. Skiptingin fer ekki eftir "Sýna allar",
+  // svo spjöld hoppa ekki á milli dálka þegar flokkur er opnaður.
+  const groupColumns =
+    groups.length <= 1
+      ? [groups]
+      : groups.reduce(
+          (cols, group) => {
+            const size = (col) =>
+              col.reduce((n, g) => n + g.products.length, 0);
+            cols[size(cols[0]) <= size(cols[1]) ? 0 : 1].push(group);
+            return cols;
+          },
+          [[], []],
+        );
+
   const counts = Object.fromEntries(
     categories.map((cat) => [
       cat.id,
@@ -295,24 +314,24 @@ function SeasonalCommission({ icons }) {
         </div>
         <h2 className="sc-section-heading">Tímabundin söluþóknun</h2>
         {products.length > 0 ? (
-          <p className="sc-section-sub">
-            {sameAmount !== null ? (
-              <>
-                <strong>{formatISK(sameAmount)}</strong> fyrir hverja selda vöru
-                á listanum á meðan átakið stendur yfir. Telur upp í 50.000kr
-                hámarks söluþóknun.
-              </>
-            ) : (
-              "Föst upphæð fyrir hverja selda vöru á listanum á meðan átakið stendur yfir. Telur upp í 50.000kr hámarks söluþóknun."
-            )}{" "}
-            Vörurnar geta breyst milli átaka.
-            {updatedAt && (
-              <span className="fp-updated">
-                {" "}
-                Listi uppfærður {formatUpdated(updatedAt)}.
+          <div className="fp-summary">
+            <div className="fp-summary-amount">
+              <span className="fp-summary-value">
+                {sameAmount !== null ? formatISK(sameAmount) : "Föst upphæð"}
               </span>
-            )}
-          </p>
+              <span className="fp-summary-label">
+                fyrir hverja selda vöru á listanum
+              </span>
+            </div>
+            <ul className="fp-summary-facts">
+              <li>Telur upp í {formatISK(MONTHLY_COMMISSION_CAP)} hámarkið</li>
+              <li>Gildir á meðan átakið stendur yfir</li>
+              <li>
+                Vörurnar geta breyst milli átaka
+                {updatedAt && <> · uppfært {formatUpdated(updatedAt)}</>}
+              </li>
+            </ul>
+          </div>
         ) : (
           <p className="sc-section-sub">
             {canEdit ? (
@@ -366,54 +385,62 @@ function SeasonalCommission({ icons }) {
           {groups.length === 0 ? (
             <div className="fp-empty">Engar vörur fundust fyrir „{query}“.</div>
           ) : (
-            <div className="fp-groups">
-              {groups.map((group) => {
-                // Sýna allt þegar leitað er, annars fella langa hópa saman
-                const isOpen = q || expanded[group.id];
-                const visible = isOpen
-                  ? group.products
-                  : group.products.slice(0, COLLAPSED_ROWS);
-                const hidden = group.products.length - visible.length;
+            <div
+              className={`fp-groups ${groupColumns.length === 1 ? "fp-groups-single" : ""}`}
+            >
+              {groupColumns.map((column, i) => (
+                <div key={i} className="fp-col">
+                  {column.map((group) => {
+                    // Sýna allt þegar leitað er, annars fella langa hópa saman
+                    const isOpen = q || expanded[group.id];
+                    const visible = isOpen
+                      ? group.products
+                      : group.products.slice(0, COLLAPSED_ROWS);
+                    const hidden = group.products.length - visible.length;
 
-                return (
-                  <div key={group.id} className="fp-group">
-                    <div className="fp-group-head">
-                      {icons[group.id] && (
-                        <span className="fp-group-icon">{icons[group.id]}</span>
-                      )}
-                      <h3>{group.name}</h3>
-                      <span className="fp-group-count">
-                        {group.products.length}
-                      </span>
-                    </div>
-                    <ul className="fp-list">
-                      {visible.map((p) => (
-                        <li key={p.sku} className="fp-row">
-                          <div className="fp-row-main">
-                            <span className="fp-name">{p.name}</span>
-                            <span className="fp-sku">{p.sku}</span>
-                          </div>
-                          <span className="fp-amount">
-                            {formatISK(p.commission)}
+                    return (
+                      <div key={group.id} className="fp-group">
+                        <div className="fp-group-head">
+                          {icons[group.id] && (
+                            <span className="fp-group-icon">{icons[group.id]}</span>
+                          )}
+                          <h3>{group.name}</h3>
+                          <span className="fp-group-count">
+                            {group.products.length}
                           </span>
-                        </li>
-                      ))}
-                    </ul>
-                    {hidden > 0 && (
-                      <button
-                        type="button"
-                        className="fp-more"
-                        onClick={() =>
-                          setExpanded((prev) => ({ ...prev, [group.id]: true }))
-                        }
-                      >
-                        Sýna allar ({group.products.length})
-                        <FiChevronDown size={16} />
-                      </button>
-                    )}
-                  </div>
-                );
-              })}
+                        </div>
+                        <ul className="fp-list">
+                          {visible.map((p) => (
+                            <li key={p.sku} className="fp-row">
+                              <div className="fp-row-main">
+                                <span className="fp-name">{p.name}</span>
+                                <span className="fp-sku">{p.sku}</span>
+                              </div>
+                              {sameAmount === null && (
+                                <span className="fp-amount">
+                                  {formatISK(p.commission)}
+                                </span>
+                              )}
+                            </li>
+                          ))}
+                        </ul>
+                        {hidden > 0 && (
+                          <button
+                            type="button"
+                            className="fp-more"
+                            onClick={() =>
+                              setExpanded((prev) => ({ ...prev, [group.id]: true }))
+                            }
+                          >
+                            Sýna allar ({group.products.length})
+                            <FiChevronDown size={16} />
+                          </button>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
             </div>
           )}
         </>

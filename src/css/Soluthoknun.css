@@ -113,33 +113,148 @@
    RULE + EXAMPLE
    ===================================================== */
 
-.sc-example {
+/* Grár rammi utan um reglu, dæmi og flokka (sama og utan um reiknivélina) */
+.sc-panel {
+  background: #f5f5f7;
+  border-radius: 24px;
+  padding: 24px;
+  margin-top: 14px;
+}
+
+.sc-panel-subheading {
+  font-size: 15px;
+  font-weight: 700;
+  color: #333;
+  margin: 24px 0 12px;
+}
+
+.sc-panel .sc-categories {
+  margin-top: 0;
+}
+
+.sc-panel .sc-category {
+  border-color: transparent;
+}
+
+.sc-panel .sc-how-card {
+  border-color: transparent;
+}
+
+.sc-how {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 16px;
+}
+
+.sc-how-card {
   border: 1px solid #e0e0e0;
   border-radius: 18px;
   padding: 20px 24px;
+  background: #fff;
 }
 
-.sc-example-label {
+.sc-how-label {
   display: block;
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: #888;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
-.sc-example-row {
+/* Reglan */
+.sc-rule-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sc-rule-list li {
+  display: flex;
+  align-items: flex-start;
   gap: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+}
+
+.sc-rule-icon {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.sc-rule-icon.yes {
+  background: #e7f6ec;
+  color: #1a9f4b;
+}
+
+.sc-rule-icon.no {
+  background: #fdecea;
+  color: #d70015;
+}
+
+/* Dæmi sem kvittun */
+.sc-receipt {
+  display: flex;
+  flex-direction: column;
+}
+
+.sc-receipt-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+/* Ljós skil á milli lína */
+.sc-receipt-row + .sc-receipt-row {
+  border-top: 1px solid #f0f0f3;
+}
+
+.sc-receipt-row:first-child {
+  padding-top: 0;
+}
+
+.sc-receipt-amount {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a9f4b;
+  font-variant-numeric: tabular-nums;
+}
+
+.sc-receipt-amount.muted {
+  font-size: 13px;
+  font-weight: 500;
+  color: #999;
+}
+
+.sc-receipt-total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px dashed #d2d2d7;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
 }
 
 .sc-chip {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
-  padding: 8px 14px;
+  padding: 6px 12px;
   border-radius: 999px;
   background: #e8f2fd;
   color: #0071e3;
@@ -150,31 +265,21 @@
   color: #fff;
 }
 
-.sc-op {
-  font-size: 18px;
-  font-weight: 600;
-  color: #999;
-}
-
 .sc-example-total {
   font-size: 22px;
   font-weight: 800;
   color: #1a9f4b;
+  font-variant-numeric: tabular-nums;
 }
 
-.sc-note {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  margin: 14px 0 0;
-  font-size: 13px;
-  color: #6e6e73;
-  line-height: 1.5;
-}
+@media (max-width: 760px) {
+  .sc-how {
+    grid-template-columns: 1fr;
+  }
 
-.sc-note svg {
-  flex-shrink: 0;
-  margin-top: 2px;
+  .sc-panel {
+    padding: 16px;
+  }
 }
 
 /* =====================================================
@@ -270,6 +375,81 @@
   margin-bottom: 10px;
 }
 
+/* Samantekt: upphæðin stór til vinstri, staðreyndir til hægri */
+.fp-summary {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 24px;
+  margin-top: 12px;
+  padding: 18px 22px;
+  border-radius: 18px;
+  background: #fff7ed;
+  border: 1px solid #fde3c4;
+}
+
+.fp-summary-amount {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-right: 24px;
+  border-right: 1px solid #fde3c4;
+}
+
+.fp-summary-value {
+  font-size: clamp(26px, 3vw, 32px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #b25000;
+  font-variant-numeric: tabular-nums;
+}
+
+.fp-summary-label {
+  font-size: 13px;
+  color: #8a5a2b;
+}
+
+.fp-summary-facts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+  color: #555;
+}
+
+.fp-summary-facts li {
+  position: relative;
+  padding-left: 14px;
+}
+
+.fp-summary-facts li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #e39b4f;
+}
+
+@media (max-width: 640px) {
+  .fp-summary {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .fp-summary-amount {
+    padding-right: 0;
+    padding-bottom: 12px;
+    border-right: none;
+    border-bottom: 1px solid #fde3c4;
+  }
+}
+
 .fp-header-top {
   display: flex;
   flex-wrap: wrap;
@@ -343,7 +523,9 @@
   border-radius: 12px;
   background: #fff;
   color: #888;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .fp-search:focus-within {
@@ -377,7 +559,10 @@
   border: 1px solid #e0e0e0;
   background: #fff;
   color: #333;
-  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .fp-filters button span {
@@ -400,11 +585,24 @@
   color: rgba(255, 255, 255, 0.6);
 }
 
+/* Tveir sjálfstæðir dálkar: hvor staflar sínum spjöldum ofan frá, svo
+   opnun á löngum flokki teygir ekki spjaldið við hliðina */
 .fp-groups {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
   align-items: start;
+}
+
+.fp-groups-single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.fp-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
 }
 
 .fp-group {
@@ -442,41 +640,50 @@
   border-radius: 999px;
 }
 
+/* Ein vara í línu, eins og tafla: nafn til vinstri, vörunúmer í föstum
+   dálki til hægri svo öll vörunúmer standist á */
 .fp-list {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0 20px;
 }
 
 .fp-row {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 20px;
+  padding: 10px 0;
 }
 
 .fp-row + .fp-row {
   border-top: 1px solid #f0f0f3;
 }
 
+/* Flex frekar en grid: grid með "auto" dálki lét vörunúmerið fara út fyrir
+   línuna í Safari */
 .fp-row-main {
   flex: 1;
   min-width: 0;
   display: flex;
-  flex-direction: column;
-  gap: 1px;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
 }
 
 .fp-name {
+  flex: 1;
+  min-width: 0;
   font-size: 14px;
   font-weight: 500;
   color: #111;
 }
 
 .fp-sku {
+  flex-shrink: 0;
   font-size: 12px;
   color: #888;
   font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  white-space: nowrap;
 }
 
 .fp-amount {
@@ -556,7 +763,6 @@
   gap: 10px;
 }
 
-
 .sc-step-title {
   font-size: 15px;
   font-weight: 700;
@@ -566,11 +772,6 @@
   font-size: 12px;
   color: #888;
 }
-
-
-
-
-
 
 /* Stepper */
 .sc-stepper {
@@ -621,7 +822,9 @@
   width: 100%;
   box-sizing: border-box;
   -moz-appearance: textfield;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .sc-stepper-input input::-webkit-outer-spin-button,
@@ -645,17 +848,6 @@
   color: #888;
   pointer-events: none;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 .sc-step-desc {
   margin: 0;

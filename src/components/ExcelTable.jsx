@@ -10,7 +10,7 @@ import {
   Paper,
 } from "@mui/material";
 import "../css/ExcelTable.css";
-import { FaX } from "react-icons/fa6";
+import { FaX, FaCircleInfo } from "react-icons/fa6";
 import { FaDownload, FaUpload } from "react-icons/fa";
 import { skuMap } from "../data/skuMap";
 import { descriptionOverride } from "../data/descriptionOverride";
@@ -18,7 +18,7 @@ import { descriptionOverride } from "../data/descriptionOverride";
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
 import PatchNotesModal from "../functions/patchNotesModal";
-import { Snackbar, Alert, CircularProgress } from "@mui/material";
+import { Snackbar, Alert, CircularProgress, Tooltip } from "@mui/material";
 import { useUser } from "@clerk/clerk-react";
 import { supabase } from "../lib/supabase";
 
@@ -57,13 +57,23 @@ const LOB_FILTERS = [
 
 // Dálkar í töflu og Excel útflutningi, í þessari röð
 const COLUMNS = [
-  { label: "Innkaupapöntun", key: "poNumber" },
   { label: "Vörunúmer", key: "partNumber" },
   { label: "Lýsing", key: "description" },
   { label: "Epli áætlað magn", key: "epliQty" },
   { label: "Staða", key: "status" },
   { label: "Áætl. afhending", key: "estimatedDelivery" },
 ];
+
+// Pantanir sem byrja á "SBP" eru sérpantanir
+function isSpecialOrder(row) {
+  return /^sbp/i.test(row.poNumber ?? "");
+}
+
+// Vöruflokkur (LOB sía) og "Aðeins sérpantanir" rofinn eru óháð hvort öðru
+function matchesFilters(row, lob, specialOnly) {
+  if (specialOnly && !isSpecialOrder(row)) return false;
+  return lob === "All" || row.lob === lob;
+}
 
 // Varaleið ef LOB dálkinn vantar eða er tómur:
 // SUB LOB (t.d. "iPad Air 11in (6th Gen)") -> síuflokkur
@@ -223,13 +233,43 @@ function getStatusClass(status) {
   return `status-stage-${bucket}`;
 }
 
+const DELIVERED_INFO =
+  "Ef skráð Delivered gæti sendingin verið komin til landsins en ekki móttekin á aðallager.";
+
+// Stöðumerki; "Delivered" fær upplýsingatákn og skýringu þegar farið er yfir það
+function StatusPill({ status }) {
+  const className = `status-pill ${getStatusClass(status)}`;
+  if (status?.trim().toLowerCase() !== "delivered") {
+    return <span className={className}>{status}</span>;
+  }
+  return (
+    <Tooltip
+      title={
+        <span className="status-tooltip">
+          <FaCircleInfo size={13} aria-hidden="true" />
+          {DELIVERED_INFO}
+        </span>
+      }
+      arrow
+      placement="top"
+      enterTouchDelay={0}
+      leaveTouchDelay={4000}
+    >
+      <span className={`${className} status-pill-info`} tabIndex={0}>
+        {status}
+        <FaCircleInfo size={11} aria-hidden="true" />
+      </span>
+    </Tooltip>
+  );
+}
+
 const ExcelTable = () => {
   const { user, isLoaded } = useUser();
   const isAdmin = isLoaded && user?.publicMetadata?.role === "admin";
 
   const [data, setData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
   const [activeFilter, setActiveFilter] = useState("All");
+  const [specialOnly, setSpecialOnly] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortConfig, setSortConfig] = useState({
     key: null,
@@ -245,9 +285,6 @@ const ExcelTable = () => {
   const filterDataByLOB = (lob) => {
     setActiveFilter(lob);
     setSearchTerm("");
-    const newFilteredData =
-      lob === "All" ? data : data.filter((row) => row.lob === lob);
-    setFilteredData(newFilteredData);
   };
 
   const [exporting, setExporting] = useState(false);
@@ -277,7 +314,6 @@ const ExcelTable = () => {
         .map(fromDbRow)
         .filter((row) => row.epliQty !== 0);
       setData(processedData);
-      setFilteredData(processedData);
       const updatedAt = meta?.uploaded_at;
       setFileUpdatedAt(updatedAt ? new Date(updatedAt) : null);
     } catch (err) {
@@ -340,33 +376,48 @@ const ExcelTable = () => {
   };
 
   // Prepare sorted and filtered data
+  const filteredData = data.filter((row) =>
+    matchesFilters(row, activeFilter, specialOnly),
+  );
+  const specialCount = data.filter((row) =>
+    matchesFilters(row, activeFilter, true),
+  ).length;
+
   const sortedData = [...filteredData]
-    .map((row) => ({
-      ...row,
-      partNumber: skuMap[row.partNumber] || row.partNumber,
-      description: descriptionOverride[row.partNumber] || row.description,
-    }))
+    .map((row) => {
+      const partNumber = skuMap[row.partNumber] || row.partNumber;
+      return {
+        ...row,
+        partNumber: isSpecialOrder(row)
+          ? `${partNumber} SÉRPÖNTUN (${row.poNumber})`
+          : partNumber,
+        description: descriptionOverride[row.partNumber] || row.description,
+      };
+    })
     .filter((row) =>
       Object.values(row).some((value) =>
         value?.toString().toLowerCase().includes(searchTerm.toLowerCase()),
       ),
     );
 
-  if (sortConfig.key) {
-    sortedData.sort((a, b) => {
-      const key =
-        sortConfig.key === "estimatedDelivery"
-          ? "estimatedDeliverySort"
-          : sortConfig.key;
-      const aVal = a[key] ?? "";
-      const bVal = b[key] ?? "";
-      const aStr = typeof aVal === "string" ? aVal.toLowerCase() : aVal;
-      const bStr = typeof bVal === "string" ? bVal.toLowerCase() : bVal;
-      if (aStr < bStr) return sortConfig.direction === "ascending" ? -1 : 1;
-      if (aStr > bStr) return sortConfig.direction === "ascending" ? 1 : -1;
-      return 0;
-    });
-  }
+  // Sérpantanir (SBP) alltaf neðst, líka þegar raðað er eftir dálki
+  sortedData.sort((a, b) => {
+    const specialDiff = isSpecialOrder(a) - isSpecialOrder(b);
+    if (specialDiff !== 0) return specialDiff;
+    if (!sortConfig.key) return 0;
+
+    const key =
+      sortConfig.key === "estimatedDelivery"
+        ? "estimatedDeliverySort"
+        : sortConfig.key;
+    const aVal = a[key] ?? "";
+    const bVal = b[key] ?? "";
+    const aStr = typeof aVal === "string" ? aVal.toLowerCase() : aVal;
+    const bStr = typeof bVal === "string" ? bVal.toLowerCase() : bVal;
+    if (aStr < bStr) return sortConfig.direction === "ascending" ? -1 : 1;
+    if (aStr > bStr) return sortConfig.direction === "ascending" ? 1 : -1;
+    return 0;
+  });
 
   // Export to Excel
   const exportToExcel = async () => {
@@ -441,34 +492,44 @@ const ExcelTable = () => {
   return (
     <div className="excel-table-root">
       <PatchNotesModal />
-      {fileUpdatedAt
-        ? (() => {
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            const daysOld = Math.floor((today - fileUpdatedAt) / 86400000);
-            const label = fileUpdatedAt
-              .toLocaleString("is-IS", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: false,
-              })
-              .replace(/\//g, ".");
-            return daysOld >= 2 ? (
-              <div className="build-date stale">
-                <span className="stale-icon">⚠️</span>
-                <span>Gögn úrelt — uppfært {label} — þarf að endurnýja</span>
-              </div>
-            ) : (
-              <div className="build-date fresh">
-                <span className="fresh-dot" />
-                <span>Gögn uppfærð: {label}</span>
-              </div>
-            );
-          })()
-        : null}
+      <div className="table-top-row">
+        {fileUpdatedAt
+          ? (() => {
+              const today = new Date();
+              today.setHours(0, 0, 0, 0);
+              const daysOld = Math.floor((today - fileUpdatedAt) / 86400000);
+              const label = fileUpdatedAt
+                .toLocaleString("is-IS", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: false,
+                })
+                .replace(/\//g, ".");
+              return daysOld >= 2 ? (
+                <div className="build-date stale">
+                  <span className="stale-icon">⚠️</span>
+                  <span>Gögn úrelt — uppfært {label} — þarf að endurnýja</span>
+                </div>
+              ) : (
+                <div className="build-date fresh">
+                  <span className="fresh-dot" />
+                  <span>Gögn uppfærð: {label}</span>
+                </div>
+              );
+            })()
+          : null}
+        <div className="table-note">
+          <FaCircleInfo size={13} aria-hidden="true" />
+          <span>
+            <strong>Athugið:</strong> Sérpantanir birtast alltaf neðst. Lýsingar
+            á sérpöntunum eru ekki réttar, skoðaðu sölupöntunina í BC fyrir
+            réttar spec upplýsingar.
+          </span>
+        </div>
+      </div>
       <div className="filter-buttons-and-search-bar">
         <div className="filter-buttons">
           {[
@@ -478,10 +539,9 @@ const ExcelTable = () => {
               (lob) => lob && !LOB_FILTERS.includes(lob),
             ),
           ].map((lob) => {
-            const count =
-              lob === "All"
-                ? data.length
-                : data.filter((r) => r.lob === lob).length;
+            const count = data.filter((r) =>
+              matchesFilters(r, lob, specialOnly),
+            ).length;
             return (
               <button
                 key={lob}
@@ -493,6 +553,19 @@ const ExcelTable = () => {
               </button>
             );
           })}
+          <button
+            type="button"
+            role="switch"
+            aria-checked={specialOnly}
+            className={`special-toggle ${specialOnly ? "on" : ""}`}
+            onClick={() => setSpecialOnly((on) => !on)}
+          >
+            <span className="special-toggle-track" aria-hidden="true">
+              <span className="special-toggle-thumb" />
+            </span>
+            Aðeins sérpantanir
+            <span className="filter-count">{specialCount}</span>
+          </button>
         </div>
         {/*<button
           onClick={toggleSearch}
@@ -585,10 +658,6 @@ const ExcelTable = () => {
               <span className="mobile-card-label">Vörunr.</span>
               <span className="mobile-card-value">{row.partNumber}</span>
             </div>
-            <div className="mobile-card-meta">
-              <span className="mobile-card-label">PO</span>
-              <span className="mobile-card-value">{row.poNumber}</span>
-            </div>
             <div className="mobile-card-stats">
               <div className="mobile-stat mobile-stat-highlight">
                 <span>{row.epliQty}</span>
@@ -600,9 +669,7 @@ const ExcelTable = () => {
                 Áætl. afhending: <strong>{row.estimatedDelivery}</strong>
               </div>
             )}
-            <span className={`status-pill ${getStatusClass(row.status)}`}>
-              {row.status}
-            </span>
+            <StatusPill status={row.status} />
           </div>
         ))}
       </div>
@@ -640,11 +707,7 @@ const ExcelTable = () => {
                   {COLUMNS.map(({ key }) => (
                     <TableCell key={key} className="sticky-cell">
                       {key === "status" ? (
-                        <span
-                          className={`status-pill ${getStatusClass(row.status)}`}
-                        >
-                          {row.status}
-                        </span>
+                        <StatusPill status={row.status} />
                       ) : (
                         <p className="sticky-cell-text">{row[key]}</p>
                       )}
@@ -656,6 +719,7 @@ const ExcelTable = () => {
           </Table>
         </TableContainer>
       </div>
+
       <Snackbar
         open={snackbar.open}
         autoHideDuration={3500}

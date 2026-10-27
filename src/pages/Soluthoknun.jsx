@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import "../css/Soluthoknun.css";
 import { BsPhone, BsTablet, BsLaptop, BsSmartwatch } from "react-icons/bs";
-import { FiInfo, FiMinus, FiPlus } from "react-icons/fi";
+import { FiCheck, FiMinus, FiPlus, FiX } from "react-icons/fi";
 import SeasonalCommission from "../components/SeasonalCommission";
 import {
   COMMISSION_PER_ACCESSORY,
@@ -248,66 +248,126 @@ function Soluthoknun() {
               Tímabilið sem er í gangi
             </span>
             <span className="sc-fact-label">
-              Nýtt hefst {formatDayMonth(nextPeriodStart)}{" "}
-              {days === 1 ? "á morgun" : `eftir ${days} daga`}.
+              Nýtt tímabil hefst {formatDayMonth(nextPeriodStart)}{" "}
+              {days === 1 ? " - Á morgun" : ` - Eftir ${days} daga`}
             </span>
           </div>
         </div>
       </section>
 
-      {/* Regla og dæmi */}
+      {/* Hvernig þóknun virkar: regla, dæmi og gildir flokkar í einum hluta */}
       <section className="sc-section">
         <h2 className="sc-section-heading">Hvenær færðu söluþóknun?</h2>
-        <p className="sc-section-sub">
-          Þegar þú selur aukahlut í <strong>sömu færslu</strong> og iPhone,
-          iPad, Mac eða Apple Watch.
-        </p>
+        <div className="sc-panel">
+          <div className="sc-how">
+            <div className="sc-how-card">
+              <span className="sc-how-label">Svona virkar þetta</span>
+              <ul className="sc-rule-list">
+                <li>
+                  <span className="sc-rule-icon yes" aria-hidden="true">
+                    <FiCheck size={14} />
+                  </span>
+                  <span>
+                    Aukahlutur þarf að vera seldur í{" "}
+                    <strong>sömu færslu</strong> og iPhone, iPad, Mac eða Apple
+                    Watch.
+                  </span>
+                </li>
+                <li>
+                  <span className="sc-rule-icon yes" aria-hidden="true">
+                    <FiCheck size={14} />
+                  </span>
+                  <span>
+                    <strong>{formatISK(COMMISSION_PER_ACCESSORY)}</strong> fyrir
+                    hvern aukahlut úr gildum flokkum.
+                  </span>
+                </li>
+                <li>
+                  <span className="sc-rule-icon yes" aria-hidden="true">
+                    <FiCheck size={14} />
+                  </span>
+                  <span>
+                    Ef aukahluturinn er í{" "}
+                    <strong>afsláttartilboði sem stjórnendur setja inn</strong>{" "}
+                    færðu fulla söluþóknun.
+                  </span>
+                </li>
+                <li>
+                  <span className="sc-rule-icon no" aria-hidden="true">
+                    <FiX size={14} />
+                  </span>
+                  <span>
+                    <strong>Ef þú setur afslátt</strong> eða ef{" "}
+                    <strong>viðskiptavinur er með fastan afslátt</strong> af
+                    aukahlutnum fæst ekki söluþóknun.
+                  </span>
+                </li>
 
-        <div className="sc-example">
-          <span className="sc-example-label">Dæmi um eina færslu</span>
-          <div className="sc-example-row">
-            <span className="sc-chip sc-chip-device">iPhone</span>
-            <span className="sc-op">+</span>
-            <span className="sc-chip">Hulstur</span>
-            <span className="sc-op">+</span>
-            <span className="sc-chip">PanzerGlass</span>
-            <span className="sc-op">=</span>
-            <span className="sc-example-total">
-              {formatISK(2 * COMMISSION_PER_ACCESSORY)}
-            </span>
-          </div>
-        </div>
-
-        <p className="sc-note">
-          <FiInfo size={16} />
-          <span>
-            <strong>
-              Aðeins færslur sem þú afgreiðir telja til þinnar söluþóknunar.
-            </strong>{" "}
-            Pantanir úr vefverslun og færslur annarra sölumanna telja ekki með.
-          </span>
-        </p>
-      </section>
-
-      {/* Flokkar */}
-      <section className="sc-section">
-        <h2 className="sc-section-heading">Gildir aukahlutaflokkar</h2>
-        <div className="sc-categories">
-          {COMMISSION_CATEGORIES.map((cat) => (
-            <div key={cat.id} className="sc-category">
-              <div className="sc-category-head">
-                <span className="sc-category-icon">
-                  {categoryIcons[cat.id]}
-                </span>
-                <h3>{cat.name}</h3>
-              </div>
-              <ul>
-                {cat.accessories.map((a) => (
-                  <li key={a}>{a}</li>
-                ))}
+                <li>
+                  <span className="sc-rule-icon no" aria-hidden="true">
+                    <FiX size={14} />
+                  </span>
+                  <span>
+                    <strong>
+                      Aðeins aukahlutir sem þú selur telja til þinnar
+                      söluþóknunar.
+                    </strong>{" "}
+                    Pantanir úr vefverslun og pantanir annarra sölumanna telja
+                    ekki með.
+                  </span>
+                </li>
               </ul>
             </div>
-          ))}
+
+            <div className="sc-how-card">
+              <span className="sc-how-label">Dæmi um eina færslu</span>
+              <div className="sc-receipt">
+                <div className="sc-receipt-row">
+                  <span className="sc-chip sc-chip-device">iPhone</span>
+                  <span className="sc-receipt-amount muted">Tækið sjálft</span>
+                </div>
+                <div className="sc-receipt-row">
+                  <span className="sc-chip">Hulstur</span>
+                  <span className="sc-receipt-amount">
+                    +{formatISK(COMMISSION_PER_ACCESSORY)}
+                  </span>
+                </div>
+                <div className="sc-receipt-row">
+                  <span className="sc-chip">PanzerGlass</span>
+                  <span className="sc-receipt-amount">
+                    +{formatISK(COMMISSION_PER_ACCESSORY)}
+                  </span>
+                </div>
+                <div className="sc-receipt-total">
+                  <span>Þín söluþóknun</span>
+                  <span className="sc-example-total">
+                    {formatISK(2 * COMMISSION_PER_ACCESSORY)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h3 className="sc-panel-subheading">
+            Eftirfarandi flokkar teljast til söluþóknunar
+          </h3>
+          <div className="sc-categories">
+            {COMMISSION_CATEGORIES.map((cat) => (
+              <div key={cat.id} className="sc-category">
+                <div className="sc-category-head">
+                  <span className="sc-category-icon">
+                    {categoryIcons[cat.id]}
+                  </span>
+                  <h3>{cat.name}</h3>
+                </div>
+                <ul>
+                  {cat.accessories.map((a) => (
+                    <li key={a}>{a}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

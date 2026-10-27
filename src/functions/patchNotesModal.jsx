@@ -3,10 +3,11 @@ import { useUser } from "@clerk/clerk-react";
 import "../css/patchNotesModal.css";
 import { FiCheck } from "react-icons/fi";
 
-const CURRENT_VERSION = "2.3.0";
+const CURRENT_VERSION = "2.3.1";
 
 const majorUpdates = [
   "Útskýringar og reiknivél fyrir nýtt bónuskerfi komið í loftið.",
+  "Staða sendinga síða hefur verið einfölduð til muna, nú sést eingöngu magn sem áætlað er að komi til verslana Epli. Ekki er lengur blandað við það sem fer í heildsölu.",
 ];
 
 const PatchNotesModal = () => {

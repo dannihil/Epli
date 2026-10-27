@@ -166,22 +166,38 @@ button.nav-link-button {
 }
 
 .nav-dropdown-menu li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   padding: 10px 14px;
   border-radius: 8px;
-  color: white;
+  color: rgba(255, 255, 255, 0.85);
   font-size: 14px;
   font-weight: 600;
+  text-align: left;
   white-space: nowrap;
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nav-dropdown-menu li + li {
+  margin-top: 2px;
 }
 
 .nav-dropdown-menu li:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
 }
 
+/* Núverandi síða: hvítur texti og hak, ekki bakgrunnur (svo það ruglist ekki við hover) */
 .nav-dropdown-menu li.active {
-  background: rgba(255, 255, 255, 0.14);
+  color: white;
+}
+
+.nav-dropdown-check {
+  flex-shrink: 0;
+  opacity: 0.9;
 }
 
 /* ===== Login Icon ===== */

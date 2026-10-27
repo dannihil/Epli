@@ -554,3 +554,152 @@
   cursor: not-allowed;
   opacity: 0.6;
 }
+
+/* Efsta lína: "Gögn uppfærð" og athugasemd hlið við hlið */
+.table-top-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.table-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: #f2f2f5;
+  color: #555;
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.table-note svg {
+  flex-shrink: 0;
+  color: #6e6e73;
+}
+
+.table-note strong {
+  color: #333;
+}
+
+@media (max-width: 750px) {
+  .table-note {
+    font-size: 12px;
+    border-radius: 12px;
+    align-items: flex-start;
+  }
+
+  .table-note svg {
+    margin-top: 2px;
+  }
+}
+
+/* Rofi: Aðeins sérpantanir (óháður vöruflokkasíunni) — í sömu röð og
+   flokkarnir, sama hæð og lögun, en hvítur með ramma svo hann lesist sem rofi.
+   Ekkert skilstrik: það lendir á röngum stað þegar röðin brotnar. */
+.special-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px 9px 10px;
+  border-radius: 25px;
+  border: 1.5px solid #d2d2d7;
+  background: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  color: rgb(82, 82, 82);
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.special-toggle:hover {
+  border-color: #8e8e93;
+  color: #111;
+}
+
+.special-toggle-track {
+  position: relative;
+  width: 34px;
+  height: 20px;
+  border-radius: 999px;
+  background: #d2d2d7;
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+}
+
+.special-toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease;
+}
+
+.special-toggle.on {
+  border-color: rgb(31, 31, 31);
+  color: rgb(31, 31, 31);
+  font-weight: 700;
+}
+
+.special-toggle.on .special-toggle-track {
+  background: #34c759;
+}
+
+.special-toggle.on .special-toggle-thumb {
+  transform: translateX(14px);
+}
+
+/* "Delivered" merki með skýringu */
+.status-pill-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: help;
+}
+
+.status-pill-info svg {
+  flex-shrink: 0;
+  opacity: 0.75;
+}
+
+.status-tooltip {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.45;
+  max-width: 260px;
+}
+
+.status-tooltip svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Upprunalega (Apple) taflan: 10 dálkar, þéttari svo öll taflan passi án
+   lárétts skruns. Aðeins Lýsing má brotna í fleiri línur; fyrirsagnir og
+   stöðumerki haldast á einni línu svo raðirnar verði jafnar. */
+.excel-table-compact .sticky-header,
+.excel-table-compact .sticky-cell {
+  padding: 8px 10px;
+}
+
+/* Lýsing (4. dálkur) tekur við plássinu sem eftir er og brotnar ef þarf */
+.excel-table-compact .sticky-cell:nth-child(4) {
+  white-space: normal;
+  min-width: 160px;
+}
+
+.excel-table-compact .table-container-2 table {
+  width: 100%;
+}
